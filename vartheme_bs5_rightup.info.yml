@@ -1,0 +1,22 @@
+name: Vartheme BS5 RightUp
+description: "The Bootstrap 5 theme starter kit for the RightUp site template, with a media, news and magazine design system. Based on Vartheme BS5 (SDC, Storybook, SASS)."
+core_version_requirement: ~11.4.0
+engine: twig
+type: theme
+base theme: false
+starterkit: true
+auto_switch_components: true
+screenshot: screenshot.png
+alt text: Screenshot of Vartheme BS5 RightUp, Varbase front-end theme.
+
+regions:
+  content: Content
+  header: Header
+  footer: Footer
+libraries:
+  - vartheme_bs5_rightup/framework
+
+ckeditor_stylesheets: false
+ckeditor5-stylesheets:
+  - css/base/ckeditor5.bootstrap.base.css
+enforce_prop_schemas: false
