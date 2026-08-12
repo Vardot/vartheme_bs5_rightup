@@ -1,7 +1,7 @@
-# Schema for the configuration files of the Vartheme BS5 RightUp.
+# Schema for the configuration files of the Vartheme BS5 Rightup.
 vartheme_bs5_rightup.settings:
   type: theme_settings
-  label: "Vartheme BS5 RightUp settings"
+  label: "Vartheme BS5 Rightup settings"
   mapping:
     # Containers for regions.
     # ----------------------------

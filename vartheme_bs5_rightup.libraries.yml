@@ -147,7 +147,7 @@ bs-tooltip-script:
   js:
     js/bootstrap/tooltip.js: {}
 
-# Vartheme BS5 RightUp global styles library.
+# Vartheme BS5 Rightup global styles library.
 global-styles:
   css:
     base:
@@ -160,7 +160,7 @@ global-styles:
       fonts/figtree/css/figtree.css: {}
       fonts/dm-mono/css/dm-mono.css: {}
 
-# Vartheme BS5 RightUp global scripts library.
+# Vartheme BS5 Rightup global scripts library.
 global-scripts:
   js:
     js/scripts.js: {}
@@ -198,7 +198,7 @@ bootstrap-styles-rtl:
     base:
       css/base/bootstrap-rtl.base.css: {}
 
-# Vartheme BS5 RightUp global RTL styles library.
+# Vartheme BS5 Rightup global RTL styles library.
 global-styles-rtl:
   css:
     base:
@@ -206,7 +206,7 @@ global-styles-rtl:
     theme:
       fonts/droid/arabic/kufi/css/droidarabickufi.css: {}
 
-# Vartheme BS5 RightUp content moderation status theme.
+# Vartheme BS5 Rightup content moderation status theme.
 content_moderation:
   css:
     theme:

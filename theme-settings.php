@@ -4,7 +4,7 @@
  * @file
  * theme-settings.php
  *
- * Provides theme settings for Vartheme BS5 RightUp
+ * Provides theme settings for Vartheme BS5 Rightup
  */
 
 use Drupal\Core\Form\FormStateInterface;

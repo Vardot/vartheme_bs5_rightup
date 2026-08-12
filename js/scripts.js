@@ -1,6 +1,6 @@
 /**
  * @file
- * Behaviors for the Vartheme BS5 RightUp theme.
+ * Behaviors for the Vartheme BS5 Rightup theme.
  */
 
 (function ($, Drupal) {

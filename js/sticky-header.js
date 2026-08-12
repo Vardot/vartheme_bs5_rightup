@@ -1,6 +1,6 @@
 /**
  * @file
- * Sticky-header scroll behavior for Vartheme BS5 RightUp.
+ * Sticky-header scroll behavior for Vartheme BS5 Rightup.
  *
  * Progressive enhancement: the header is `position: sticky` in CSS on its own,
  * so it stays usable without JS. This behavior only toggles a `scrolled` class

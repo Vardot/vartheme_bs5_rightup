@@ -74,7 +74,7 @@ inherited in Bootstrap, meaning any nested tables can be styled independent from
 
 ## Examples:
 
-**Example #1** Used in the `table.html.twig` in Vartheme BS5 RightUp
+**Example #1** Used in the `table.html.twig` in Vartheme BS5 Rightup
 Only passing variables from Drupal.
 ```
 {% include 'vartheme_bs5_rightup:table' with {   

@@ -2,7 +2,7 @@
 // Add custom Bootstrap fixes and changes over the default provided
 // Bootstrap 5.3.3 package.
 
-// Using UMD in Vartheme BS5 RightUp
+// Using UMD in Vartheme BS5 Rightup
 // The UMD format in Bootstrap is using ESM format.
 // `dropdown.js` and `tooltip.js` are allocating the library by `@popperjs/core`
 

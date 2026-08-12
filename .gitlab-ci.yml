@@ -1,5 +1,5 @@
 ################################################################################
-# Basic GitLab CI for Vartheme BS5 RightUp.
+# Basic GitLab CI for Vartheme BS5 Rightup.
 #
 # A self-contained build + validate pipeline modeled on the Varbase project CI:
 # build the theme + component assets, then run the JS / CSS / YAML / spelling

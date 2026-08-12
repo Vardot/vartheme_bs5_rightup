@@ -1,6 +1,6 @@
 {
   "name": "drupal/vartheme_bs5_rightup",
-  "description": "The Bootstrap 5 front-end theme for the RightUp media, news and magazine site template (SDC + Storybook).",
+  "description": "The Bootstrap 5 front-end theme for the Rightup media, news and magazine site template (SDC + Storybook).",
   "type": "drupal-theme",
   "homepage": "https://www.drupal.org/project/vartheme_bs5_rightup",
   "license": "GPL-2.0-or-later",

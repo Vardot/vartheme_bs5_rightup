@@ -1,8 +1,8 @@
-# Vartheme BS5 RightUp Starterkit Theme
+# Vartheme BS5 Rightup Starterkit Theme
 
-## How to use the Vartheme BS5 RightUp Starterkit
+## How to use the Vartheme BS5 Rightup Starterkit
 
-To generate a new theme from Vartheme BS5 RightUp using the starterkit/theme-generation
+To generate a new theme from Vartheme BS5 Rightup using the starterkit/theme-generation
 script, run the following from Drupal's installation root:
 
 ```sh
@@ -16,16 +16,16 @@ with two optional arguments:
 php core/scripts/drupal generate-theme new_theme_name
   --starterkit vartheme_bs5_rightup
   --name "New Theme Name"
-  --description "Custom theme generated from Vartheme BS5 RightUp theme"
+  --description "Custom theme generated from Vartheme BS5 Rightup theme"
 ```
 
-This script will copy over all the files from the Vartheme BS5 RightUp theme, and replace
-instances of Vartheme BS5 RightUp's machine name and label with the strings you provide.
+This script will copy over all the files from the Vartheme BS5 Rightup theme, and replace
+instances of Vartheme BS5 Rightup's machine name and label with the strings you provide.
 
 ## Customizing CSS
 
-Your new theme should look and function identically to Vartheme BS5 RightUp out of the box,
-but you may wish to change the styles to suit your needs. Vartheme BS5 RightUp's styles are
+Your new theme should look and function identically to Vartheme BS5 Rightup out of the box,
+but you may wish to change the styles to suit your needs. Vartheme BS5 Rightup's styles are
 written using Bootstrap 5, SASS, PostCSS, which is installed and configured Varbase,
 and allows CSS authors to write modern CSS while still supporting browsers that have
 not fully implemented the newest methodologies.

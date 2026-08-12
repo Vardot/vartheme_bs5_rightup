@@ -1,7 +1,7 @@
 bootstrap_icons:
   enabled: true
   label: "Bootstrap icons"
-  description: "General Bootstrap Icons available within the Vartheme BS5 RightUp theme."
+  description: "General Bootstrap Icons available within the Vartheme BS5 Rightup theme."
   links:
     - https://icons.getbootstrap.com/#usage
   version: 1.13.1
@@ -48,7 +48,7 @@ bootstrap_icons:
 vartheme_social:
   enabled: true
   label: "Vartheme social"
-  description: "Brand-coloured social platform icons that ship with Vartheme BS5 RightUp."
+  description: "Brand-coloured social platform icons that ship with Vartheme BS5 Rightup."
   version: 1.0.0
   license:
     name: GPL-2.0-or-later

@@ -58,7 +58,7 @@ Text area type form element.
   }
 %}
 ```
-Used in [Vartheme BS5 RightUp](https://github.com/Vardot/vartheme_bs5_rightup/blob/3.0.x/templates/form/textarea.html.twig)
+Used in [Vartheme BS5 Rightup](https://github.com/Vardot/vartheme_bs5_rightup/blob/3.0.x/templates/form/textarea.html.twig)
 
 #### Example #2: Textarea - Resize both
 ```
