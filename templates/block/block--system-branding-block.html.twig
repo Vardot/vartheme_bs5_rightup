@@ -2,20 +2,43 @@
 /**
  * @file
  * Template for the branding block.
+ *
+ * Ships both wordmarks and lets CSS reveal exactly one, so the block works on a
+ * light and on a dark section without a per-instance prop. logo_white comes from
+ * hook_preprocess_block(); the fallback keeps the block rendering when a site has
+ * set its own logo and the hook left logo_white unset.
+ *
+ * Available config:
+ * - site_name: the site name.
+ * - site_logo: the wordmark for light sections.
+ * - logo_alt: alternative text for the wordmark.
+ * - logo_white: the wordmark for dark sections.
  */
 #}
 {% embed 'vartheme_bs5_rightup:block' with {
   html_tag: 'div',
 } %}
 
-	{% block content %}
-		{% include 'vartheme_bs5_rightup:navbar-brand' with {
-    text: site_name,
-    image_path: site_logo,
-    height: 'auto',
-    path: path('<front>'),
-    alt: elements.content.site_name['#markup'] ~ ' logo' ,
-  } %}
-	{% endblock %}
+  {% block content %}
+    {% include 'vartheme_bs5_rightup:navbar-brand' with {
+      text: site_name,
+      image_path: site_logo,
+      height: 'auto',
+      path: path('<front>'),
+      alt: logo_alt|default('Site logo'|t),
+      navbar_brand_utility_classes: ['brand-logo-on-light'],
+    } only %}
+
+    {% if logo_white %}
+      {% include 'vartheme_bs5_rightup:navbar-brand' with {
+        text: site_name,
+        image_path: logo_white,
+        height: 'auto',
+        path: path('<front>'),
+        alt: logo_alt|default('Site logo'|t),
+        navbar_brand_utility_classes: ['brand-logo-on-dark'],
+      } only %}
+    {% endif %}
+  {% endblock %}
 
 {% endembed %}

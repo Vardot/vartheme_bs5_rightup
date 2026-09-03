@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Implements hook_theme().
@@ -116,7 +117,22 @@ function vartheme_bs5_rightup_preprocess_block(&$variables) {
   // the rightup-logo.* pair instead. Skipped when a site has set its own logo.
   if (($variables['plugin_id'] ?? '') === 'system_branding_block'
     && theme_get_setting('logo.use_default', 'vartheme_bs5_rightup')) {
-    $variables['site_logo'] = \Drupal::request()->getBaseUrl() . '/' . \Drupal::service('extension.list.theme')->getPath('vartheme_bs5_rightup') . '/rightup-logo.svg';
+    $theme_url = \Drupal::request()->getBaseUrl() . '/' . \Drupal::service('extension.list.theme')->getPath('vartheme_bs5_rightup');
+
+    $variables['site_logo'] = $theme_url . '/rightup-logo.svg';
+
+    // The block is placed in a Canvas region, which page.html.twig never wraps,
+    // so hook_preprocess_page()'s logo_white / logo_print never reach it. Expose
+    // both here as well, and let the branding template pick per section context.
+    $variables['logo_white'] = $theme_url . '/rightup-logo-white.svg';
+    $variables['logo_print'] = $theme_url . '/logo-print.png';
+
+    // site_name is empty whenever the block hides it, and the logo still stands
+    // for the site, so the alternative text reads the name from config instead.
+    $site_name = \Drupal::config('system.site')->get('name');
+    $variables['logo_alt'] = $site_name
+      ? new TranslatableMarkup('@site_name logo', ['@site_name' => $site_name])
+      : new TranslatableMarkup('Site logo');
   }
 }
 

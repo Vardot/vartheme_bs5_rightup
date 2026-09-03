@@ -671,3 +671,47 @@ footer.footer hr {
   padding-right: 0;
   padding-left: 2.25rem;
 }
+
+.brand-logo-on-dark {
+  display: none !important;
+}
+
+.bg-primary .brand-logo-on-light {
+  display: none !important;
+}
+
+.bg-primary .brand-logo-on-dark {
+  display: flex !important;
+}
+
+.bg-success .brand-logo-on-light {
+  display: none !important;
+}
+
+.bg-success .brand-logo-on-dark {
+  display: flex !important;
+}
+
+.bg-danger .brand-logo-on-light {
+  display: none !important;
+}
+
+.bg-danger .brand-logo-on-dark {
+  display: flex !important;
+}
+
+.bg-dark .brand-logo-on-light {
+  display: none !important;
+}
+
+.bg-dark .brand-logo-on-dark {
+  display: flex !important;
+}
+
+.bg-black .brand-logo-on-light {
+  display: none !important;
+}
+
+.bg-black .brand-logo-on-dark {
+  display: flex !important;
+}

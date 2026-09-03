@@ -741,3 +741,32 @@ footer.footer {
   padding-right: 2.25rem;
   padding-left: 0;
 }
+
+// Branding wordmark, light and dark sections.
+// -----------------------------------------------------------------------------
+// block--system-branding-block.html.twig ships both wordmarks; exactly one is
+// revealed here, so the block needs no per-instance prop and no new component
+// version. display:none also keeps the hidden one out of the a11y tree and out
+// of tab order, so the duplicate front-page link is never reachable.
+//
+// Derived from the dark_backgrounds set in atoms/section, MINUS bg-secondary:
+// $secondary is #FFFFFF in this theme, so bg-secondary is a light background here.
+$rightup-dark-section-backgrounds: ".bg-primary", ".bg-success", ".bg-danger", ".bg-dark", ".bg-black";
+
+// navbar-brand carries Bootstrap's .d-flex, and every Bootstrap utility is
+// declared !important, so hiding either wordmark has to be !important too.
+.brand-logo-on-dark {
+  display: none !important;
+}
+
+@each $dark-background in $rightup-dark-section-backgrounds {
+  #{$dark-background} {
+    .brand-logo-on-light {
+      display: none !important;
+    }
+
+    .brand-logo-on-dark {
+      display: flex !important;
+    }
+  }
+}
