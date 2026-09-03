@@ -1,0 +1,42 @@
+import { Title, Subtitle, Meta, Description, Primary, Stories, Controls, Source } from '@storybook/addon-docs/blocks';
+import * as comStories from './article-teaser.stories.json';
+import templateSource from './article-teaser.twig?raw';
+
+<Meta of={comStories} name="Docs"/>
+
+<Title />
+<Subtitle />
+<Description />
+
+> ### Bootstrap Documentation
+> * [Colors](https://getbootstrap.com/docs/5.3/utilities/colors/)
+> * [Ratio](https://getbootstrap.com/docs/5.3/helpers/ratio/)
+> * [Horizontal rules](https://getbootstrap.com/docs/5.3/content/reboot/#horizontal-rules)
+
+<Primary />
+
+## Properties
+<Controls />
+
+<Stories of={comStories} />
+
+## Attributes
+* `attributes` — HTML attributes for the root `<article>` element
+* `media_attributes` — the image wrapper; only rendered when `media_image` is set
+
+## Slots
+* N/A
+
+## Example
+
+```twig
+{% include 'vartheme_bs5_rightup:article-teaser' with {
+  media_image: { src: '/path/to/image.jpg', alt: 'Rotterdam flagship', width: 1200, height: 900 },
+  category_label: 'Architecture',
+  heading_text: 'Fen & Marble Reveal First Look at Rotterdam Flagship',
+  author: 'Tomas Adeyemi'
+} %}
+```
+
+## Source code
+<Source code={templateSource} />

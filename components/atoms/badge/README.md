@@ -22,7 +22,7 @@ Use this component when you need a reusable badge that can:
 - show an optional Bootstrap Icon before or after the label
 - display a notification dot or a count bubble on the badge
 - switch between small, medium, and large sizing utilities
-- choose a default rounded or pill border radius
+- accept a `radius` prop, though badges render square in this theme regardless of its value (see Notes)
 
 ## Files
 
@@ -45,7 +45,7 @@ Use this component when you need a reusable badge that can:
 
 - `variant` (required): Bootstrap contextual color — `text-bg-primary`, `text-bg-secondary`, `text-bg-success`, `text-bg-danger`, `text-bg-warning`, `text-bg-info`, `text-bg-light`, `text-bg-dark`; defaults to `text-bg-primary`
 - `size`: sizing utilities (font-size + padding) — `fs-6 px-2 py-1` (Small), `fs-6 px-3 py-2` (Medium), `fs-5 px-3 py-2` (Large); defaults to `fs-6 px-3 py-2`
-- `radius`: border-radius utility — `rounded-1`, `rounded-pill`; defaults to `rounded-1`
+- `radius`: border-radius utility — `rounded-0`, `rounded-1`, `rounded-pill`; defaults to `rounded-0`. Badges are always square in this theme regardless of this value (see Notes).
 
 ### Icon
 
@@ -86,7 +86,7 @@ Use this component when you need a reusable badge that can:
   url: 'https://example.com',
   variant: 'text-bg-success',
   size: 'fs-6 px-3 py-2',
-  radius: 'rounded-pill',
+  radius: 'rounded-0',
   icon: 'check',
   icon_first: true,
   indicator: 'count',
@@ -112,4 +112,6 @@ Use this component when you need a reusable badge that can:
 - The icon is rendered through the `vartheme_bs5_rightup:icon` component using the `icon` value without its `bi-` prefix.
 - The count bubble and dot are positioned absolutely on the badge; the root gains `position-relative` when an indicator is present.
 - Custom styling uses CSS Logical Properties (e.g. `padding-inline`, `inline-size`) for RTL/LTR support.
+- `text-bg-primary` and `text-bg-secondary` use brand-specific background colors (tertiary and accent respectively — see `badge.scss`), overriding Bootstrap's own primary/secondary badge colors.
+- Badges are square in this theme: `badge.scss` forces `border-radius: 0 !important` on all three size-modifier classes, overriding the `radius` prop's `.rounded-*` utility class regardless of which value it's set to. The notification dot/count bubble keep their own circular/pill shape — that's unrelated to the `radius` prop.
 - The boolean prop `icon_first` is validated by SDC and arrives as a real boolean.

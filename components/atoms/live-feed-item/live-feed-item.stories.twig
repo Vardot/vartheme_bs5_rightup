@@ -1,0 +1,56 @@
+{% stories LiveFeedItem with {
+  title: 'Base/Live Feed Item',
+  parameters: {
+    componentSubtitle: 'Timestamped ticker entry',
+    docs: {
+      description: {
+        component: 'A single timestamped news item, meant to be dropped into a Live Feed component\'s "Items" slot.',
+      },
+      story: {inline: true},
+    },
+  },
+  argTypes: {
+    time: {
+      name: 'Time',
+      description: 'Short timestamp shown before the title.',
+      defaultValue: '5:10 PM',
+      control: 'text',
+    },
+    title: {
+      name: 'Title',
+      description: 'The news item\'s headline.',
+      defaultValue: 'Adobe Quietly Kills Its Font-Pairing Tool',
+      control: 'text',
+    },
+    url: {
+      name: 'Link URL (optional)',
+      description: 'If provided, the item renders as a link to this URL.',
+      defaultValue: '',
+      control: 'text',
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Default',
+  args: {
+    time: '5:10 PM',
+    title: 'Adobe Quietly Kills Its Font-Pairing Tool',
+    url: '',
+  },
+} %}
+{{ include('vartheme_bs5_rightup:live-feed-item') }}
+{% endstory %}
+
+{% story Linked with {
+  name: 'Linked',
+  args: {
+    time: '6:00 PM',
+    title: 'Milan Design Week Adds a Fourth Venue for 2027',
+    url: '#',
+  },
+} %}
+{{ include('vartheme_bs5_rightup:live-feed-item') }}
+{% endstory %}
+
+{% endstories %}

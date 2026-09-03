@@ -1,0 +1,53 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup Starter Kit implementation for the Live Feed Item component.
+ *
+ * A single timestamped news item, meant to be dropped into a Live Feed
+ * component's "Items" slot (one item = one drag & drop instance). Renders as
+ * a link when a URL is provided, otherwise as a span.
+ *
+ * Available properties:
+ * - time: Short timestamp shown before the title. (required)
+ * - title: The news item's headline. (required)
+ * - url: If provided, the item renders as a link to this URL. Defaults to ``.
+ *
+ * Available attributes:
+ * - attributes: HTML attributes for the root element.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set url = url|default('') %}
+
+{# Logic: URL switches the root tag to a link. #}
+{% set has_url = url is not empty %}
+
+{# Logic: merge root/region classes as arrays. #}
+{% set base_classes = ['live-feed-item', 'd-inline-flex', 'align-items-center', 'text-nowrap', 'px-3'] %}
+{% set time_classes = ['live-feed-item__time', 'text-tertiary', 'fw-bold', 'fs-6', 'me-2'] %}
+{% set title_classes = ['live-feed-item__title', 'text-black', 'fs-6'] %}
+
+{# Print the HTML. #}
+{% if has_url %}
+  {% set attributes = attributes.addClass(base_classes|merge(['text-decoration-none'])).setAttribute('href', url|e) %}
+  <a{{ attributes }}>
+    <span class="{{ time_classes|join(' ') }}">{{ time }}</span>
+    <span class="{{ title_classes|join(' ') }}">{{ title }}</span>
+  </a>
+{% else %}
+  {% set attributes = attributes.addClass(base_classes) %}
+  <span{{ attributes }}>
+    <span class="{{ time_classes|join(' ') }}">{{ time }}</span>
+    <span class="{{ title_classes|join(' ') }}">{{ title }}</span>
+  </span>
+{% endif %}

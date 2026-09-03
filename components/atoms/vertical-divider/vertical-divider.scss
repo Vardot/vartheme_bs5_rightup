@@ -1,0 +1,31 @@
+// @file
+// Vertical divider component styles.
+//
+// The divider has no intrinsic height of its own; two mechanisms combine to
+// fill its parent automatically without a height prop:
+// - `align-self: stretch` handles the case where the divider is placed as a
+//   *direct* child of a flex/grid container (a `d-flex` wrapper, or a Row
+//   with no Column in between). It overrides the container's own
+//   `align-items` setting on this item alone.
+// - `height: 100%` handles the far more common Drupal Canvas case: dropped
+//   into its own Column, the divider's immediate parent is the plain
+//   (non-flex) `.col-*` div Canvas always wraps a component in. That column
+//   only has real height to give once the Section/Row's "Vertical alignment"
+//   is set to Stretch (equal height) — see atoms/section's
+//   `vertical_alignment` prop — so the column matches its tallest siblings
+//   and the divider's `height: 100%` fills it.
+// `min-height` keeps the line visible as a graceful fallback outside any
+// flex/grid context and before Stretch is enabled (e.g. inline usage with no
+// wrapper).
+
+@import "../../defaults";
+
+.vertical-divider {
+  --vertical-divider-min-height: #{$spacer};
+
+  display: inline-block;
+  align-self: stretch;
+  width: 0;
+  height: 100%;
+  min-height: var(--vertical-divider-min-height);
+}

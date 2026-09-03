@@ -1,0 +1,66 @@
+{#
+/**
+ * @file
+ * audio-player-remote.stories.twig
+ * Storybook stories for the Remote Audio Player component.
+ */
+#}
+{% stories AudioPlayerRemote with {
+  title: 'Molecules/Audio Player Remote',
+  parameters: {
+    componentSubtitle: 'An audio player for an external audio URL.',
+    docs: {
+      description: {
+        component: 'Enter an external audio file URL and this component renders full playback controls: play/pause, skip, time, and a seek bar.',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    url: {
+      name: 'Audio URL',
+      control: 'text',
+      defaultValue: 'https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3',
+    },
+    title: {
+      name: 'Title',
+      control: 'text',
+      defaultValue: '',
+    },
+    accent_color: {
+      name: 'Accent color',
+      control: 'select',
+      options: {
+        Default: 'default',
+        Black: 'black',
+        Secondary: 'secondary',
+        Primary: 'primary',
+        Tertiary: 'tertiary',
+        Accent: 'accent',
+        Success: 'success',
+        Danger: 'danger',
+        Warning: 'warning',
+        Info: 'info',
+        Light: 'light',
+        Dark: 'dark',
+        White: 'white',
+      },
+      defaultValue: 'default',
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Default',
+  args: {
+    url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3',
+    title: 'External episode',
+    accent_color: 'default',
+  },
+} %}
+  {{ include('vartheme_bs5_rightup:audio-player-remote', {url: url, title: title, accent_color: accent_color}, with_context: false) }}
+{% endstory %}
+
+{% endstories %}

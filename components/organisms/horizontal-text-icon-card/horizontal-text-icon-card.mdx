@@ -1,0 +1,54 @@
+import { Title, Subtitle, Meta, Description, Primary, Stories, Controls, Source } from '@storybook/addon-docs/blocks';
+import * as comStories from './horizontal-text-icon-card.stories.json';
+import templateSource from './horizontal-text-icon-card.twig?raw';
+
+<Meta of={comStories} name="Docs"/>
+
+<Title />
+<Subtitle />
+<Description />
+
+> ### Bootstrap Documentation
+> * [Flex](https://getbootstrap.com/docs/5.3/utilities/flex/)
+> * [Colors](https://getbootstrap.com/docs/5.3/utilities/colors/)
+> * [Border radius](https://getbootstrap.com/docs/5.3/utilities/borders/#border-radius)
+> * [Stretched link](https://getbootstrap.com/docs/5.3/helpers/stretched-link/)
+
+<Primary />
+
+## Properties
+<Controls />
+
+<Stories of={comStories} />
+
+## Attributes
+* `attributes` — HTML attributes for the root element
+* `content_attributes` — HTML attributes for the content wrapper element
+* `icon_attributes` — HTML attributes for the icon wrapper element
+
+## Slots
+* `content` — flexible content for the start side (category label, heading, text, meta line, button, etc.)
+
+## Example
+
+```twig
+{% embed 'vartheme_bs5_rightup:horizontal-text-icon-card' with {
+  icon_color: 'bg-accent',
+  background_color: 'bg-primary',
+  corner_style: 'rounded-3',
+  padded: true,
+  content_vertical_alignment: 'align-items-center',
+  stretched_link: true,
+  link_url: '/episodes/13',
+  link_target: '_self'
+} only %}
+  {% block content %}
+    <span class="text-uppercase fw-bold text-accent small">Episode 13</span>
+    <h3>No Straight Walls</h3>
+    <p>An architect on designing a museum wing with no straight walls, and why the client said yes.</p>
+  {% endblock %}
+{% endembed %}
+```
+
+## Source code
+<Source code={templateSource} />

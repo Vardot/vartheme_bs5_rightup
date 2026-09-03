@@ -1,0 +1,88 @@
+{#
+/**
+ * @file
+ * tab-item.stories.twig
+ * Storybook stories for the Tab Item component.
+ */
+#}
+{% stories TabItem with {
+  title: 'Molecules/Tab Item',
+  parameters: {
+    componentSubtitle: 'A single tab, meant to be placed inside a Tabs component.',
+    docs: {
+      description: {
+        component: 'Renders a single nav-link list item. Place one or more inside a Tabs component\'s items slot — as a plain filter/navigation link (url), or as a real Bootstrap JS tab (pane_id).',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    title: {
+      name: 'Title',
+      description: 'The tab\'s label.',
+      control: 'text',
+      defaultValue: 'All',
+    },
+    url: {
+      name: 'URL',
+      description: 'Where this tab links to. Used as a plain navigation link when Pane ID is empty.',
+      control: 'text',
+      defaultValue: '/',
+    },
+    pane_id: {
+      name: 'Pane ID',
+      description: 'Turns this tab into a real Bootstrap JS tab (only matters for the no-JS render — tabs.js promotes plain links automatically).',
+      control: 'text',
+      defaultValue: '',
+    },
+    is_active: {
+      name: 'Active',
+      description: 'Whether this tab is the current/active one.',
+      control: 'boolean',
+      defaultValue: false,
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Default',
+  args: {
+    title: 'Architecture',
+    url: '/architecture',
+    is_active: false,
+  },
+} %}
+  <ul class="tabs nav nav-tabs">
+    {{ include('vartheme_bs5_rightup:tab-item') }}
+  </ul>
+{% endstory %}
+
+{% story Active with {
+  name: 'Active',
+  args: {
+    title: 'All',
+    url: '/',
+    is_active: true,
+  },
+} %}
+  <ul class="tabs nav nav-tabs">
+    {{ include('vartheme_bs5_rightup:tab-item') }}
+  </ul>
+{% endstory %}
+
+{% story JsTab with {
+  name: 'JS Tab',
+  args: {
+    title: 'Architecture',
+    pane_id: 'architecture-pane',
+    is_active: true,
+  },
+} %}
+  <ul class="tabs nav nav-tabs" role="tablist">
+    {{ include('vartheme_bs5_rightup:tab-item') }}
+  </ul>
+{% endstory %}
+
+{% endstories %}

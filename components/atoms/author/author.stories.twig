@@ -1,0 +1,107 @@
+{% stories Author with {
+  title: 'Base/Author',
+  parameters: {
+    componentSubtitle: 'Author byline with a static prefix and a dynamic name',
+    docs: {
+      description: {
+        component: 'Author byline with a static prefix and a dynamic author name used to credit content authors on cards and teasers.',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    prefix: {
+      name: 'Prefix',
+      description: 'Static text shown before the author name.',
+      defaultValue: 'By:',
+      control: 'text',
+    },
+    author: {
+      name: 'Author name',
+      description: 'Dynamic author name shown after the prefix. Leave empty to omit the whole component.',
+      defaultValue: '',
+      control: 'text',
+    },
+    size: {
+      name: 'Font size',
+      description: 'Bootstrap font-size utility class.',
+      defaultValue: 'fs-6',
+      control: 'select',
+      options: {
+        Display: 'fs-1',
+        "'Extra large'": 'fs-2',
+        Large: 'fs-3',
+        Medium: 'fs-4',
+        Small: 'fs-5',
+        "'Extra small'": 'fs-6',
+      },
+    },
+    text_color: {
+      name: 'Text color',
+      description: 'Bootstrap text color utility class.',
+      defaultValue: 'text-muted',
+      control: 'select',
+      options: {
+        Muted: 'text-muted',
+        "'Body text color'": 'text-body',
+        Primary: 'text-primary',
+        Secondary: 'text-secondary',
+        Dark: 'text-dark',
+      },
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Default',
+  args: {
+    prefix: 'By:',
+    author: 'Jane Doe',
+    size: 'fs-6',
+    text_color: 'text-muted',
+  },
+} %}
+{% include 'vartheme_bs5_rightup:author' with {
+  prefix: prefix,
+  author: author,
+  size: size,
+  text_color: text_color
+} %}
+{% endstory %}
+
+{% story NoPrefix with {
+  name: 'No prefix',
+  args: {
+    prefix: '',
+    author: 'Jane Doe',
+    size: 'fs-6',
+    text_color: 'text-muted',
+  },
+} %}
+{% include 'vartheme_bs5_rightup:author' with {
+  prefix: prefix,
+  author: author,
+  size: size,
+  text_color: text_color
+} %}
+{% endstory %}
+
+{% story LargePrimary with {
+  name: 'Large primary',
+  args: {
+    prefix: 'By:',
+    author: 'Jane Doe',
+    size: 'fs-4',
+    text_color: 'text-primary',
+  },
+} %}
+{% include 'vartheme_bs5_rightup:author' with {
+  prefix: prefix,
+  author: author,
+  size: size,
+  text_color: text_color
+} %}
+{% endstory %}
+{% endstories %}

@@ -9,6 +9,7 @@ Use this component when you need to:
 - output a block of filtered HTML rich text
 - apply an optional Bootstrap font-size utility
 - apply a Bootstrap text color utility
+- apply a Bootstrap opacity utility
 
 ## Files
 
@@ -29,6 +30,7 @@ Use this component when you need to:
 
 - `text_size`: Bootstrap font-size utility class — `none`, `fs-6`, `fs-5`, `fs-4`, `fs-3`; defaults to `none`
 - `text_color`: Bootstrap text color utility class; defaults to `text-body`
+- `opacity`: Bootstrap opacity utility class — `opacity-25`, `opacity-50`, `opacity-75`, `opacity-100`; defaults to `opacity-100`
 
 ## Text size values
 
@@ -56,6 +58,15 @@ Use this component when you need to:
 | `text-white` | White |
 | `text-subtle-text` | Subtle Text |
 
+## Opacity values
+
+| Value | Label |
+|---|---|
+| `opacity-25` | Subtle |
+| `opacity-50` | Soft |
+| `opacity-75` | Strong |
+| `opacity-100` | Solid |
+
 ## Available attributes
 
 - `attributes`: attributes object merged onto the wrapping `<div>`
@@ -75,3 +86,4 @@ Use this component when you need to:
 - The content is wrapped in a `<div class="rich-text">` and printed with `|raw`, so the `text` value must already be filtered/safe.
 - `text_size: none` adds no font-size class; any other value is applied directly.
 - The `text_color` value is applied directly as a class.
+- `opacity` is always applied as a class (like the Divider component's own `opacity` prop); `opacity-100` is a functional no-op matching the browser default, so leaving it at the default has no visible effect.

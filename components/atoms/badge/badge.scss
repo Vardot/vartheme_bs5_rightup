@@ -1,8 +1,32 @@
 .badge {
   // -----------------------------
+  // Variant color overrides
+  // -----------------------------
+  // Bootstrap's `.text-bg-*` utilities set `background-color` with
+  // `!important`, so these need matching specificity (extra `.badge` class)
+  // and `!important` to win. Text color is left as Bootstrap computed it —
+  // white already reads well on tertiary, black already reads well on
+  // accent — so only the background changes.
+  &.text-bg-primary {
+    background-color: var(--bs-tertiary) !important;
+  }
+
+  &.text-bg-secondary {
+    background-color: var(--bs-accent) !important;
+  }
+
+  // -----------------------------
   // Size: Large
   // -----------------------------
   &.badge-large {
+    // No border radius on any badge, regardless of variant or the `radius`
+    // prop's value. Bootstrap's `.rounded-*` utilities set `border-radius`
+    // with `!important` at the same (single-class) specificity as a bare
+    // `.badge` rule, which would make the outcome depend on unpredictable
+    // CSS load order — pairing with the size-modifier class (every badge
+    // has one, defaulted in the twig) bumps specificity so this wins
+    // unconditionally instead. Repeated in all three size blocks below.
+    border-radius: 0 !important;
     padding-block: 0.3125rem;
     padding-inline: 0.625rem;
     font-size: 1rem;
@@ -25,6 +49,7 @@
   // Size: Medium
   // -----------------------------
   &.badge-medium {
+    border-radius: 0 !important;
     padding-block: 0.3125rem;
     padding-inline: 0.625rem;
     font-size: 0.875rem;
@@ -47,6 +72,7 @@
   // Size: Small
   // -----------------------------
   &.badge-small {
+    border-radius: 0 !important;
     padding-block: 0.125rem;
     padding-inline: 0.3125rem;
     font-size: 0.75rem;

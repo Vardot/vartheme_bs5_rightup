@@ -1,0 +1,161 @@
+// @file
+// Vartheme BS5 Rightup — Offcanvas Menu component.
+//
+// Hamburger trigger + Bootstrap Offcanvas takeover panel: a dark header
+// strip (matches the site's header/footer background) holding the close
+// button, and a light panel body (tinted from the brand-tertiary indigo)
+// holding the main menu, a divider, secondary utility links, and search.
+// All visual values flow through `--offcanvas-menu-*` tokens so the panel
+// follows the active theme; only the brand-tertiary indigo itself is a
+// literal fallback (no Bootstrap token carries it yet).
+
+@import "../../defaults";
+
+$offcanvas-menu-tertiary: #4F46E1;
+// Bootstrap ships no serif stack ($font-family-sans-serif/-monospace only);
+// this theme has no serif webfont loaded, so use a system serif stack for
+// the utility links' italic serif treatment — no new font file/build step.
+$offcanvas-menu-font-serif: Georgia, "Times New Roman", Times, serif;
+
+.offcanvas-menu {
+  --offcanvas-menu-trigger-size: #{$spacer * 2.5};
+  --offcanvas-menu-trigger-color: var(--text-white-text, #{$white});
+  --offcanvas-menu-header-bg: var(--bs-primary-text-emphasis);
+  --offcanvas-menu-body-bg: #{tint-color($offcanvas-menu-tertiary, 92%)};
+  --offcanvas-menu-text-color: #{$black};
+  --offcanvas-menu-menu-size: #{$font-size-base * 1.5};
+  --offcanvas-menu-utility-color: var(--brand-tertiary, #{$offcanvas-menu-tertiary});
+  --offcanvas-menu-divider-color: var(--brand-tertiary, #{$offcanvas-menu-tertiary});
+  --offcanvas-menu-panel-width: min(26rem, 100vw);
+
+  display: inline-flex;
+
+  &__trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--offcanvas-menu-trigger-size);
+    height: var(--offcanvas-menu-trigger-size);
+    margin: 0;
+    padding: 0;
+    color: var(--offcanvas-menu-trigger-color);
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    appearance: none;
+
+    &:hover,
+    &:focus {
+      color: var(--brand-tertiary, #{$offcanvas-menu-tertiary});
+    }
+
+    &:focus-visible {
+      outline: #{$focus-ring-width} solid var(--bs-focus-ring-color);
+      outline-offset: #{$spacer * 0.125};
+    }
+  }
+
+  &__panel {
+    width: var(--offcanvas-menu-panel-width);
+  }
+
+  &__header {
+    padding: $spacer;
+    background: var(--offcanvas-menu-header-bg);
+
+    // Bootstrap's offcanvas-header lays out its title + close button with
+    // space-between by default; there is no title here, only the visually
+    // hidden label, so push the close button to the end on its own.
+    justify-content: flex-end;
+  }
+
+  // Nested under &__body (rather than siblings of it) so the compiled
+  // selectors gain the extra .offcanvas-menu__body ancestor class. The
+  // panel body is a light lavender surface, visually unrelated to the
+  // dark site header it happens to be DOM-nested inside of, so its links
+  // need enough specificity to beat `.page > header[role="banner"]
+  // .nav-link` (which also carries `!important` on hover) — hence the
+  // `!important` on the hover colors below, matched with the higher
+  // specificity from this nesting depth.
+  &__body {
+    padding: $spacer * 1.5;
+    color: var(--offcanvas-menu-text-color);
+    background: var(--offcanvas-menu-body-bg);
+
+    .offcanvas-menu__menu {
+      // The "main" menu's block template (menu--main.html.twig) always
+      // wraps its output in <nav class="navbar navbar-expand-lg"> with its
+      // own toggler + collapse — designed for the primary header nav, not
+      // for reuse here. Neutralize it (same treatment the footer already
+      // uses for the same reason) so the menu is always visible instead of
+      // hiding behind a second, redundant, un-clickable hamburger.
+      .navbar {
+        padding: 0;
+      }
+
+      .navbar-toggler {
+        display: none;
+      }
+
+      .navbar-collapse {
+        display: block !important;
+      }
+
+      .nav {
+        flex-direction: column;
+        gap: $spacer;
+      }
+
+      .nav-link {
+        padding: 0;
+        // !important: beats `.page > header[role="banner"] .nav-link`
+        // (white) — this panel is DOM-nested inside the header but is a
+        // visually distinct light surface, and BEM nesting here (`&` does
+        // string concatenation, not an ancestor combinator) doesn't reach
+        // that rule's specificity on its own.
+        color: var(--offcanvas-menu-text-color) !important;
+        font-size: var(--offcanvas-menu-menu-size);
+        font-weight: $font-weight-bold;
+
+        &:hover,
+        &:focus,
+        &:active {
+          color: var(--brand-tertiary, #{$offcanvas-menu-tertiary}) !important;
+          text-decoration: none;
+        }
+      }
+    }
+
+    .offcanvas-menu__divider {
+      margin: $spacer * 1.5 0;
+      opacity: 0.4;
+      border: 0;
+      border-top: $border-width solid var(--offcanvas-menu-divider-color);
+    }
+
+    .offcanvas-menu__utility {
+      .nav {
+        flex-direction: column;
+        gap: $spacer * 0.75;
+      }
+
+      .nav-link {
+        padding: 0;
+        color: var(--offcanvas-menu-utility-color) !important;
+        font-family: $offcanvas-menu-font-serif;
+        font-size: $font-size-base;
+        font-style: italic;
+
+        &:hover,
+        &:focus,
+        &:active {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .offcanvas-menu__search {
+      margin-top: $spacer * 1.5;
+    }
+  }
+}

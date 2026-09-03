@@ -45,3 +45,55 @@ props:
       meta:enum:
         taxonomy-lg: Large
         taxonomy-sm: Small
+    color:
+      type: string
+      title: Color
+      description: Bootstrap text color utility for the badge label.
+      enum:
+        - text-tertiary
+        - text-accent
+        - text-primary
+        - text-secondary
+        - text-success
+        - text-danger
+        - text-warning
+        - text-info
+        - text-dark
+        - text-white
+        - text-muted
+      default: text-tertiary
+      examples:
+        - text-tertiary
+      meta:enum:
+        text-tertiary: Tertiary (default)
+        text-accent: Accent
+        text-primary: Primary
+        text-secondary: Secondary
+        text-success: Success
+        text-danger: Danger
+        text-warning: Warning
+        text-info: Info
+        text-dark: Dark
+        text-white: White
+        text-muted: Muted
+    no_padding:
+      type: boolean
+      title: Remove padding
+      description: Removes the badge's padding for a flush, zero-padding taxonomy label.
+      default: false
+      examples: [false]
+    justify_content:
+      type: string
+      title: Horizontal alignment
+      description: Controls the horizontal alignment of the badge content (justify-content modifier class).
+      enum:
+        - justify-content-start
+        - justify-content-center
+        - justify-content-end
+      default: justify-content-center
+      examples:
+        - justify-content-center
+      meta:enum:
+        justify-content-start: Left
+        justify-content-center: Center
+        justify-content-end: Right

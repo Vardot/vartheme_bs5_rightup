@@ -1,0 +1,75 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup Starter Kit implementation for the Byline component.
+ *
+ * Author and/or date byline (e.g. "By Jane Doe · Jan 1, 2026"), rendered as a
+ * single muted text line. Renders nothing when both author and date are
+ * empty.
+ *
+ * Available properties:
+ * - author: Author name shown after "By". Leave empty to omit the author.
+ *           Defaults to `''`.
+ * - author_url: If provided, the author name renders as a link. Defaults to `''`.
+ * - date: ISO 8601 date string (YYYY-MM-DD). Leave empty to omit the date.
+ *         Defaults to `''`.
+ * - size: Bootstrap font-size utility class. (fs-1..fs-6) Defaults to `fs-6`.
+ * - text_color: Bootstrap text color utility class.
+ *               (text-muted | text-body | text-primary | text-secondary | text-dark)
+ *               Defaults to `text-muted`.
+ *
+ * Available attributes:
+ * - attributes: Attributes for the root <p> element.
+ *
+ * Available slots:
+ * - N/A
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set author = author|default('') %}
+{% set author_url = author_url|default('')|trim %}
+{% set date = date|default('') %}
+{% set size = size|default('fs-6') %}
+{% set text_color = text_color|default('text-muted') %}
+
+{# Logic: presence checks; render nothing when there is neither an author
+ # nor a date. #}
+{% set has_author = author|trim is not empty %}
+{% set has_date = date|trim is not empty %}
+
+{% set classes = ['mb-0', size, text_color] %}
+{% set attributes = attributes.addClass(classes) %}
+{% set author_link_attributes = create_attribute()
+  .setAttribute('href', author_url)
+  .addClass(['text-reset', 'text-decoration-none'])
+%}
+
+{# Print the HTML. #}
+{% if has_author or has_date %}
+  <p{{ attributes }}>
+    {% if has_author %}
+      By
+      {% if author_url is not empty %}
+        <a{{ author_link_attributes }}>{{ author }}</a>
+      {% else %}
+        {{ author }}
+      {% endif %}
+    {% endif %}
+    {% if has_author and has_date %}
+      <span aria-hidden="true">&middot;</span>
+    {% endif %}
+    {% if has_date %}
+      {{ include('vartheme_bs5_rightup:date', {date: date, text_color: text_color}, with_context: false) }}
+    {% endif %}
+  </p>
+{% endif %}

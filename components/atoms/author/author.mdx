@@ -1,0 +1,38 @@
+import { Title, Subtitle, Meta, Description, Primary, Stories, Controls, Source } from '@storybook/addon-docs/blocks';
+import * as comStories from './author.stories.json';
+import templateSource from './author.twig?raw';
+
+<Meta of={comStories} name="Docs"/>
+
+<Title />
+<Subtitle />
+<Description />
+
+> ### Bootstrap Documentation
+> * [Text](https://getbootstrap.com/docs/5.3/utilities/text/#font-size)
+> * [Colors](https://getbootstrap.com/docs/5.3/utilities/colors/)
+
+<Primary />
+
+## Properties
+<Controls />
+
+<Stories of={comStories} />
+
+## Attributes
+* `attributes` — HTML attributes for the root `<p>` element
+
+## Slots
+* N/A
+
+## Example
+
+```twig
+{% include 'vartheme_bs5_rightup:author' with {
+  prefix: 'By:',
+  author: 'Jane Doe'
+} %}
+```
+
+## Source code
+<Source code={templateSource} />

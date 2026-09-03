@@ -99,6 +99,24 @@ a {
   transition: height 0.3s ease-out;
 }
 
+@media (min-width: 768px) {
+  .page > header[role="banner"] [data-component-id="vartheme_bs5_rightup:group"] {
+    position: relative;
+  }
+
+  .page > header[role="banner"] div.block-system-branding-block {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  [dir="rtl"] .page > header[role="banner"] div.block-system-branding-block {
+    right: 50%;
+    left: auto;
+    transform: translateX(50%);
+  }
+}
+
 @media (max-width: 991.98px) {
   .page > header[role="banner"] .row {
     position: relative;
@@ -137,13 +155,19 @@ a {
   }
 }
 
+@media (max-width: 991.98px) {
+  .page > header[role="banner"] section + section {
+    display: none;
+  }
+}
+
 .page > header[role="banner"] .nav-link {
   position: relative;
   padding: 0.625rem 0;
   text-decoration: none;
-  color: var(--bs-body-color);
+  color: var(--text-white-text, #fff);
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: var(--weight-primary-medium, 500);
   line-height: 1.4;
 }
 
@@ -151,47 +175,12 @@ a {
 .page > header[role="banner"] .nav-link:focus,
 .page > header[role="banner"] .nav-link:active {
   text-decoration: none;
-  color: var(--bs-primary) !important;
+  color: var(--brand-tertiary, #4f46e1) !important;
 }
 
 .page > header[role="banner"] .nav-link.dropdown-toggle::after {
   vertical-align: 0.15em;
   border-top-color: currentColor;
-}
-
-@media (min-width: 992px) {
-  .page > header[role="banner"] .nav-link::before {
-    position: absolute;
-    bottom: 0.25rem;
-    left: 0;
-    width: 100%;
-    height: 0.05em;
-    content: "";
-    transition: transform 0.25s ease-out;
-    transform: scaleX(0);
-    transform-origin: right;
-    border-radius: 50rem;
-    background: currentColor;
-  }
-
-  [dir="rtl"] .page > header[role="banner"] .nav-link::before {
-    right: 0;
-    left: auto;
-    transform-origin: left;
-  }
-
-  .page > header[role="banner"] .nav-link:hover::before,
-  .page > header[role="banner"] .nav-link:focus::before,
-  .page > header[role="banner"] .nav-link:active::before {
-    transform: scaleX(1);
-    transform-origin: left;
-  }
-
-  [dir="rtl"] .page > header[role="banner"] .nav-link:hover::before,
-  [dir="rtl"] .page > header[role="banner"] .nav-link:focus::before,
-  [dir="rtl"] .page > header[role="banner"] .nav-link:active::before {
-    transform-origin: right;
-  }
 }
 
 .page > header[role="banner"] .dropdown-menu {
@@ -404,7 +393,7 @@ footer.footer .block-system-menu-blocksecondary a.nav-link.dropdown-toggle {
   margin-bottom: 1.5rem;
   padding: 0;
   pointer-events: none;
-  color: var(--bs-body-color);
+  color: var(--bs-emphasis-color);
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.5;
@@ -435,7 +424,7 @@ footer.footer .block-system-menu-blocksecondary a.dropdown-item {
   transition: color 0.15s ease-in-out;
   white-space: nowrap;
   text-decoration: none;
-  color: var(--bs-body-color);
+  color: var(--bs-emphasis-color);
   background: transparent;
   font-size: 1.125rem;
   font-weight: 400;
@@ -466,7 +455,7 @@ footer.footer .block-system-menu-blocksecondary a.dropdown-item:hover,
 footer.footer .block-system-menu-blocksecondary a.dropdown-item:focus,
 footer.footer .block-system-menu-blocksecondary a.dropdown-item:active {
   text-decoration: none;
-  color: var(--bs-primary);
+  color: var(--bs-accent);
   background: transparent;
 }
 
@@ -495,7 +484,7 @@ footer.footer .block-system-menu-blocksocial-media-menu li.nav-item > a {
   height: 1.875rem;
   text-decoration: none;
   letter-spacing: -9999px !important;
-  color: var(--bs-primary);
+  color: var(--bs-emphasis-color);
   font-size: 0 !important;
   line-height: 0 !important;
 }
@@ -504,7 +493,7 @@ footer.footer .block-system-menu-blocksocial-media-menu li.nav-item > a::before 
   display: inline-block;
   margin: 0;
   letter-spacing: normal;
-  color: var(--bs-primary);
+  color: var(--bs-emphasis-color);
   font-size: 1.125rem;
 }
 

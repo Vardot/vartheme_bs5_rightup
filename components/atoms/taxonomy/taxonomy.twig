@@ -3,8 +3,9 @@
  * @file
  * Vartheme BS5 Rightup Starter Kit implementation for the Taxonomy component.
  *
- * Taxonomy badge rendered with Bootstrap utilities only. Renders as a link
- * when a URL is provided, otherwise as a span.
+ * Taxonomy badge rendered with Bootstrap utilities plus the component's own
+ * size modifiers (see taxonomy.scss). Renders as a link when a URL is
+ * provided, otherwise as a span.
  *
  * Available properties:
  * - label: Text shown inside the taxonomy badge. (required)
@@ -13,6 +14,17 @@
  *           (_self | _blank) Defaults to `_self`.
  * - size: Controls the typography size (taxonomy modifier class).
  *         (taxonomy-lg | taxonomy-sm) Defaults to `taxonomy-lg`.
+ * - color: Bootstrap text color utility for the badge label.
+ *          (text-tertiary | text-accent | text-primary | text-secondary
+ *           | text-success | text-danger | text-warning | text-info
+ *           | text-dark | text-white | text-muted) Defaults to
+ *          `text-tertiary`.
+ * - no_padding: Removes the badge's padding for a flush, zero-padding
+ *               taxonomy label. Defaults to `false`.
+ * - justify_content: Controls the horizontal alignment of the badge content
+ *                     (justify-content-start | justify-content-center |
+ *                     justify-content-end) Defaults to
+ *                     `justify-content-center`.
  *
  * Available attributes:
  * - attributes: Attributes array.
@@ -32,26 +44,36 @@
 {% set url = url|default('') %}
 {% set target = target|default('_self') %}
 {% set size = size|default('taxonomy-lg') %}
+{% set color = color|default('text-tertiary') %}
+{% set justify_content = justify_content|default('justify-content-center') %}
 
-{# Logic: map size prop to Bootstrap font-size utilities. #}
-{% set size_classes = size == 'taxonomy-sm' ? [] : ['fs-6'] %}
+{# Variables: boolean props.
+ # SDC validates `type: boolean` props and applies their schema defaults,
+ # so the values arrive as real booleans — only a presence fallback is
+ # needed here, never type coercion.
+ #}
+{% set no_padding = no_padding ?? false %}
 
-{# Logic: base visual styling — pure Bootstrap utilities, no custom CSS. #}
+{# Logic: the size prop is itself the modifier class (see taxonomy.scss). #}
+{% set size_classes = [size] %}
+
+{# Logic: p-0 overrides the badge's built-in padding when requested. #}
+{% set padding_classes = no_padding ? ['p-0'] : [] %}
+
+{# Logic: base visual styling — Bootstrap utilities plus the component's own
+ # size modifiers (Bootstrap's fs-* scale doesn't land on the exact sizes
+ # needed here). No background or border — colored text only. #}
 {% set base_classes = [
   'taxonomy',
   'badge',
   'd-inline-flex',
   'align-items-center',
-  'justify-content-center',
+  justify_content,
   'text-nowrap',
   'fw-bold',
   'text-uppercase',
-  'rounded-1',
-  'bg-dark',
-  'text-accent',
-  'border',
-  'border-accent',
-]|merge(size_classes) %}
+  color,
+]|merge(size_classes)|merge(padding_classes) %}
 
 {% set has_url = url is not empty %}
 

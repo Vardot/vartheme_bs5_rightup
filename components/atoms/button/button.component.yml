@@ -14,6 +14,7 @@ props:
       enum:
         - btn-primary
         - btn-secondary
+        - btn-accent
         - btn-success
         - btn-danger
         - btn-warning
@@ -27,6 +28,7 @@ props:
       meta:enum:
         btn-primary: Primary
         btn-secondary: Secondary
+        btn-accent: Accent
         btn-success: Success
         btn-danger: Danger
         btn-warning: Warning
@@ -234,7 +236,8 @@ props:
     radius:
       type: string
       title: Border radius
-      description: Bootstrap border-radius utility class.
+      description: Bootstrap border-radius utility class. Buttons are square in this theme's design — button.scss forces
+        border-radius to 0 regardless of this value.
       enum:
         - rounded
         - rounded-0
@@ -243,9 +246,9 @@ props:
         - rounded-3
         - rounded-4
         - rounded-pill
-      default: rounded-1
+      default: rounded-0
       examples:
-        - rounded-1
+        - rounded-0
       meta:enum:
         rounded: Default
         rounded-0: None

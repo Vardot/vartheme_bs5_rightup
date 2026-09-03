@@ -1,0 +1,26 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Tab Pane
+description: A single Bootstrap JS tab's content pane. Place one or more inside a Tabs component's panes slot, in the same order as their paired Tab Items — the Tabs component pairs each pane with its Tab Item automatically by position.
+props:
+  type: object
+  properties:
+    pane_id:
+      type: string
+      title: Pane ID
+      description: Optional. Leave empty to auto-generate — the parent Tabs component's tabs.js always assigns this pane's live id/aria attributes itself, paired with its Tab Item by position, so no value here (or a duplicate one, e.g. after copying this component) affects the pairing.
+      default: ''
+    is_active:
+      type: boolean
+      title: Active
+      description: Whether this pane is the current/visible one on the live page. Should match its paired Tab Item's Active setting. Ignored in Drupal Canvas, where the pane always renders visible so it can be edited.
+      default: false
+      examples:
+        - false
+    attributes:
+      type: Drupal\Core\Template\Attribute
+      title: Attributes
+      description: HTML attributes for the pane element.
+slots:
+  content:
+    title: Content
+    description: The tab's body content.

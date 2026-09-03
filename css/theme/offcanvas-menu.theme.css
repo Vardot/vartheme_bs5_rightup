@@ -1,0 +1,7 @@
+body.offcanvas-menu-open header[role="banner"] .navbar-collapse:not(.offcanvas-menu__body .navbar-collapse) {
+  visibility: hidden;
+}
+
+body.offcanvas-menu-open .offcanvas-backdrop {
+  top: var(--offcanvas-menu-header-offset, 0);
+}

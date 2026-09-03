@@ -1,0 +1,63 @@
+{#
+/**
+ * @file
+ * tab-pane.stories.twig
+ * Storybook stories for the Tab Pane component.
+ */
+#}
+{% stories TabPane with {
+  title: 'Molecules/Tab Pane',
+  parameters: {
+    componentSubtitle: 'A single Bootstrap JS tab\'s content pane, meant to be placed inside a Tabs component.',
+    docs: {
+      description: {
+        component: 'Renders a single tab-pane element. Place it alongside its paired Tab Item in the same Tabs component — they\'re paired automatically by position, no Pane ID needs to be set.',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    pane_id: {
+      name: 'Pane ID',
+      description: 'Optional — leave empty to auto-generate. tabs.js always assigns this pane\'s live id, paired with its Tab Item by position.',
+      control: 'text',
+      defaultValue: '',
+    },
+    is_active: {
+      name: 'Active',
+      description: 'Whether this pane is the current/visible one.',
+      control: 'boolean',
+      defaultValue: false,
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Default',
+  args: {
+    pane_id: 'architecture',
+    is_active: false,
+  },
+} %}
+  {% set content %}<p>Architecture tab content.</p>{% endset %}
+  <div class="tab-content">
+    {{ include('vartheme_bs5_rightup:tab-pane', {content: content}) }}
+  </div>
+{% endstory %}
+
+{% story Active with {
+  name: 'Active',
+  args: {
+    pane_id: 'all',
+    is_active: true,
+  },
+} %}
+  {% set content %}<p>All tab content.</p>{% endset %}
+  <div class="tab-content">
+    {{ include('vartheme_bs5_rightup:tab-pane', {content: content}) }}
+  </div>
+{% endstory %}
+
+{% endstories %}

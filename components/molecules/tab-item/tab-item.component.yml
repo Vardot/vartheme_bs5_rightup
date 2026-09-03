@@ -1,0 +1,37 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Tab Item
+description: A single tab. Place one or more inside a Tabs component's items slot — as a plain filter/navigation link (set url), or as a real Bootstrap JS tab (set pane_id, paired with a Tab Pane in the Tabs component's panes slot).
+props:
+  type: object
+  required:
+    - title
+  properties:
+    title:
+      type: string
+      title: Title
+      description: The tab's label.
+      examples:
+        - All
+    url:
+      type: string
+      title: URL
+      description: Where this tab links to. Used as a plain navigation link when Pane ID is empty.
+      format: uri-reference
+      examples:
+        - /
+    pane_id:
+      type: string
+      title: Pane ID
+      description: Turns this tab into a real Bootstrap JS tab that toggles a content pane instead of navigating. Must match the paired Tab Pane component's Pane ID in the Tabs component's panes slot. Leave empty to use URL as a plain link.
+      default: ''
+    is_active:
+      type: boolean
+      title: Active
+      description: Whether this tab is the current/active one.
+      default: false
+      examples:
+        - false
+    attributes:
+      type: Drupal\Core\Template\Attribute
+      title: Attributes
+      description: HTML attributes for the link element.

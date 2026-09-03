@@ -1,0 +1,40 @@
+import { Title, Subtitle, Meta, Description, Primary, Stories, Controls, Source } from '@storybook/addon-docs/blocks';
+import * as comStories from './byline.stories.json';
+import templateSource from './byline.twig?raw';
+
+<Meta of={comStories} name="Docs"/>
+
+<Title />
+<Subtitle />
+<Description />
+
+> ### Bootstrap Documentation
+> * [Colors](https://getbootstrap.com/docs/5.3/utilities/colors/)
+> * [Text](https://getbootstrap.com/docs/5.3/utilities/text/#font-size)
+
+<Primary />
+
+## Properties
+<Controls />
+
+<Stories of={comStories} />
+
+## Attributes
+* `attributes` — HTML attributes for the root `<p>` element
+
+## Slots
+* N/A
+
+## Example
+
+```twig
+{% include 'vartheme_bs5_rightup:byline' with {
+  author: 'Tomas Adeyemi',
+  date: '2026-01-31',
+  size: 'fs-6',
+  text_color: 'text-muted'
+} %}
+```
+
+## Source code
+<Source code={templateSource} />

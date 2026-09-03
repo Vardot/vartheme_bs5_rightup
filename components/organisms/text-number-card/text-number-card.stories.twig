@@ -1,0 +1,110 @@
+{% stories TextNumberCard with {
+  title: 'Card/Text Number Card',
+  parameters: {
+    componentSubtitle: 'Numbered badge with a flexible content slot',
+    docs: {
+      description: {
+        component: 'Stacked card with a numbered brand-color badge and a flexible content slot below it (heading, text, meta, button, etc.) — for step-by-step or itemized listings.',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    number: {
+      name: 'Number',
+      description: 'Step or index number shown in the badge.',
+      defaultValue: '01',
+      control: 'text',
+    },
+    number_color: {
+      name: 'Number badge color',
+      description: 'Bootstrap theme color for the number badge background.',
+      defaultValue: 'bg-tertiary',
+      control: 'select',
+      options: {
+        Blue: 'bg-tertiary',
+        "'Accent (Mint)'": 'bg-accent',
+      },
+    },
+    background_color: {
+      name: 'Background color',
+      description: 'Brand background color applied to the card.',
+      defaultValue: 'none',
+      control: 'select',
+      options: {
+        None: 'none',
+        "'Body tertiary'": 'bg-body-tertiary',
+        Tertiary: 'bg-tertiary',
+        Accent: 'bg-accent',
+        Primary: 'bg-primary',
+        "'Primary subtle'": 'bg-primary-subtle',
+        Secondary: 'bg-secondary',
+        "'Secondary subtle'": 'bg-secondary-subtle',
+        Dark: 'bg-dark',
+      },
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Blue badge',
+  args: {
+    number: '01',
+    number_color: 'bg-tertiary',
+    background_color: 'none',
+  },
+} %}
+{% embed 'vartheme_bs5_rightup:text-number-card' with {
+  number: number,
+  number_color: number_color,
+  background_color: background_color,
+} only %}
+  {% block content %}
+    <h3>Studio Breakdowns</h3>
+    <p>One real project, start to finish, with the parts that usually get cut from the case study.</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story AccentBadge with {
+  name: 'Accent badge',
+  args: {
+    number: '02',
+    number_color: 'bg-accent',
+    background_color: 'none',
+  },
+} %}
+{% embed 'vartheme_bs5_rightup:text-number-card' with {
+  number: number,
+  number_color: number_color,
+  background_color: background_color,
+} only %}
+  {% block content %}
+    <h3>Design Reviews</h3>
+    <p>How feedback loops actually work between the studio and the client.</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story DarkBackground with {
+  name: 'Dark background',
+  args: {
+    number: '03',
+    number_color: 'bg-accent',
+    background_color: 'bg-dark',
+  },
+} %}
+{% embed 'vartheme_bs5_rightup:text-number-card' with {
+  number: number,
+  number_color: number_color,
+  background_color: background_color,
+} only %}
+  {% block content %}
+    <h3>Handover</h3>
+    <p>What gets documented, and what doesn't, once the project ships.</p>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+{% endstories %}

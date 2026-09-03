@@ -1,6 +1,6 @@
 .navbar {
   height: 5.25rem;
-  background: var(--bs-white);
+  background: var(--bs-primary-text-emphasis);
 }
 
 .navbar .form-inline .form-actions {
@@ -9,14 +9,14 @@
 
 .navbar .navbar-nav .nav-item a.nav-link {
   position: relative;
-  color: var(--bs-gray-900);
+  color: var(--bs-white);
   font-weight: bold;
 }
 
 .navbar .navbar-nav .nav-item a.nav-link:hover,
 .navbar .navbar-nav .nav-item a.nav-link:focus,
 .navbar .navbar-nav .nav-item a.nav-link:active {
-  color: var(--bs-primary) !important;
+  color: var(--bs-accent) !important;
 }
 
 .navbar .navbar-nav .nav-item a.nav-link:hover:after,
@@ -30,7 +30,7 @@
   content: "";
   transition: left 0.3s;
   transition: right 0.3s;
-  background-color: var(--bs-primary);
+  background-color: var(--bs-accent);
 }
 
 [dir="rtl"] .navbar .navbar-nav .nav-item a.nav-link:hover:after,
@@ -46,7 +46,7 @@
   left: 30%;
   height: 1px;
   content: "";
-  background-color: var(--bs-primary);
+  background-color: var(--bs-accent);
 }
 
 [data-bs-theme="dark"] .navbar {

@@ -1,0 +1,56 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup Starter Kit implementation for the Author component.
+ *
+ * Author byline: a static prefix followed by a dynamic author name (e.g.
+ * "By: Jane Doe"). Renders nothing when the author name is empty.
+ *
+ * Available properties:
+ * - prefix: Static text shown before the author name. Defaults to `By:`.
+ * - author: Dynamic author name shown after the prefix. Leave empty to omit
+ *           the whole component. Defaults to `''`.
+ * - size: Bootstrap font-size utility class. (fs-1..fs-6) Defaults to `fs-6`.
+ * - text_color: Bootstrap text color utility class.
+ *               (text-muted | text-body | text-primary | text-secondary | text-dark)
+ *               Defaults to `text-muted`.
+ *
+ * Available attributes:
+ * - attributes: HTML attributes for the root <p> element.
+ *
+ * Available slots:
+ * - N/A
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set prefix = prefix|default('By:') %}
+{% set author = author|default('') %}
+{% set size = size|default('fs-6') %}
+{% set text_color = text_color|default('text-muted') %}
+
+{# Logic: presence checks; render nothing when there is no author name. #}
+{% set has_author = author|trim is not empty %}
+{% set has_prefix = prefix|trim is not empty %}
+
+{% set classes = ['vb-author', 'mb-0', size, text_color] %}
+{% set attributes = attributes.addClass(classes) %}
+
+{# Print the HTML. #}
+{% if has_author %}
+  <p{{ attributes }}>
+    {% if has_prefix %}
+      <span class="vb-author__prefix">{{ prefix }}</span>
+    {% endif %}
+    <span class="vb-author__name">{{ author }}</span>
+  </p>
+{% endif %}

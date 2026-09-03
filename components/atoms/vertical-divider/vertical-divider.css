@@ -1,0 +1,9 @@
+.vertical-divider {
+  --vertical-divider-min-height: 1rem;
+
+  display: inline-block;
+  align-self: stretch;
+  width: 0;
+  height: 100%;
+  min-height: var(--vertical-divider-min-height);
+}

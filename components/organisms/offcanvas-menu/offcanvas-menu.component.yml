@@ -1,0 +1,60 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Offcanvas Menu
+status: stable
+description: "A hamburger trigger that opens a full takeover navigation panel (Bootstrap Offcanvas): a main menu list, a secondary utility link list, and a search form, stacked with a divider between the first two."
+group: Navigation
+props:
+  type: object
+  properties:
+    label:
+      type: string
+      title: Trigger label
+      description: Accessible label for the closed-state trigger button (visually hidden).
+      default: Open menu
+      examples:
+        - Open menu
+    close_label:
+      type: string
+      title: Close label
+      description: Accessible label for the panel's close button (visually hidden).
+      default: Close menu
+      examples:
+        - Close menu
+    placement:
+      type: string
+      title: Panel side
+      description: Which side the panel slides in from (logical, RTL-aware).
+      enum:
+        - start
+        - end
+      default: start
+      examples:
+        - start
+      meta:enum:
+        start: Start side
+        end: End side
+    expand_in_editor:
+      type: boolean
+      title: Expand in Canvas editor
+      description: Force the panel open while previewed inside the Drupal Canvas editor, so its "menu", "utility", and "search" slots stay reachable for dropping components in — without Bootstrap's own backdrop covering the rest of the canvas. Turn off once content is placed, if the always-open panel clutters the editor view — the front-end click/open/close behavior is unaffected either way.
+      default: true
+      examples:
+        - true
+    attributes:
+      type: Drupal\Core\Template\Attribute
+      title: Attributes
+      description: HTML attributes for the root element.
+slots:
+  menu:
+    title: Main menu
+    description: The primary navigation links, e.g. a "Main navigation" menu block rendered through the Nav Menu component.
+  utility:
+    title: Utility links
+    description: Secondary links shown below the divider, e.g. Newsletter, About, Advertise.
+  search:
+    title: Search
+    description: "Search form, e.g. the 'Exposed form: search-page' block."
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once

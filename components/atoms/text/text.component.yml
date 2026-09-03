@@ -63,3 +63,20 @@ props:
         text-dark: Dark
         text-white: White
         text-subtle-text: Subtle Text
+    opacity:
+      type: string
+      title: Opacity
+      description: Bootstrap opacity utility class.
+      enum:
+        - opacity-25
+        - opacity-50
+        - opacity-75
+        - opacity-100
+      meta:enum:
+        opacity-25: Subtle
+        opacity-50: Soft
+        opacity-75: Strong
+        opacity-100: Solid
+      default: opacity-100
+      examples:
+        - opacity-100

@@ -1,0 +1,14 @@
+// @file
+// Section column divider: a vertical rule between columns. Tablet/desktop
+// only — columns stack to full width on mobile, where a left border would
+// just sit at the container edge instead of between columns.
+
+@import "../../defaults";
+
+.sdc-section__row--divided {
+  @include media-breakpoint-up(md) {
+    > div:not(:first-child) {
+      border-inline-start: var(--bs-border-width) solid var(--bs-border-color);
+    }
+  }
+}

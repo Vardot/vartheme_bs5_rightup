@@ -1,0 +1,5 @@
+@media (min-width: 768px) {
+  .sdc-section__row--divided > div:not(:first-child) {
+    border-inline-start: var(--bs-border-width) solid var(--bs-border-color);
+  }
+}

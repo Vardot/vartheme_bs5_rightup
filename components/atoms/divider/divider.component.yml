@@ -1,10 +1,38 @@
 $schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
 name: Divider
-description: A Bootstrap 5.3-compatible horizontal divider using the native hr element.
+description: A Bootstrap 5.3-compatible horizontal divider using the native hr element, with an optional label.
 group: Layout
 props:
   type: object
   properties:
+    text:
+      type: string
+      title: Label text
+      description: Optional label shown before the line (e.g. "FEATURED"). Leave empty for a plain divider.
+      default: ''
+
+    text_size:
+      type: string
+      title: Label font size
+      description: Bootstrap font-size utility class for the label. Only used when a label is set.
+      enum:
+        - fs-1
+        - fs-2
+        - fs-3
+        - fs-4
+        - fs-5
+        - fs-6
+      meta:enum:
+        fs-1: Extra large
+        fs-2: Large
+        fs-3: Medium large
+        fs-4: Medium
+        fs-5: Small
+        fs-6: Extra small (0.875rem)
+      default: fs-6
+      examples:
+        - fs-6
+
     border_width:
       type: string
       title: Border width
@@ -30,30 +58,34 @@ props:
       title: Border color
       description: Bootstrap border color utility class.
       enum:
+        - border-black
         - border-secondary
-        - border-light
-        - border-dark
         - border-primary
+        - border-tertiary
+        - border-accent
         - border-success
         - border-danger
         - border-warning
         - border-info
+        - border-light
+        - border-dark
         - border-white
-        - border-black
       meta:enum:
+        border-black: Black
         border-secondary: Secondary
-        border-light: Light
-        border-dark: Dark
         border-primary: Primary
+        border-tertiary: Tertiary
+        border-accent: Accent
         border-success: Success
         border-danger: Danger
         border-warning: Warning
         border-info: Info
+        border-light: Light
+        border-dark: Dark
         border-white: White
-        border-black: Black
-      default: border-secondary
+      default: border-black
       examples:
-        - border-secondary
+        - border-black
 
     opacity:
       type: string

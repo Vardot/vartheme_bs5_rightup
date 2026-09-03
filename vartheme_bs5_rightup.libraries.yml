@@ -157,8 +157,8 @@ global-styles:
       css/layout/equal-height.layout.css: {}
       css/layout/print.layout.css: { media: print }
     theme:
-      fonts/figtree/css/figtree.css: {}
-      fonts/dm-mono/css/dm-mono.css: {}
+      fonts/rubik/css/rubik.css: {}
+      fonts/eb-garamond/css/eb-garamond.css: {}
 
 # Vartheme BS5 Rightup global scripts library.
 global-scripts:
@@ -182,6 +182,18 @@ sticky-header:
   dependencies:
     - core/drupal
     - core/once
+
+# Offcanvas Menu header-coordination styles (hides the header's main menu and
+# offsets Bootstrap's own offcanvas backdrop while the panel is open — see
+# scss/theme/offcanvas-menu.theme.scss). Declared as a dependency of the
+# Offcanvas Menu SDC itself (offcanvas-menu.component.yml), so it only loads
+# on pages that use that component.
+offcanvas-menu-theme:
+  css:
+    theme:
+      css/theme/offcanvas-menu.theme.css: {}
+  dependencies:
+    - core/drupal
 
 framework-rtl:
   dependencies:

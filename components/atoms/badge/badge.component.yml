@@ -167,16 +167,19 @@ props:
     radius:
       type: string
       title: Border radius
-      description: "Bootstrap border-radius utility class."
+      description: "Bootstrap border-radius utility class. Badges are square in this theme's design — badge.scss forces
+        border-radius to 0 regardless of this value."
       enum:
+        - "rounded-0"
         - "rounded-1"
         - "rounded-pill"
-      default: "rounded-1"
+      default: "rounded-0"
       'meta:enum':
-        "rounded-1": "Rounded (default)"
+        "rounded-0": "None (default)"
+        "rounded-1": "Rounded"
         "rounded-pill": "Rounded pill"
       examples:
-        - "rounded-1"
+        - "rounded-0"
     indicator:
       type: string
       title: Notification indicator

@@ -1,19 +1,143 @@
 $schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
 name: Tabs
-description: Tabs
+description: A horizontal tab / filter bar. Place one or more Tab Item components inside the items slot, and optionally pair them with Tab Pane components in the panes slot for real Bootstrap JS tab content.
 props:
   type: object
   properties:
+    tabs_id:
+      type: string
+      title: Tabs ID
+      description: Unique id for the tabs container. Leave empty to auto-generate.
+      default: ''
     shape:
       type: string
       title: Shape
+      description: The shape of the tabs.
       enum:
         - tabs
         - pills
+      default: tabs
+      examples:
+        - tabs
+    active_bg:
+      type: string
+      title: Active tab background color
+      description: Bootstrap theme color applied as the active tab's background. Leave as Default to keep the theme's brand-tertiary fill.
+      enum:
+        - default
+        - black
+        - secondary
+        - primary
+        - tertiary
+        - accent
+        - success
+        - danger
+        - warning
+        - info
+        - light
+        - dark
+        - white
+      default: default
+      examples:
+        - default
+      meta:enum:
+        default: Default (brand tertiary)
+        black: Black
+        secondary: Secondary
+        primary: Primary
+        tertiary: Tertiary
+        accent: Accent
+        success: Success
+        danger: Danger
+        warning: Warning
+        info: Info
+        light: Light
+        dark: Dark
+        white: White
+    active_color:
+      type: string
+      title: Active tab font color
+      description: Bootstrap theme color applied as the active tab's text color. Leave as Default to keep the theme's white text.
+      enum:
+        - default
+        - black
+        - secondary
+        - primary
+        - tertiary
+        - accent
+        - success
+        - danger
+        - warning
+        - info
+        - light
+        - dark
+        - white
+      default: default
+      examples:
+        - default
+      meta:enum:
+        default: Default (white)
+        black: Black
+        secondary: Secondary
+        primary: Primary
+        tertiary: Tertiary
+        accent: Accent
+        success: Success
+        danger: Danger
+        warning: Warning
+        info: Info
+        light: Light
+        dark: Dark
+        white: White
+    border_color:
+      type: string
+      title: Tabs bottom border color
+      description: Bootstrap border color utility applied to the shared bottom border. Leave as Default to keep the theme's neutral hairline.
+      enum:
+        - default
+        - border-black
+        - border-secondary
+        - border-primary
+        - border-tertiary
+        - border-accent
+        - border-success
+        - border-danger
+        - border-warning
+        - border-info
+        - border-light
+        - border-dark
+        - border-white
+      default: default
+      examples:
+        - default
+      meta:enum:
+        default: Default (neutral)
+        border-black: Black
+        border-secondary: Secondary
+        border-primary: Primary
+        border-tertiary: Tertiary
+        border-accent: Accent
+        border-success: Success
+        border-danger: Danger
+        border-warning: Warning
+        border-info: Info
+        border-light: Light
+        border-dark: Dark
+        border-white: White
     attributes:
       type: Drupal\Core\Template\Attribute
       title: Attributes
       description: HTML attributes for the containing element.
+slots:
+  items:
+    title: Items
+    description: Place one or more Tab Item components inside this slot.
+  panes:
+    title: Panes
+    description: Optional. Place one or more Tab Pane components inside this slot, in the same order as their paired Tab Items, to render real Bootstrap JS tab content. Each pane is paired with its Tab Item automatically by position (no Pane ID or Active flag needs to match, or even be set, on the Tab Item). Leave empty to use Tab Item as a plain filter/navigation link instead.
+
 libraryOverrides:
   dependencies:
     - vartheme_bs5_rightup/bs-tab-script
+    - core/drupal
+    - core/once

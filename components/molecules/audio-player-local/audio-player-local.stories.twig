@@ -1,0 +1,51 @@
+{#
+/**
+ * @file
+ * audio-player-local.stories.twig
+ * Storybook stories for the Local Audio Player component.
+ */
+#}
+{% stories AudioPlayerLocal with {
+  title: 'Molecules/Audio Player Local',
+  parameters: {
+    componentSubtitle: 'A custom-controlled audio player for a locally uploaded audio file.',
+    docs: {
+      description: {
+        component: 'Upload a file directly (audio_url) and this component renders full playback controls: play/pause, skip, time, and a seek bar.',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    audio_url: {
+      name: 'Audio file',
+      control: 'text',
+      defaultValue: 'https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3',
+    },
+    title: {
+      name: 'Title',
+      control: 'text',
+      defaultValue: '',
+    },
+    show_download: {
+      name: 'Show download link',
+      control: 'boolean',
+      defaultValue: false,
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Default',
+  args: {
+    audio_url: 'public://audio/sample.mp3',
+    title: 'Sample Local Audio',
+    show_download: false,
+  },
+} %}
+  {{ include('vartheme_bs5_rightup:audio-player-local', {audio_url: audio_url, title: title, show_download: show_download}, with_context: false) }}
+{% endstory %}
+
+{% endstories %}

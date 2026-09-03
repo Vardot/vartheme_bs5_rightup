@@ -1,0 +1,45 @@
+import { Title, Subtitle, Description, Source, Meta, Primary, Stories, Controls } from '@storybook/addon-docs/blocks';
+import * as comStories from './tab-pane.stories.json';
+import templateSource from './tab-pane.twig?raw';
+
+<Meta of={comStories} />
+
+<Title />
+<Subtitle />
+<Description />
+
+> ### Bootstrap documentation
+> * [Navs and tabs: JavaScript behavior](https://getbootstrap.com/docs/5.3/components/navs-tabs/#javascript-behavior)
+
+<Primary />
+
+## Properties
+<Controls />
+
+<Stories />
+
+## Properties reference
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `pane_id` | string | Optional — leave empty to auto-generate. `tabs.js` always assigns this pane's live id, paired with its Tab Item by position | `''` (auto-generated) |
+| `is_active` | boolean | Whether this pane is the current/visible one on the live page (ignored in Canvas, where it's always visible) | `false` |
+| `attributes` | object | HTML attributes for the pane element | `{}` |
+
+## Slots
+
+| Slot | Description |
+|---|---|
+| `content` | The tab's body content. |
+
+## Example
+
+```twig
+{{ include('vartheme_bs5_rightup:tab-pane', {
+  pane_id: 'architecture',
+  is_active: false
+}, with_context: false) }}
+```
+
+## Source code
+<Source code={templateSource} />

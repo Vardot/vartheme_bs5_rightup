@@ -47,7 +47,7 @@ Use this component when you need a navbar brand that can:
 {% include 'vartheme_bs5_rightup:navbar-brand' with {
   text: 'Vartheme',
   path: '/',
-  image_path: '/themes/contrib/vartheme_bs5_rightup/logo.svg',
+  image_path: '/themes/contrib/vartheme_bs5_rightup/rightup-logo.svg',
   width: 120,
   height: 32,
   alt: 'Vartheme logo',

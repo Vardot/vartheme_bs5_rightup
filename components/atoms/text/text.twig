@@ -16,6 +16,9 @@
  *                | text-danger | text-warning | text-info | text-muted
  *                | text-dark | text-white | text-subtle-text)
  *               Defaults to `text-body`.
+ * - opacity: Bootstrap opacity utility class.
+ *            (opacity-25 | opacity-50 | opacity-75 | opacity-100)
+ *            Defaults to `opacity-100`.
  *
  * Available attributes:
  * - attributes: Attributes array.
@@ -35,13 +38,14 @@
 {% set text = text|default('<p>Lorem ipsum dolor sit amet.</p>') %}
 {% set text_size = text_size|default('none') %}
 {% set text_color = text_color|default('text-body') %}
+{% set opacity = opacity|default('opacity-100') %}
 
 {# Logic: optional utility classes, only when set. #}
 {% set size_classes = text_size != 'none' ? [text_size] : [] %}
 {% set color_classes = text_color != 'none' ? [text_color] : [] %}
 
 {# Logic: merge text classes as arrays. #}
-{% set classes = ['rich-text']|merge(size_classes)|merge(color_classes) %}
+{% set classes = ['rich-text', opacity]|merge(size_classes)|merge(color_classes) %}
 
 {# Print the HTML. #}
 {% set attributes = attributes.addClass(classes) %}

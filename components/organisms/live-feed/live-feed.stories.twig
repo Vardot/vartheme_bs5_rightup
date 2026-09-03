@@ -1,0 +1,88 @@
+{% stories LiveFeed with {
+  title: 'Organisms/Live Feed',
+  parameters: {
+    componentSubtitle: 'Auto-scrolling news ticker',
+    docs: {
+      description: {
+        component: 'A colored ticker bar with a fixed label and a continuously auto-scrolling row of timestamped news items. Items are slot content ("Live Feed Item" components) so Canvas can manage drag/drop ordering.',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    label: {
+      name: 'Label',
+      description: 'Fixed label shown before the scrolling feed.',
+      defaultValue: 'Latest',
+      control: 'text',
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Default',
+  args: {
+    label: 'Latest',
+  },
+} %}
+{% embed 'vartheme_bs5_rightup:live-feed' with {
+  label: label,
+} only %}
+  {% block items %}
+    {{ include('vartheme_bs5_rightup:live-feed-item', {
+      time: '5:10 PM',
+      title: 'Adobe Quietly Kills Its Font-Pairing Tool',
+      url: '#',
+    }, with_context: false) }}
+    {{ include('vartheme_bs5_rightup:live-feed-item', {
+      time: '6:00 PM',
+      title: 'Milan Design Week Adds a Fourth Venue for 2027',
+      url: '#',
+    }, with_context: false) }}
+    {{ include('vartheme_bs5_rightup:live-feed-item', {
+      time: '11:20 AM',
+      title: 'New Guggenheim Wing Opens in Bilbao',
+      url: '#',
+    }, with_context: false) }}
+    {{ include('vartheme_bs5_rightup:live-feed-item', {
+      time: '2:45 PM',
+      title: 'A Discontinued 1974 Chair Returns to Production',
+    }, with_context: false) }}
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story CustomLabel with {
+  name: 'Custom label',
+  args: {
+    label: 'Breaking',
+  },
+} %}
+{% embed 'vartheme_bs5_rightup:live-feed' with {
+  label: label,
+} only %}
+  {% block items %}
+    {{ include('vartheme_bs5_rightup:live-feed-item', {
+      time: '9:00 AM',
+      title: 'Something big just happened',
+    }, with_context: false) }}
+    {{ include('vartheme_bs5_rightup:live-feed-item', {
+      time: '9:15 AM',
+      title: 'Reactions are already rolling in',
+    }, with_context: false) }}
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story Empty with {
+  name: 'No items',
+  args: {
+    label: 'Latest',
+  },
+} %}
+{{ include('vartheme_bs5_rightup:live-feed', { label: label }) }}
+{% endstory %}
+
+{% endstories %}

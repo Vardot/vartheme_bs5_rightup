@@ -34,6 +34,9 @@ Use this component when you need to:
 ### Appearance
 
 - `size`: typography size (taxonomy modifier class) — `taxonomy-lg` or `taxonomy-sm`; defaults to `taxonomy-lg`
+- `color`: Bootstrap text color utility for the badge label — `text-tertiary`, `text-accent`, `text-primary`, `text-secondary`, `text-success`, `text-danger`, `text-warning`, `text-info`, `text-dark`, `text-white`, or `text-muted`; defaults to `text-tertiary`
+- `no_padding`: removes the badge's padding for a flush, zero-padding label; defaults to `false`
+- `justify_content`: horizontal alignment of the badge content — `justify-content-start`, `justify-content-center`, or `justify-content-end`; defaults to `justify-content-center`
 
 ## Target values
 
@@ -48,6 +51,14 @@ Use this component when you need to:
 |---|---|
 | `taxonomy-lg` | Large |
 | `taxonomy-sm` | Small |
+
+## Justify content values
+
+| Value | Label |
+|---|---|
+| `justify-content-start` | Left |
+| `justify-content-center` | Center |
+| `justify-content-end` | Right |
 
 ## Available attributes
 
@@ -75,7 +86,9 @@ Use this component when you need to:
 ## Notes
 
 - With a non-empty `url` the badge renders as `<a>`; otherwise it renders as `<span>`.
-- The badge is built entirely from Bootstrap utilities (`badge`, `bg-dark`, `text-accent`, `border`, `border-accent`, and more) plus the `taxonomy` class — no custom CSS.
-- The `taxonomy-lg` size adds the `fs-6` utility; `taxonomy-sm` omits it.
+- No background or border — just bold, uppercase, colored text; `color` defaults to `text-tertiary` but can be set to any Bootstrap text color utility, including this theme's `text-accent` token.
+- The `taxonomy-lg`/`taxonomy-sm` size prop values double as the modifier class name. Bootstrap's `fs-*` scale doesn't land on the exact sizes needed, so `taxonomy.scss` sets them directly: `taxonomy-lg` is `0.75rem`, `taxonomy-sm` is `0.625rem`.
 - When `target` is `_blank`, the link also gets `rel="noopener noreferrer"`.
 - The link variant adds `text-decoration-none`; both `label` and `url` are escaped on output.
+- `no_padding: true` adds Bootstrap's `p-0` utility, which overrides the badge's default padding.
+- `justify_content` swaps in Bootstrap's `justify-content-*` flex utility on the badge's own `d-inline-flex` layout.

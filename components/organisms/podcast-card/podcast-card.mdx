@@ -1,0 +1,56 @@
+import { Meta, Source, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as PodcastCardStories from './podcast-card.stories.json';
+import templateSource from './podcast-card.twig?raw';
+
+<Meta of={PodcastCardStories} name="Docs" />
+
+# Podcast Card
+
+A podcast/show card: uploaded cover image, a single drag & drop content slot, a fixed meta text (bottom-left), and a "view show" button (bottom-right), with an optional stretched-link overlay.
+
+- `content_padding` toggles padding around the content area below the image
+- `meta_text` is a fixed, editable label (e.g. "38 Episodes") shown at the bottom-left
+- `image_ratio`/`image_fit` control cropping the same way as `atoms/image`
+- `content_slot` accepts any component — drop `atoms/heading` + `atoms/text`, or a rich text field
+- the footer row only renders when `meta_text` or `button_url` is set; when only one is present, alignment adjusts (meta text alone sits left, button alone sits right)
+- `stretched_link` requires `button_url` — makes the entire card clickable, while the visible button stays independently focusable via `position-relative`/`z-2`
+
+> ### Bootstrap documentation
+> - [Card](https://getbootstrap.com/docs/5.3/components/card/)
+> - [Stretched link](https://getbootstrap.com/docs/5.3/helpers/stretched-link/)
+> - [Ratio](https://getbootstrap.com/docs/5.3/helpers/ratio/)
+
+## Properties
+
+<Canvas of={PodcastCardStories.Default} />
+<Controls of={PodcastCardStories.Default} />
+
+## Stories
+
+<Stories of={PodcastCardStories} />
+
+## Example
+
+```twig
+{% embed 'vartheme_bs5_rightup:podcast-card' with {
+  media_image: {
+    src: '/path/to/cover.jpg',
+    alt: 'Last Call cover art',
+  },
+  image_ratio: 'ratio-1x1',
+  image_fit: 'object-fit-cover',
+  meta_text: '38 Episodes',
+  button_text: 'View Show',
+  button_url: '/podcasts/last-call',
+  stretched_link: true,
+} %}
+  {% block content_slot %}
+    <h3 class="h4 fw-bold mb-3">Last Call</h3>
+    <p class="text-muted mb-0">The decisions nobody sees, told by the people who made them.</p>
+  {% endblock %}
+{% endembed %}
+```
+
+## Source code
+[//]: # (Twig Template source code)
+<Source code={templateSource} />

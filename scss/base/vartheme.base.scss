@@ -133,6 +133,32 @@ a {
   .navbar {
     transition: height 0.3s ease-out;
   }
+
+}
+
+// Row 1's group (hamburger / logo / search+newsletter) uses
+// justify-content-between, which only puts the middle item at the visual
+// center when the two flanking items are equal width — they aren't (the
+// hamburger is much narrower than the search icon + Newsletter button), so
+// the logo drifted off-center. Center it with absolute positioning instead,
+// which holds it dead-center regardless of how wide either side is.
+// md+ only: below that there isn't enough spare width for true centering
+// without the logo overlapping the search icon/Newsletter button, so small
+// phones keep the natural (slightly off-center but non-overlapping) flow.
+@include media-breakpoint-up(md) {
+  .page > header[role="banner"] [data-component-id="vartheme_bs5_rightup:group"] {
+    position: relative;
+  }
+
+  // `div.` disambiguates the block wrapper (the actual flex child inside the
+  // group) from the inner `<a class="navbar-brand block-system-branding-block">`
+  // link that shares the same class — only the outer wrapper should be pulled
+  // out of the flex flow and centered.
+  .page > header[role="banner"] div.block-system-branding-block {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 // Below lg the header region's two grid columns (brand + menu) each take a full
@@ -194,12 +220,24 @@ a {
   }
 }
 
-// Header menu link styling (bold 1rem, body-color default, primary on hover).
+// The header is built from two stacked Canvas sections: the top bar
+// (hamburger / logo / search+newsletter) and the bottom bar (centered main
+// menu). The hamburger's offcanvas panel already covers navigation on
+// mobile/tablet, so hide the second (bottom bar) section below lg to avoid
+// duplicate navigation UI.
+@include media-breakpoint-down(lg) {
+  .page > header[role="banner"] section + section {
+    display: none;
+  }
+}
+
+// Header menu link styling: white on the header's dark (bg-black) background,
+// brand-tertiary (indigo) on hover with no underline.
 .page > header[role="banner"] .nav-link {
   position: relative;
   padding: 0.625rem 0;
-  color: var(--bs-body-color);
-  font-weight: 700;
+  color: var(--text-white-text, #FFF);
+  font-weight: var(--weight-primary-medium, 500);
   font-size: 1rem;
   line-height: 1.4;
   text-decoration: none;
@@ -207,40 +245,15 @@ a {
   &:hover,
   &:focus,
   &:active {
-    color: var(--bs-primary) !important;
+    color: var(--brand-tertiary, #4F46E1) !important;
     text-decoration: none;
   }
 }
 
-// Dropdown chevron inherits the link color so it also turns primary on hover.
+// Dropdown chevron inherits the link color so it also turns brand-tertiary on hover.
 .page > header[role="banner"] .nav-link.dropdown-toggle::after {
   border-top-color: currentColor;
   vertical-align: 0.15em;
-}
-
-// Hover underline indicator — lg+ only (pointer-hover context). Uses ::before
-// so it doesn't collide with Bootstrap's ::after dropdown chevron.
-@include media-breakpoint-up(lg) {
-  .page > header[role="banner"] .nav-link::before {
-    content: "";
-    position: absolute;
-    bottom: 0.25rem;
-    left: 0;
-    width: 100%;
-    height: 0.05em;
-    background: currentcolor;
-    border-radius: $border-radius-pill;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.25s ease-out;
-  }
-
-  .page > header[role="banner"] .nav-link:hover::before,
-  .page > header[role="banner"] .nav-link:focus::before,
-  .page > header[role="banner"] .nav-link:active::before {
-    transform: scaleX(1);
-    transform-origin: left;
-  }
 }
 
 // Header dropdown panel for child menu links (desktop floating panel).
@@ -464,7 +477,7 @@ footer.footer {
     a.nav-link.dropdown-toggle {
       margin-bottom: 1.5rem;
       padding: 0;
-      color: var(--bs-body-color);
+      color: var(--bs-emphasis-color);
       font-weight: 700;
       font-size: 1.25rem;
       line-height: 1.5;
@@ -495,7 +508,7 @@ footer.footer {
       position: relative;
       width: auto;
       padding: 0;
-      color: var(--bs-body-color);
+      color: var(--bs-emphasis-color);
       font-weight: 400;
       font-size: 1.125rem;
       line-height: 1.5;
@@ -521,7 +534,7 @@ footer.footer {
       &:hover,
       &:focus,
       &:active {
-        color: var(--bs-primary);
+        color: var(--bs-accent);
         text-decoration: none;
         background: transparent;
       }
@@ -548,7 +561,7 @@ footer.footer {
       justify-content: center;
       width: 1.875rem;
       height: 1.875rem;
-      color: var(--bs-primary);
+      color: var(--bs-emphasis-color);
       font-size: 0 !important;
       line-height: 0 !important;
       letter-spacing: -9999px !important;
@@ -557,7 +570,7 @@ footer.footer {
       &::before {
         display: inline-block;
         margin: 0;
-        color: var(--bs-primary);
+        color: var(--bs-emphasis-color);
         font-size: 1.125rem;
         letter-spacing: normal;
       }

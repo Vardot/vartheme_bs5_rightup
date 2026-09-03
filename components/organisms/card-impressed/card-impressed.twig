@@ -73,6 +73,7 @@
 {# Logic: class arrays merged into attributes. #}
 {% set attributes = attributes.addClass([
   'card',
+  'card-impressed',
   'd-flex',
   'flex-column',
   'overflow-hidden',
@@ -97,7 +98,7 @@
   'card-body',
   'd-flex',
   'flex-column',
-  'gap-3',
+  'gap-2',
   (padded ? 'p-4' : 'py-3 px-0'),
 ]|filter(v => v is not empty)) %}
 

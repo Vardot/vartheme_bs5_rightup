@@ -1,0 +1,64 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Author
+group: Base
+status: stable
+description: 'Author byline with a static prefix and a dynamic author name (e.g. "By: Jane Doe"). Used to credit content authors on cards and teasers.'
+props:
+  type: object
+  properties:
+    prefix:
+      type: string
+      title: Prefix
+      description: 'Static text shown before the author name (e.g. "By:").'
+      default: 'By:'
+      examples:
+        - 'By:'
+    author:
+      type: string
+      title: Author name
+      description: Dynamic author name shown after the prefix. Leave empty to omit the whole component.
+      default: ''
+      examples:
+        - 'Jane Doe'
+
+    size:
+      type: string
+      title: Font size
+      description: Bootstrap font-size utility class.
+      enum:
+        - fs-1
+        - fs-2
+        - fs-3
+        - fs-4
+        - fs-5
+        - fs-6
+      meta:enum:
+        fs-1: Display
+        fs-2: Extra large
+        fs-3: Large
+        fs-4: Medium
+        fs-5: Small
+        fs-6: Extra small
+      default: fs-6
+      examples:
+        - fs-6
+
+    text_color:
+      type: string
+      title: Text color
+      description: Bootstrap text color utility class.
+      enum:
+        - text-muted
+        - text-body
+        - text-primary
+        - text-secondary
+        - text-dark
+      meta:enum:
+        text-muted: Muted
+        text-body: Body text color
+        text-primary: Primary
+        text-secondary: Secondary
+        text-dark: Dark
+      default: text-muted
+      examples:
+        - text-muted

@@ -321,6 +321,36 @@
         "'Extra large'": 'border-5',
       },
     },
+    column_divider: {
+      name: 'Column divider',
+      control: 'boolean',
+      defaultValue: false,
+    },
+    column_divider_color: {
+      name: 'Column divider color',
+      control: 'select',
+      defaultValue: 'none',
+      options: {
+        Default: 'none',
+        Primary: 'border-primary',
+        "'Primary subtle'": 'border-primary-subtle',
+        Secondary: 'border-secondary',
+        "'Secondary subtle'": 'border-secondary-subtle',
+        Success: 'border-success',
+        "'Success subtle'": 'border-success-subtle',
+        Danger: 'border-danger',
+        "'Danger subtle'": 'border-danger-subtle',
+        Warning: 'border-warning',
+        "'Warning subtle'": 'border-warning-subtle',
+        Info: 'border-info',
+        "'Info subtle'": 'border-info-subtle',
+        Light: 'border-light',
+        Dark: 'border-dark',
+        "'Dark subtle'": 'border-dark-subtle',
+        Black: 'border-black',
+        White: 'border-white',
+      },
+    },
     section_header: {
       name: 'Show header region',
       control: 'boolean',
@@ -359,6 +389,8 @@
     border: 'none',
     border_color: 'none',
     border_width: 'none',
+    column_divider: false,
+    column_divider_color: 'none',
     section_header: true,
     section_footer: true,
   },
@@ -414,6 +446,8 @@
     border: 'none',
     border_color: 'none',
     border_width: 'none',
+    column_divider: false,
+    column_divider_color: 'none',
     section_header: true,
     section_footer: false,
   },
@@ -459,6 +493,8 @@
     border: 'none',
     border_color: 'none',
     border_width: 'none',
+    column_divider: false,
+    column_divider_color: 'none',
     section_header: true,
     section_footer: false,
   },
@@ -503,6 +539,8 @@
     border: 'none',
     border_color: 'none',
     border_width: 'none',
+    column_divider: false,
+    column_divider_color: 'none',
     section_header: true,
     section_footer: false,
   },
@@ -549,6 +587,8 @@
     border: 'none',
     border_color: 'none',
     border_width: 'none',
+    column_divider: false,
+    column_divider_color: 'none',
     section_header: true,
     section_footer: false,
   },
@@ -569,6 +609,55 @@
     <div class="p-4 border rounded-3 h-100 bg-body-tertiary">
       <h3 class="h5">Supporting panel</h3>
       <p class="mb-0">Use this side for related links, stats, CTAs, or secondary details.</p>
+    </div>
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story TwoColumnsWithDivider with {
+  name: 'Two Columns With Divider',
+  args: {
+    bg_edge2edge: false,
+    container_type: 'container',
+    background_color: 'none',
+    text_color: 'auto',
+    background_overlay: 'none',
+    columns: '50-50',
+    gutter: 'gx-4 gy-4',
+    vertical_alignment: 'align-items-start',
+    horizontal_alignment: 'text-start',
+    padding_block_start: 'pt-4',
+    padding_block_end: 'pb-4',
+    padding_inline_start: 'ps-0',
+    padding_inline_end: 'pe-0',
+    margin_block_start: 'mt-0',
+    margin_block_end: 'mb-0',
+    margin_inline_start: 'ms-0',
+    margin_inline_end: 'me-0',
+    shadow: 'none',
+    radius: 'none',
+    border: 'none',
+    border_color: 'none',
+    border_width: 'none',
+    column_divider: true,
+    column_divider_color: 'border-secondary-subtle',
+    section_header: false,
+    section_footer: false,
+  },
+} %}
+{% embed 'vartheme_bs5_rightup:section' with _context %}
+  {% block col_1 %}
+    <div class="p-4 h-100">
+      <p class="text-primary fw-bold text-uppercase small mb-2">Product</p>
+      <h3 class="h4">A Danish Lighting Brand Just Reissued Its Most Controversial Chair</h3>
+      <p class="mb-0 text-muted">By Sana Kovač</p>
+    </div>
+  {% endblock %}
+  {% block col_2 %}
+    <div class="p-4 h-100">
+      <p class="text-primary fw-bold text-uppercase small mb-2">Process</p>
+      <h3 class="h4">What Fen &amp; Marble Actually Use to Pitch New Clients</h3>
+      <p class="mb-0 text-muted">By Tom James</p>
     </div>
   {% endblock %}
 {% endembed %}
@@ -599,6 +688,8 @@
     border: 'none',
     border_color: 'none',
     border_width: 'none',
+    column_divider: false,
+    column_divider_color: 'none',
     section_header: true,
     section_footer: false,
   },
@@ -651,6 +742,8 @@
     border: 'none',
     border_color: 'none',
     border_width: 'none',
+    column_divider: false,
+    column_divider_color: 'none',
     section_header: false,
     section_footer: false,
   },
@@ -689,6 +782,8 @@
     border: 'none',
     border_color: 'none',
     border_width: 'none',
+    column_divider: false,
+    column_divider_color: 'none',
     section_header: false,
     section_footer: false,
   },
@@ -734,6 +829,8 @@
     border: 'none',
     border_color: 'none',
     border_width: 'none',
+    column_divider: false,
+    column_divider_color: 'none',
     section_header: true,
     section_footer: false,
   },

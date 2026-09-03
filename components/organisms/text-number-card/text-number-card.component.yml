@@ -1,0 +1,61 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Text Number Card
+group: Card
+status: stable
+description: 'Stacked card with a numbered brand-color badge (e.g. "01") and a flexible content slot below it (heading, text, meta, button, etc.) — for step-by-step or itemized listings.'
+props:
+  type: object
+  properties:
+    number:
+      type: string
+      title: Number
+      description: 'Step or index number shown in the badge (e.g. "01").'
+      default: '01'
+      examples:
+        - '01'
+
+    number_color:
+      type: string
+      title: Number badge color
+      description: Bootstrap theme color for the number badge background.
+      enum:
+        - bg-tertiary
+        - bg-accent
+      default: bg-tertiary
+      examples:
+        - bg-tertiary
+      meta:enum:
+        bg-tertiary: Blue
+        bg-accent: Accent (Mint)
+
+    background_color:
+      type: string
+      title: Background color
+      description: Brand background color applied to the card.
+      enum:
+        - none
+        - bg-body-tertiary
+        - bg-tertiary
+        - bg-accent
+        - bg-primary
+        - bg-primary-subtle
+        - bg-secondary
+        - bg-secondary-subtle
+        - bg-dark
+      default: none
+      examples:
+        - none
+      meta:enum:
+        none: None
+        bg-body-tertiary: Body tertiary
+        bg-tertiary: Tertiary
+        bg-accent: Accent
+        bg-primary: Primary
+        bg-primary-subtle: Primary subtle
+        bg-secondary: Secondary
+        bg-secondary-subtle: Secondary subtle
+        bg-dark: Dark
+slots:
+  content:
+    title: Content
+    description: Flexible content area below the number badge — combine heading, text, meta line, button, etc.

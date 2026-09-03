@@ -1,0 +1,59 @@
+.live-feed {
+  --live-feed-duration: 30s;
+}
+
+.live-feed__track-wrapper {
+  mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+}
+
+.live-feed__track {
+  inline-size: max-content;
+  min-block-size: 1.5em;
+}
+
+.live-feed__track.is-looping {
+  animation: live-feed-scroll var(--live-feed-duration) linear infinite;
+}
+
+.live-feed__fallback {
+  display: inline-block;
+  inline-size: 12.5rem;
+}
+
+.live-feed:hover .live-feed__track.is-looping,
+.live-feed:focus-within .live-feed__track.is-looping {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-feed__track.is-looping {
+    animation: none;
+  }
+}
+
+.live-feed-item + .live-feed-item {
+  position: relative;
+}
+
+.live-feed-item + .live-feed-item::before {
+  position: absolute;
+  top: 50%;
+  content: "";
+  transform: translateY(-50%);
+  opacity: 0.3;
+  border-radius: 50%;
+  background-color: var(--bs-black);
+  inset-inline-start: 0;
+  inline-size: 0.25rem;
+  block-size: 0.25rem;
+}
+
+@keyframes live-feed-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}

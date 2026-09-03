@@ -6,6 +6,29 @@
 @import "../node_modules/bootstrap/scss/variables";      // Bootstrap variables.
 @import "../node_modules/bootstrap/scss/variables-dark"; // Bootstrap variables dark.
 
+// Register custom brand colors in Bootstrap's theme-colors map so that
+// the utilities API generates bg-*, text-*, and border-* classes for them.
+//
+// MUST happen before `scss/maps` is imported below: that partial derives
+// $theme-colors-rgb (and, from it, $utilities-bg/$utilities-border/
+// $utilities-text — the maps the plain bg-*/border-*/text-* utility loops
+// read from) from whatever $theme-colors holds at the moment it is
+// imported. Extending $theme-colors after that import (as this used to do)
+// left $theme-colors-rgb stuck with only Bootstrap's built-in colors, so
+// .bg-accent/.bg-tertiary/.border-accent/.border-tertiary/.text-accent/
+// .text-tertiary were silently never generated — even though .btn-accent and
+// .text-bg-accent worked fine, since buttons/helpers import later and re-read
+// $theme-colors directly, after this extension.
+$theme-colors: map-merge(
+  $theme-colors,
+  (
+    "tertiary": $tertiary,
+    "accent":   $accent,
+  )
+);
+
+@import "../node_modules/bootstrap/scss/maps";           // Bootstrap maps (for $utilities-bg-subtle extension below).
+
 // Card's default card-title font size.
 $card-xlarge-title-font-size: 2.5rem;
 $card-large-title-font-size: 2.5rem;
@@ -106,12 +129,16 @@ $vmh-breadcrumb-color: $white;
 $vmh-breadcrumb-font-size: 0.75rem;
 $vmh-breadcrumb-font-size-lg: 0.875rem;
 
-// Register custom brand colors in Bootstrap's theme-colors map so that
-// the utilities API generates bg-*, text-*, and border-* classes for them.
-$theme-colors: map-merge(
-  $theme-colors,
+// Bootstrap's "-subtle" background utilities ($utilities-bg-subtle) are a
+// fixed, hand-authored map of its own built-in colors (primary, secondary,
+// success, info, warning, danger, light, dark) — unlike bg-*/text-*/border-*,
+// they are NOT derived automatically from $theme-colors, so "accent" needs
+// its own entry to get a real `.bg-accent-subtle` utility class. The
+// `--bs-accent-bg-subtle` custom property it references is already defined
+// in components/base/root/root.scss from $accent-bg-subtle above.
+$utilities-bg-subtle: map-merge(
+  $utilities-bg-subtle,
   (
-    "tertiary": $tertiary,
-    "accent":   $accent,
+    "accent-subtle": var(--#{$prefix}accent-bg-subtle),
   )
 );

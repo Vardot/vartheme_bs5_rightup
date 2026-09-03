@@ -1,0 +1,144 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup Starter Kit implementation for the Article Teaser component.
+ *
+ * Editorial article teaser: an optional image, a small uppercase category
+ * label, a headline, a byline, and an optional bottom divider — composed from
+ * atoms/image, atoms/heading, molecules/byline, and atoms/divider.
+ *
+ * Available properties:
+ * - media_image: Optional image shown above the category label. Leave empty
+ *                for a text-only teaser.
+ * - image_ratio: Image ratio crop. Only used when a teaser image is set.
+ *                (ratio-auto | ratio-16x9 | ratio-4x3 | ratio-1x1 | ratio-21x9)
+ *                Defaults to `ratio-4x3`.
+ * - category_label: Small uppercase label shown above the headline (e.g.
+ *                    "ARCHITECTURE"). Leave empty to omit it. Defaults to `''`.
+ * - category_url: If provided, the category label renders as a link.
+ *                  Defaults to `''`.
+ * - category_color: Bootstrap text color utility for the category label.
+ *                    (text-primary | text-secondary | text-success | text-danger
+ *                     | text-warning | text-info | text-dark) Defaults to `text-primary`.
+ * - heading_text: The headline. Defaults to `'Enter the title'`.
+ * - heading_level: HTML heading tag (1-6). Defaults to `3`.
+ * - heading_size: Optional Bootstrap typography utility overriding the
+ *                 heading level's visual size. Defaults to `default`.
+ * - heading_url: If provided, the headline renders as a link. Defaults to `''`.
+ * - heading_target: Link target for the headline link. (_self | _blank)
+ *                    Defaults to `_self`.
+ * - author: Author name shown in the byline. Defaults to `''`.
+ * - author_url: If provided, the byline author renders as a link. Defaults to `''`.
+ * - date: ISO 8601 date string (YYYY-MM-DD) shown in the byline. Defaults to `''`.
+ * - show_divider: Adds a thin divider line below the byline, for stacking
+ *                 teasers in a list. Defaults to `true`.
+ *
+ * Available attributes:
+ * - attributes: Attributes for the root <article> element.
+ * - media_attributes: The image wrapper. Only rendered when media_image is set.
+ *
+ * Available slots:
+ * - N/A
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set image_ratio = image_ratio|default('ratio-4x3') %}
+{% set category_label = category_label|default('') %}
+{% set category_url = category_url|default('')|trim %}
+{% set category_color = category_color|default('text-primary') %}
+{% set heading_text = heading_text|default('Enter the title') %}
+{% set heading_level = heading_level|default(3) %}
+{% set heading_size = heading_size|default('default') %}
+{% set heading_url = heading_url|default('') %}
+{% set heading_target = heading_target|default('_self') %}
+{% set author = author|default('') %}
+{% set author_url = author_url|default('') %}
+{% set date = date|default('') %}
+
+{# Variables: boolean props.
+ # SDC validates `type: boolean` props and applies their schema defaults,
+ # so the values arrive as real booleans — only a presence fallback is
+ # needed here, never type coercion.
+ #}
+{% set show_divider = show_divider ?? true %}
+
+{# Logic: image presence, mirroring atoms/image's own check. #}
+{% set has_image = media_image is defined and media_image and media_image.src is defined and media_image.src is not empty %}
+
+{# Logic: category presence and classes. #}
+{% set has_category = category_label|trim is not empty %}
+{% set category_classes = ['fs-6', 'fw-semibold', 'text-uppercase', 'd-block', 'mb-1', category_color] %}
+
+{# Logic: heading props, only set a visual size when overriding the level. #}
+{% set heading_props = {
+  heading_text: heading_text,
+  level: heading_level,
+  url: heading_url,
+  target: heading_target,
+} %}
+{% if heading_size != 'default' %}
+  {% set heading_props = heading_props|merge({text_size: heading_size}) %}
+{% endif %}
+
+{# Logic: byline props. Omit `date` entirely when empty — passing an empty
+ # string into a `format: date` prop fails SDC's schema validation, unlike a
+ # plain string prop where '' is a valid "not set" value. #}
+{% set byline_props = {
+  author: author,
+  author_url: author_url,
+} %}
+{% if date is not empty %}
+  {% set byline_props = byline_props|merge({date: date}) %}
+{% endif %}
+
+{# Logic: per-region attribute objects. #}
+{% if not media_attributes %}
+  {% set media_attributes = create_attribute() %}
+{% endif %}
+{% set media_attributes = media_attributes.addClass(['mb-3']) %}
+
+{% set category_attributes = create_attribute().addClass(category_classes) %}
+{% if category_url is not empty %}
+  {% set category_attributes = category_attributes.setAttribute('href', category_url) %}
+{% endif %}
+
+{# Print the HTML. #}
+<article{{ attributes }}>
+  {% if has_image %}
+    <div{{ media_attributes }}>
+      {{ include('vartheme_bs5_rightup:image', {media: media_image, ratio: image_ratio}, with_context: false) }}
+    </div>
+  {% endif %}
+
+  {% if has_category %}
+    {% if category_url is not empty %}
+      <a{{ category_attributes }}>{{ category_label }}</a>
+    {% else %}
+      <span{{ category_attributes }}>{{ category_label }}</span>
+    {% endif %}
+  {% endif %}
+
+  {{ include('vartheme_bs5_rightup:heading', heading_props, with_context: false) }}
+
+  {{ include('vartheme_bs5_rightup:byline', byline_props, with_context: false) }}
+
+  {% if show_divider %}
+    {{ include('vartheme_bs5_rightup:divider', {
+      border_width: 'border-1',
+      border_color: 'border-secondary',
+      opacity: 'opacity-50',
+      margin_top: 'mt-3',
+      margin_bottom: 'mb-0',
+    }, with_context: false) }}
+  {% endif %}
+</article>

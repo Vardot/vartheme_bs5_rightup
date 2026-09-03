@@ -1,0 +1,96 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup Starter Kit implementation for the Live Feed component.
+ *
+ * A colored ticker bar: a fixed label followed by a continuously
+ * auto-scrolling row of timestamped news items. Uses slot content for items
+ * (like hero-slider-container's slides) so Canvas can manage drag/drop
+ * ordering — avoids pre-building an items array in Twig.
+ *
+ * The scroll-loop duplication and the animation itself are both
+ * progressive-enhancement JS (live-feed.js): without it, the slot's items
+ * render once, in order, fully readable and static. See that file's
+ * docblock for how the seamless loop and its accessibility handling work.
+ *
+ * Available properties:
+ * - label: Fixed label shown before the scrolling feed. Defaults to `Latest`.
+ *
+ * Available attributes:
+ * - attributes: HTML attributes for the root element.
+ * - label_attributes: HTML attributes for the fixed label element.
+ * - track_attributes: HTML attributes for the scrolling track element.
+ *
+ * Available slots:
+ * - items: One or more "Live Feed Item" components.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set label = label|default('Latest') %}
+
+{# Logic: presence check — nothing to scroll without slot content. #}
+{% set has_items = items is defined and items|render|trim is not empty %}
+
+{# Logic: when the slot is empty, reassign `items` itself to a fallback
+ # fragment rather than branching around a separate `{{ items }}` print.
+ # Canvas wraps the measurement markers it uses for its drag & drop drop
+ # zone around every `{{ items }}` print statement at compile time,
+ # regardless of what value the variable holds at render time — so only a
+ # reassign-then-always-print keeps that fixed-size fallback measurable;
+ # branching to a *different* print statement (as before) left it outside
+ # the markers entirely, which is why the drop zone measured as empty. #}
+{% if not has_items %}
+  {% set items %}
+    <span class="live-feed__fallback text-black fs-6 fst-italic px-3">Add &quot;Live Feed Item&quot; components into the Items slot.</span>
+  {% endset %}
+{% endif %}
+
+{# Logic: merge root/region classes as arrays. #}
+{% set classes = ['live-feed', 'bg-accent', 'd-flex', 'align-items-center', 'overflow-hidden'] %}
+{% set label_classes = ['live-feed__label', 'flex-shrink-0', 'fw-bold', 'text-black', 'fs-6', 'px-3', 'py-2'] %}
+{% set track_wrapper_classes = ['live-feed__track-wrapper', 'overflow-hidden', 'flex-grow-1'] %}
+{% set track_classes = ['live-feed__track', 'd-flex', 'flex-nowrap'] %}
+{% set group_classes = ['live-feed__group', 'd-flex', 'flex-nowrap'] %}
+
+{% set attributes = attributes.addClass(classes) %}
+
+{% if not label_attributes %}
+  {% set label_attributes = create_attribute() %}
+{% endif %}
+{% set label_attributes = label_attributes.addClass(label_classes) %}
+
+{% set track_wrapper_attributes = create_attribute().addClass(track_wrapper_classes) %}
+
+{% if not track_attributes %}
+  {% set track_attributes = create_attribute() %}
+{% endif %}
+{% set track_attributes = track_attributes.addClass(track_classes) %}
+
+{% set group_attributes = create_attribute().addClass(group_classes) %}
+
+{# Print the HTML.
+ # The track/track-wrapper/group are always rendered — even with an empty
+ # slot — so there is a stable, always-measurable drop target for Canvas's
+ # drag & drop; `items` always holds either real slot content or the
+ # fallback fragment set above, and is always printed the same way here. #}
+<div{{ attributes }}>
+  <div{{ label_attributes }}>{{ label }}</div>
+
+  <div{{ track_wrapper_attributes }}>
+    <div{{ track_attributes }}>
+      <div{{ group_attributes }}>
+        {{ items }}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+// @file
+// Taxonomy badge size variants. Bootstrap's fs-* utility scale doesn't land
+// on the exact sizes needed here, so they're defined directly.
+
+@import "../../defaults";
+
+.taxonomy-lg {
+  font-size: 0.75rem;
+}
+
+.taxonomy-sm {
+  font-size: 0.625rem;
+}

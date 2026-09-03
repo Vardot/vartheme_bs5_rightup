@@ -36,7 +36,7 @@
       }
 
       once(
-        'vartheme-bs5-sticky-header',
+        'vartheme-bs5-rightup-sticky-header',
         '.page > header[role="banner"]',
         context,
       ).forEach((header) => {

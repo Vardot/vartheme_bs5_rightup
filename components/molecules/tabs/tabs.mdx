@@ -1,0 +1,89 @@
+import { Title, Subtitle, Description, Source, Meta, Primary, Stories, Controls } from '@storybook/addon-docs/blocks';
+import * as comStories from './tabs.stories.json';
+import templateSource from './tabs.twig?raw';
+
+<Meta of={comStories} />
+
+<Title />
+<Subtitle />
+<Description />
+
+> ### Bootstrap documentation
+> * [Navs and tabs](https://getbootstrap.com/docs/5.3/components/navs-tabs/)
+> * [Pills](https://getbootstrap.com/docs/5.3/components/navs-tabs/#pills)
+
+<Primary />
+
+## Properties
+<Controls />
+
+<Stories />
+
+## Properties reference
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `tabs_id` | string | Tabs container id — leave empty to auto-generate | auto-generated |
+| `shape` | string | `tabs` or `pills` | `tabs` |
+| `active_bg` | string | Bootstrap theme color for the active tab's background (`default`, `black`, `secondary`, `primary`, `tertiary`, `accent`, `success`, `danger`, `warning`, `info`, `light`, `dark`, `white`) | `default` (brand tertiary) |
+| `active_color` | string | Bootstrap theme color for the active tab's text (same color list as `active_bg`) | `default` (white) |
+| `border_color` | string | Bootstrap `border-*` utility for the shared bottom border (`default`, `border-black`, `border-secondary`, `border-primary`, `border-tertiary`, `border-accent`, `border-success`, `border-danger`, `border-warning`, `border-info`, `border-light`, `border-dark`, `border-white`) | `default` (neutral) |
+| `attributes` | object | HTML attributes for the nav (tabs list) element | `{}` |
+
+## Slots
+
+| Slot | Description |
+|---|---|
+| `items` | Place one or more [Tab Item](../tab-item/tab-item.mdx) components here. |
+| `panes` | Optional. Place one or more [Tab Pane](../tab-pane/tab-pane.mdx) components here, paired with the Tab Items above via matching Pane ID, for real Bootstrap JS tab content. |
+
+## Examples
+
+### Example #1 : Filter tabs
+
+```twig
+{% set items %}
+  {{ include('vartheme_bs5_rightup:tab-item', {title: 'All', url: '/', is_active: true}, with_context: false) }}
+  {{ include('vartheme_bs5_rightup:tab-item', {title: 'Architecture', url: '/architecture'}, with_context: false) }}
+  {{ include('vartheme_bs5_rightup:tab-item', {title: 'Fashion', url: '/fashion'}, with_context: false) }}
+{% endset %}
+{{ include('vartheme_bs5_rightup:tabs', {
+  shape: 'tabs',
+  items: items
+}, with_context: false) }}
+```
+
+### Example #2 : Color options
+
+```twig
+{{ include('vartheme_bs5_rightup:tabs', {
+  shape: 'tabs',
+  active_bg: 'accent',
+  active_color: 'black',
+  border_color: 'border-tertiary',
+  items: items
+}, with_context: false) }}
+```
+
+### Example #3 : Real Bootstrap JS tabs with content panes
+
+```twig
+{% set items %}
+  {{ include('vartheme_bs5_rightup:tab-item', {title: 'All', pane_id: 'all-pane', is_active: true}, with_context: false) }}
+  {{ include('vartheme_bs5_rightup:tab-item', {title: 'Architecture', pane_id: 'architecture-pane'}, with_context: false) }}
+{% endset %}
+{% set panes %}
+  {% set content %}<p>All content.</p>{% endset %}
+  {{ include('vartheme_bs5_rightup:tab-pane', {pane_id: 'all-pane', is_active: true, content: content}, with_context: false) }}
+  {% set content %}<p>Architecture content.</p>{% endset %}
+  {{ include('vartheme_bs5_rightup:tab-pane', {pane_id: 'architecture-pane', content: content}, with_context: false) }}
+{% endset %}
+{{ include('vartheme_bs5_rightup:tabs', {
+  shape: 'tabs',
+  items: items,
+  panes: panes
+}, with_context: false) }}
+```
+
+## Source code
+<Source code={templateSource} />

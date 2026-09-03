@@ -7,4 +7,12 @@
   .stretched-link {
     z-index: 99;
   }
+
+  // Hover: the content slot is arbitrary, so target any heading level it
+  // contains rather than a fixed class name.
+  &:hover {
+    .card-body :is(h1, h2, h3, h4, h5, h6) {
+      text-decoration: underline;
+    }
+  }
 }

@@ -22,7 +22,7 @@
  * - icon_first: (true|false) If enabled, icon shows before the label.
  *               If disabled, icon shows after. Defaults to `true`.
  * - radius: Bootstrap border-radius utility class.
- *           (rounded-1 | rounded-pill) Defaults to `rounded-1`.
+ *           (rounded-0 | rounded-1 | rounded-pill) Defaults to `rounded-0`.
  * - indicator: Show a dot or a count bubble on the badge.
  *              (none | dot | count) Defaults to `none`.
  * - indicator_text: Text shown in count bubble (e.g. 1, 9, 99+). Used only
@@ -42,7 +42,7 @@
 {# Variables: scalar props with schema defaults. #}
 {% set variant = variant|default('text-bg-primary') %}
 {% set size = size|default('fs-6 px-3 py-2') %}
-{% set radius = radius|default('rounded-1') %}
+{% set radius = radius|default('rounded-0') %}
 {% set icon = icon|default('none') %}
 {% set indicator = indicator|default('none') %}
 {% set indicator_text = indicator_text|default('99+') %}

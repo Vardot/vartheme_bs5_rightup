@@ -1,0 +1,152 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup Starter Kit implementation for the Horizontal Text Icon Card component.
+ *
+ * Full-width horizontal card: a flexible content slot on the start side and a
+ * fixed circular play icon on the end side, in one of two brand colors. The
+ * first heading found in the content slot underlines when the card is
+ * hovered (see horizontal-text-icon-card.scss).
+ *
+ * Available properties:
+ * - icon_color: Bootstrap theme color for the circular icon background.
+ *               (bg-tertiary | bg-accent) Defaults to `bg-tertiary`.
+ * - background_color: Brand background color applied to the card.
+ *                      (none | bg-body-tertiary | bg-tertiary | bg-accent | bg-primary
+ *                       | bg-primary-subtle | bg-secondary | bg-secondary-subtle | bg-dark)
+ *                      Defaults to `bg-primary`.
+ * - corner_style: Bootstrap rounded utility applied to the card.
+ *                 (rounded-0 | rounded-1 | rounded-2 | rounded-3 | rounded-4
+ *                  | rounded-5 | rounded-pill) Defaults to `rounded-0`.
+ * - padded: (true|false) Adds Bootstrap padding (p-4) to the card. When
+ *           disabled, the card has no padding (p-0). Defaults to `true`.
+ * - content_vertical_alignment: Vertical alignment of the content slot and
+ *                                icon within the row.
+ *                                (align-items-start | align-items-center | align-items-end)
+ *                                Defaults to `align-items-center`.
+ * - stretched_link: (true|false) When enabled and a Card link URL is
+ *                    provided, the entire card becomes clickable using
+ *                    Bootstrap's stretched-link. Defaults to `false`.
+ * - link_url: Optional URL for the card link. Only used when Stretched link
+ *             is enabled.
+ * - link_target: Where to open the card link. (_self | _blank) Only used
+ *                when Stretched link is enabled and a Card link URL is
+ *                provided. Defaults to `_self`.
+ *
+ * Available attributes:
+ * - attributes: Attributes for the root element.
+ * - content_attributes: HTML attributes for the content wrapper element.
+ * - icon_attributes: HTML attributes for the icon wrapper element.
+ *
+ * Available slots:
+ * - content: Flexible content for the start side — category label, heading,
+ *            text, meta line, button, etc.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set icon_color = icon_color|default('bg-tertiary') %}
+{% set background_color = background_color|default('bg-primary') %}
+{% set corner_style = corner_style|default('rounded-0') %}
+{% set content_vertical_alignment = content_vertical_alignment|default('align-items-center') %}
+{% set link_url = link_url|default('')|trim %}
+{% set link_target = link_target|default('_self') %}
+
+{# Variables: boolean props.
+ # SDC validates `type: boolean` props and applies their schema defaults,
+ # so the values arrive as real booleans — only a presence fallback is
+ # needed here, never type coercion.
+ #}
+{% set padded = padded ?? true %}
+{% set stretched_link = stretched_link ?? false %}
+
+{# Logic: icon foreground pairing. Tertiary (indigo) reads best with a white
+ # triangle; accent (mint) reads best with a dark triangle — matching
+ # Bootstrap's own contrast pairing for each theme color. #}
+{% set icon_text_color = icon_color == 'bg-accent' ? 'text-dark' : 'text-white' %}
+
+{# Logic: card background/text pairing. Only the theme colors that read as
+ # visually dark switch to white text; everything else keeps the inherited
+ # (dark) text color. #}
+{% set dark_backgrounds = ['bg-primary', 'bg-tertiary', 'bg-dark', 'bg-body-tertiary'] %}
+{% set background_classes = background_color != 'none' ? [background_color] : [] %}
+{% set text_classes = background_color in dark_backgrounds ? ['text-white'] : [] %}
+
+{# Logic: padding. #}
+{% set padding_classes = [padded ? 'p-4' : 'p-0'] %}
+
+{# Logic: stretched card link, only when both enabled and a URL is set. #}
+{% set use_stretched_link = stretched_link and link_url is not empty %}
+
+{# Logic: merge all classes as arrays. #}
+{%
+  set classes = [
+    'horizontal-text-icon-card',
+    'd-flex',
+    content_vertical_alignment,
+    'justify-content-between',
+    'gap-4',
+    'position-relative',
+    corner_style,
+  ]|merge(background_classes)|merge(text_classes)|merge(padding_classes)
+%}
+{% set content_classes = ['horizontal-text-icon-card__content', 'flex-grow-1'] %}
+{% set icon_classes = ['horizontal-text-icon-card__icon', 'flex-shrink-0', 'rounded-circle', 'd-inline-flex', 'align-items-center', 'justify-content-center', icon_color, icon_text_color] %}
+
+{% set attributes = attributes.addClass(classes) %}
+
+{% if not content_attributes %}
+  {% set content_attributes = create_attribute() %}
+{% endif %}
+{% set content_attributes = content_attributes.addClass(content_classes) %}
+
+{% if not icon_attributes %}
+  {% set icon_attributes = create_attribute() %}
+{% endif %}
+{% set icon_attributes = icon_attributes.addClass(icon_classes) %}
+
+{# Slot content. #}
+{% set content_slot %}{% block content %}{% endblock %}{% endset %}
+
+{# Logic: stretched link attributes, only built when the link will render. #}
+{% if use_stretched_link %}
+  {% set stretched_link_attributes = create_attribute().setAttribute('aria-label', content_slot|striptags|trim) %}
+  {% if link_target == '_blank' %}
+    {% set stretched_link_attributes = stretched_link_attributes
+      .setAttribute('target', '_blank')
+      .setAttribute('rel', 'noopener noreferrer')
+    %}
+  {% endif %}
+{% endif %}
+
+{# Print the HTML. #}
+<div{{ attributes }}>
+  <div{{ content_attributes }}>
+    {{ content_slot }}
+  </div>
+  <div{{ icon_attributes }} aria-hidden="true">
+    {# preserveAspectRatio="none": the viewBox is square but the CSS size
+     # (horizontal-text-icon-card.scss) is not, so the default "meet"
+     # behavior would letterbox instead of filling the box. #}
+    <svg class="horizontal-text-icon-card__icon-svg" viewBox="0 0 48 48" preserveAspectRatio="none" fill="currentColor" xmlns="http://www.w3.org/2000/svg" focusable="false">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M34.8 24.5L18 13.7V35.3L34.8 24.5Z"/>
+    </svg>
+  </div>
+  {% if use_stretched_link %}
+    {{ include('vartheme_bs5_rightup:link', {
+      url: link_url,
+      attributes: stretched_link_attributes,
+      content: '',
+      link_utility_classes: ['stretched-link'],
+    }) }}
+  {% endif %}
+</div>

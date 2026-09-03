@@ -30,15 +30,17 @@
 {# Preload assets only for LTR languages. #}
 {% if html_dir == 'ltr' %}
 
-  {# Preload Figtree — primary sans-serif font (body + headings). Only woff2 is available. #}
-  <link rel="preload" href="{{ vartheme_bs5_rightup_path }}/fonts/figtree/webfonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="{{ vartheme_bs5_rightup_path }}/fonts/figtree/webfonts/figtree-latin-ext.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  {# Preload Rubik — primary sans-serif font (body + headings). Only woff2 is available. #}
+  <link rel="preload" href="{{ vartheme_bs5_rightup_path }}/fonts/rubik/webfonts/rubik-400-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_rightup_path }}/fonts/rubik/webfonts/rubik-400-latin-ext.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_rightup_path }}/fonts/rubik/webfonts/rubik-500-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_rightup_path }}/fonts/rubik/webfonts/rubik-500-latin-ext.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 
-  {# Preload DM Mono — monospace font. Only woff2 is available. #}
-  <link rel="preload" href="{{ vartheme_bs5_rightup_path }}/fonts/dm-mono/webfonts/dm-mono-400-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="{{ vartheme_bs5_rightup_path }}/fonts/dm-mono/webfonts/dm-mono-400-latin-ext.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="{{ vartheme_bs5_rightup_path }}/fonts/dm-mono/webfonts/dm-mono-500-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="{{ vartheme_bs5_rightup_path }}/fonts/dm-mono/webfonts/dm-mono-500-latin-ext.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  {# Preload EB Garamond — secondary serif font. Only woff2 is available. #}
+  <link rel="preload" href="{{ vartheme_bs5_rightup_path }}/fonts/eb-garamond/webfonts/eb-garamond-400-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_rightup_path }}/fonts/eb-garamond/webfonts/eb-garamond-400-latin-ext.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_rightup_path }}/fonts/eb-garamond/webfonts/eb-garamond-700-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="{{ vartheme_bs5_rightup_path }}/fonts/eb-garamond/webfonts/eb-garamond-700-latin-ext.woff2" as="font" type="font/woff2" crossorigin="anonymous">
 
 {% endif %}
 

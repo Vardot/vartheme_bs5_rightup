@@ -1,4 +1,61 @@
+// No border radius on any button, regardless of variant or the `radius`
+// prop's value. Bootstrap's `.rounded-*` utilities set `border-radius` with
+// `!important` at the same (single-class) specificity as a plain `.btn`
+// rule, which would make the outcome depend on unpredictable CSS load
+// order — pairing with the required `size` class (every button has one:
+// `btn-md`/`btn-sm`/`btn-lg`) bumps specificity so this wins
+// unconditionally instead, whether the button is rendered standalone or
+// nested inside another component via `{{ include() }}`.
+@each $btn-size in btn-md, btn-sm, btn-lg {
+  .btn.#{$btn-size} {
+    border-radius: 0 !important;
+  }
+}
+
 .btn {
+  // -----------------------------
+  // Variant color overrides
+  // -----------------------------
+  // Bootstrap's button component drives color entirely through --bs-btn-*
+  // custom properties consumed by its own base/hover/active rules, so
+  // redefining the properties here is enough — no extra selectors needed.
+  // Nested under `.btn` (matching the size overrides below) so this wins on
+  // specificity over Bootstrap's own single-class `.btn-primary` etc.
+  // regardless of CSS source order.
+  &.btn-primary {
+    // Default (background/color) already matches Bootstrap's own primary —
+    // only the hover/active state is inverted here.
+    --bs-btn-hover-color: var(--bs-black);
+    --bs-btn-hover-bg: var(--bs-white);
+    --bs-btn-hover-border-color: var(--bs-primary-border-subtle);
+    --bs-btn-active-color: var(--bs-black);
+    --bs-btn-active-bg: var(--bs-white);
+    --bs-btn-active-border-color: var(--bs-primary-border-subtle);
+  }
+
+  &.btn-secondary {
+    // Default background/color already match Bootstrap's own secondary —
+    // only the (previously invisible, bg-colored) border and the
+    // hover/active state change here.
+    --bs-btn-border-color: var(--bs-primary);
+    --bs-btn-hover-color: var(--bs-white);
+    --bs-btn-hover-bg: var(--bs-primary-text-emphasis);
+    --bs-btn-hover-border-color: var(--bs-primary-text-emphasis);
+    --bs-btn-active-color: var(--bs-white);
+    --bs-btn-active-bg: var(--bs-primary-text-emphasis);
+    --bs-btn-active-border-color: var(--bs-primary-text-emphasis);
+  }
+
+  &.btn-accent {
+    // No border in any state (Bootstrap auto-generates this variant from
+    // the "accent" theme color, but with a border matching the background).
+    --bs-btn-border-color: transparent;
+    --bs-btn-hover-bg: var(--bs-accent-bg-subtle);
+    --bs-btn-hover-border-color: transparent;
+    --bs-btn-active-bg: var(--bs-accent-bg-subtle);
+    --bs-btn-active-border-color: transparent;
+  }
+
   &.btn-md {
     /* Medium (default) — 16px text with 16px vertical and 32px horizontal
        padding. */

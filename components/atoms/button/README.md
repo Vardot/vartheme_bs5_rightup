@@ -22,7 +22,7 @@ Use this component when you need a reusable button that can:
 - apply any Bootstrap variant, with an optional outline style
 - switch between small, medium, and large sizes
 - show an optional Bootstrap Icon before or after the label
-- choose a border-radius utility from none to pill
+- accept a `radius` prop, though buttons render square in this theme regardless of its value (see Notes)
 - wrap in an alignment container (left, center, right) or render inline
 - become full width with the `w-100` utility
 - be disabled, with correct semantics for both button and link
@@ -45,10 +45,10 @@ Use this component when you need a reusable button that can:
 
 ### Appearance
 
-- `variant` (required): Bootstrap button style — `btn-primary`, `btn-secondary`, `btn-success`, `btn-danger`, `btn-warning`, `btn-info`, `btn-light`, `btn-dark`, `btn-link`; defaults to `btn-primary`
+- `variant` (required): Bootstrap button style — `btn-primary`, `btn-secondary`, `btn-accent`, `btn-success`, `btn-danger`, `btn-warning`, `btn-info`, `btn-light`, `btn-dark`, `btn-link`; defaults to `btn-primary`
 - `outline`: use the outline variant (`btn-outline-*`); not applied to `btn-link` — `true` / `false`; defaults to `false`
 - `size` (required): button size — `btn-md`, `btn-sm`, `btn-lg`; defaults to `btn`
-- `radius`: border-radius utility — `rounded`, `rounded-0`, `rounded-1`, `rounded-2`, `rounded-3`, `rounded-4`, `rounded-pill`; defaults to `rounded`
+- `radius`: border-radius utility — `rounded`, `rounded-0`, `rounded-1`, `rounded-2`, `rounded-3`, `rounded-4`, `rounded-pill`; defaults to `rounded-0`. Buttons are always square in this theme regardless of this value (see Notes).
 - `full_width`: make the button full width with `w-100` — `true` / `false`; defaults to `false`
 
 ### Link
@@ -75,6 +75,7 @@ Use this component when you need a reusable button that can:
 |---|---|
 | `btn-primary` | Primary |
 | `btn-secondary` | Secondary |
+| `btn-accent` | Accent |
 | `btn-success` | Success |
 | `btn-danger` | Danger |
 | `btn-warning` | Warning |
@@ -109,7 +110,7 @@ The template exposes named attribute objects you can pass in to add classes or a
   label: 'Read more',
   variant: 'btn-primary',
   size: 'btn',
-  radius: 'rounded'
+  radius: 'rounded-0'
 } only %}
 ```
 
@@ -148,3 +149,5 @@ The template exposes named attribute objects you can pass in to add classes or a
 - Inline buttons receive `me-3 mb-3` so multiple sibling buttons get consistent spacing; non-inline alignments wrap the button in a `d-flex justify-content-*` container instead.
 - The icon is rendered through the `vartheme_bs5_rightup:bootstrap-icon` component; `icon_first: false` reverses the flex order so the icon follows the label.
 - Boolean props (`outline`, `disabled`, `full_width`, `icon_first`) are validated by SDC and arrive as real booleans.
+- `btn-primary`, `btn-secondary`, and `btn-accent` have brand-specific hover/active states (see `button.scss`) that differ from Bootstrap's own auto-darkened defaults: `btn-primary` inverts to a white button with a black border on hover; `btn-secondary` fills with the primary-emphasis tone and switches to white text; `btn-accent` has no border in any state and lightens to the accent-subtle tone on hover.
+- Buttons are square in this theme: `button.scss` forces `border-radius: 0 !important` on every `.btn` size/variant combination, overriding the `radius` prop's `.rounded-*` utility class regardless of which value it's set to.

@@ -1,0 +1,171 @@
+{#
+/**
+ * @file
+ * tabs.stories.twig
+ * Storybook stories for the Tabs component (Bootstrap nav-tabs / nav-pills).
+ */
+#}
+{% stories Tabs with {
+  title: 'Molecules/Tabs',
+  parameters: {
+    componentSubtitle: 'A horizontal tab / filter bar with a filled active-tab state (no border radius) and a shared bottom border.',
+    docs: {
+      description: {
+        component: 'Bootstrap nav-tabs / nav-pills based filter bar. Place one or more Tab Item components inside the items slot; the active one renders as a filled square box (no border radius) on a shared bottom border line. Pair Tab Items with Tab Panes in the panes slot for real Bootstrap JS tab content.',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    shape: {
+      name: 'Shape',
+      description: 'The shape of the tabs.',
+      control: 'select',
+      options: {
+        Tabs: 'tabs',
+        Pills: 'pills',
+      },
+      defaultValue: 'tabs',
+    },
+    active_bg: {
+      name: 'Active tab background color',
+      description: 'Bootstrap theme color applied as the active tab\'s background.',
+      control: 'select',
+      options: {
+        Default: 'default',
+        Black: 'black',
+        Secondary: 'secondary',
+        Primary: 'primary',
+        Tertiary: 'tertiary',
+        Accent: 'accent',
+        Success: 'success',
+        Danger: 'danger',
+        Warning: 'warning',
+        Info: 'info',
+        Light: 'light',
+        Dark: 'dark',
+        White: 'white',
+      },
+      defaultValue: 'default',
+    },
+    active_color: {
+      name: 'Active tab font color',
+      description: 'Bootstrap theme color applied as the active tab\'s text color.',
+      control: 'select',
+      options: {
+        Default: 'default',
+        Black: 'black',
+        Secondary: 'secondary',
+        Primary: 'primary',
+        Tertiary: 'tertiary',
+        Accent: 'accent',
+        Success: 'success',
+        Danger: 'danger',
+        Warning: 'warning',
+        Info: 'info',
+        Light: 'light',
+        Dark: 'dark',
+        White: 'white',
+      },
+      defaultValue: 'default',
+    },
+    border_color: {
+      name: 'Tabs bottom border color',
+      description: 'Bootstrap border color utility applied to the shared bottom border.',
+      control: 'select',
+      options: {
+        Default: 'default',
+        Black: 'border-black',
+        Secondary: 'border-secondary',
+        Primary: 'border-primary',
+        Tertiary: 'border-tertiary',
+        Accent: 'border-accent',
+        Success: 'border-success',
+        Danger: 'border-danger',
+        Warning: 'border-warning',
+        Info: 'border-info',
+        Light: 'border-light',
+        Dark: 'border-dark',
+        White: 'border-white',
+      },
+      defaultValue: 'default',
+    },
+  },
+} %}
+
+{% story FilterTabs with {
+  name: 'Filter Tabs',
+  args: {
+    tabs_id: 'filter-tabs',
+    shape: 'tabs',
+  },
+} %}
+  {% set items %}
+    {{ include('vartheme_bs5_rightup:tab-item', {title: 'All', url: '/', is_active: true}, with_context: false) }}
+    {{ include('vartheme_bs5_rightup:tab-item', {title: 'Architecture', url: '/architecture'}, with_context: false) }}
+    {{ include('vartheme_bs5_rightup:tab-item', {title: 'Fashion', url: '/fashion'}, with_context: false) }}
+    {{ include('vartheme_bs5_rightup:tab-item', {title: 'Arts', url: '/arts'}, with_context: false) }}
+    {{ include('vartheme_bs5_rightup:tab-item', {title: 'Culture', url: '/culture'}, with_context: false) }}
+  {% endset %}
+  {{ include('vartheme_bs5_rightup:tabs', {tabs_id: tabs_id, shape: shape, items: items}, with_context: false) }}
+{% endstory %}
+
+{% story PillsShape with {
+  name: 'Pills Shape',
+  args: {
+    tabs_id: 'pills-tabs',
+    shape: 'pills',
+  },
+} %}
+  {% set items %}
+    {{ include('vartheme_bs5_rightup:tab-item', {title: 'Home', url: '/', is_active: true}, with_context: false) }}
+    {{ include('vartheme_bs5_rightup:tab-item', {title: 'Profile', url: '/profile'}, with_context: false) }}
+    {{ include('vartheme_bs5_rightup:tab-item', {title: 'Contact', url: '/contact'}, with_context: false) }}
+  {% endset %}
+  {{ include('vartheme_bs5_rightup:tabs', {tabs_id: tabs_id, shape: shape, items: items}, with_context: false) }}
+{% endstory %}
+
+{% story ColorOptions with {
+  name: 'Color Options',
+  args: {
+    tabs_id: 'color-options-tabs',
+    shape: 'tabs',
+    active_bg: 'accent',
+    active_color: 'black',
+    border_color: 'border-tertiary',
+  },
+} %}
+  {% set items %}
+    {{ include('vartheme_bs5_rightup:tab-item', {title: 'All', url: '/', is_active: true}, with_context: false) }}
+    {{ include('vartheme_bs5_rightup:tab-item', {title: 'Architecture', url: '/architecture'}, with_context: false) }}
+    {{ include('vartheme_bs5_rightup:tab-item', {title: 'Fashion', url: '/fashion'}, with_context: false) }}
+  {% endset %}
+  {{ include('vartheme_bs5_rightup:tabs', {tabs_id: tabs_id, shape: shape, active_bg: active_bg, active_color: active_color, border_color: border_color, items: items}, with_context: false) }}
+{% endstory %}
+
+{% story JsTabsWithPanes with {
+  name: 'JS Tabs With Panes',
+  args: {
+    tabs_id: 'js-tabs',
+    shape: 'tabs',
+  },
+} %}
+  {% set items %}
+    {{ include('vartheme_bs5_rightup:tab-item', {title: 'All', pane_id: 'all-pane', is_active: true}, with_context: false) }}
+    {{ include('vartheme_bs5_rightup:tab-item', {title: 'Architecture', pane_id: 'architecture-pane'}, with_context: false) }}
+    {{ include('vartheme_bs5_rightup:tab-item', {title: 'Fashion', pane_id: 'fashion-pane'}, with_context: false) }}
+  {% endset %}
+  {% set panes %}
+    {% set content %}<p>All content shows here.</p>{% endset %}
+    {{ include('vartheme_bs5_rightup:tab-pane', {pane_id: 'all-pane', is_active: true, content: content}, with_context: false) }}
+    {% set content %}<p>Architecture content shows here.</p>{% endset %}
+    {{ include('vartheme_bs5_rightup:tab-pane', {pane_id: 'architecture-pane', content: content}, with_context: false) }}
+    {% set content %}<p>Fashion content shows here.</p>{% endset %}
+    {{ include('vartheme_bs5_rightup:tab-pane', {pane_id: 'fashion-pane', content: content}, with_context: false) }}
+  {% endset %}
+  {{ include('vartheme_bs5_rightup:tabs', {tabs_id: tabs_id, shape: shape, items: items, panes: panes}, with_context: false) }}
+{% endstory %}
+
+{% endstories %}

@@ -20,11 +20,11 @@ $aspect-ratios: (
   "21x9": calc(9 / 21 * 100%),
 );
 
-// Override the default primary font family to Inter - Regular, Italic Bold for sans serif.
-$font-family-sans-serif: figtree, sans-serif;
+// Override the default primary font family to Rubik - Regular and Medium for sans serif.
+$font-family-sans-serif: 'Rubik', sans-serif;
 
-// Secondary monospace font family.
-$font-family-monospace: 'DM Mono', monospace;
+// Secondary font family (EB Garamond — Regular and Bold).
+$font-family-monospace: 'EB Garamond', serif;
 
 // Override the default font size.
 $font-size-root: null;
@@ -69,63 +69,38 @@ $navy: #001D38;
 $navy-600: shade-color($navy, 0%);
 $dark: $navy-600;
 
-// Override the light color to use sky-600.
-$sky: #F5F9FE;
-$sky-600: shade-color($sky, 0%);
+// Brand colors.
+// ----------------------------------------------------------------
+// Primary — black.
+$primary:               #000000;
+$primary-text-emphasis: #080910;
+$primary-bg-subtle:     #E6E6E9;
+$primary-border-subtle: #000000;
 
-// Lavender — accent base color.
-$lavender:     #E4DCFF;
-$lavender-600: shade-color($lavender, 0%);
-$accent:       $lavender-600;
+// Secondary — white.
+$secondary:               #FFFFFF;
+$secondary-text-emphasis: #E8E8E8;
+$secondary-bg-subtle:     #F8F8F8;
 
-// Linen — warm neutral used for secondary-subtle surfaces and borders.
-$linen:     #F3F1EF;
-$linen-600: shade-color($linen, 0%);
+// Tertiary — indigo. Not one of Bootstrap's native theme colors, so its
+// border-subtle isn't auto-generated; derive it the same way Bootstrap
+// derives its own (tint-color of the base, 60%).
+$tertiary:               #4F46E1;
+$tertiary-text-emphasis: #2D298B;
+$tertiary-bg-subtle:     #ECEBFC;
+$tertiary-border-subtle: tint-color($tertiary, 60%);
 
-// Sand — slightly deeper warm neutral used for secondary backgrounds.
-$sand:     #EBE8E5;
-$sand-600: shade-color($sand, 0%);
-$secondary: $sand-600;
+// Accent — mint. Same reasoning as tertiary above.
+$accent:               #00F5D4;
+$accent-text-emphasis: #212529;
+$accent-bg-subtle:     #E2FCF5;
+$accent-border-subtle: tint-color($accent, 60%);
 
-// Stone — mid-tone warm gray for emphasis and light text.
-$stone:     #D7D2CB;
-$stone-600: shade-color($stone, 0%);
-
-// Powder — light blue for primary subtle background.
-$powder:     #BEDCFF;
-$powder-600: shade-color($powder, 0%);
-
-// Mist — very light lavender for accent subtle background.
-$mist:     #F6F3FF;
-$mist-600: shade-color($mist, 0%);
-
-// Lilac — medium lavender for accent emphasis, border, and background.
-$lilac:     #DBD0FF;
-$lilac-600: shade-color($lilac, 0%);
-
-// Tertiary background (Bootstrap $light default is #f8f9fa; Figma uses sky #F5F9FE).
-$tertiary: $sky-600;
-
-// Override subtle background variants (Bootstrap computes these from base colors).
-$primary-bg-subtle:   $powder-600;
-$secondary-bg-subtle: $linen-600;
-$accent-bg-subtle:    $mist-600;
-
-// Override text emphasis variants (Bootstrap computes these from base colors).
-$primary-text-emphasis:   $navy-600;
-$secondary-text-emphasis: $stone-600;
-$accent-text-emphasis:    $lilac-600;
-
-// Override border colors (Bootstrap defaults differ).
-$border-color:            $linen-600;
-$primary-border-subtle:   #0D6EFD;    // full primary blue (Figma primary-border)
-$secondary-border-subtle: $lilac-600;
+// Global border color — primary's subtle tone reads as a neutral hairline.
+$border-color: $primary-bg-subtle;
 
 // Custom color variables with no Bootstrap equivalents.
-$border-white: #FFFFFF;
-$light-text:   $stone-600;
-$subtle-text:  rgba($navy, .7); // subtle-text at 70% opacity
-$accent-bg:    $lilac-600;
+$subtle-text: rgba($navy, .7); // subtle-text at 70% opacity
 
 // Override body-tertiary to use gray-900 (#212529) for both background and text.
 $gray: #212529;

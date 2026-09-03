@@ -1,0 +1,305 @@
+{% set demo_media_1 = {
+  src: '/components/foundation/images/assets/teaser-2.jpg',
+  alt: 'A photographer at work',
+  width: 800,
+  height: 600,
+} %}
+{% set demo_media_2 = {
+  src: '/components/foundation/images/assets/hero-1.png',
+  alt: 'A documentary shoot',
+  width: 800,
+  height: 600,
+} %}
+
+{% stories CardSlider with {
+  title: 'Card/Card Slider',
+  parameters: {
+    componentSubtitle: 'Horizontally scrollable slider of card components',
+    docs: {
+      description: {
+        component: 'Shows multiple card components side by side with an optional label and previous/next controls.',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    label: {
+      name: 'Label',
+      control: 'text',
+      defaultValue: 'On display',
+    },
+    title_color: {
+      name: 'Title color',
+      control: 'select',
+      defaultValue: 'text-dark',
+      options: {
+        'Dark (default)': 'text-dark',
+        Body: 'text-body',
+        White: 'text-white',
+        Muted: 'text-muted',
+      },
+    },
+    divider_color: {
+      name: 'Divider color',
+      control: 'select',
+      defaultValue: 'border-primary',
+      options: {
+        'Primary (default)': 'border-primary',
+        Secondary: 'border-secondary',
+        Light: 'border-light',
+        Dark: 'border-dark',
+        White: 'border-white',
+      },
+    },
+    show_controls: {
+      name: 'Show previous/next controls',
+      control: 'boolean',
+      defaultValue: true,
+    },
+    control_bg_color: {
+      name: 'Icon box background color',
+      control: 'select',
+      defaultValue: 'accent',
+      options: {
+        'Accent (default)': 'accent',
+        Tertiary: 'tertiary',
+        Primary: 'primary',
+        Secondary: 'secondary',
+        Dark: 'dark',
+        Light: 'light',
+        White: 'white',
+        Black: 'black',
+      },
+    },
+    control_icon_color: {
+      name: 'Icon color',
+      control: 'select',
+      defaultValue: 'white',
+      options: {
+        'White (default)': 'white',
+        Black: 'black',
+        Dark: 'dark',
+        Light: 'light',
+        Accent: 'accent',
+        Tertiary: 'tertiary',
+        Primary: 'primary',
+      },
+    },
+    control_disabled_opacity: {
+      name: 'Disabled icon box opacity',
+      control: 'select',
+      defaultValue: 'opacity-50',
+      options: {
+        '0%': 'opacity-0',
+        '25%': 'opacity-25',
+        '50% (default)': 'opacity-50',
+        '75%': 'opacity-75',
+        '100%': 'opacity-100',
+      },
+    },
+    visible_items: {
+      name: 'Visible cards (desktop)',
+      control: 'select',
+      defaultValue: '3',
+      options: {
+        '1 card': '1',
+        '2 cards': '2',
+        '3 cards': '3',
+        '4 cards': '4',
+      },
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Default',
+  args: {
+    label: 'On display',
+    title_color: 'text-dark',
+    divider_color: 'border-primary',
+    show_controls: true,
+    control_bg_color: 'accent',
+    control_icon_color: 'white',
+    control_disabled_opacity: 'opacity-50',
+    visible_items: '3',
+  },
+} %}
+{% embed 'vartheme_bs5_rightup:card-slider' with _context %}
+  {% block cards %}
+    {{ include('vartheme_bs5_rightup:article-teaser', {
+      media_image: demo_media_1,
+      image_ratio: 'ratio-4x3',
+      category_label: 'Culture',
+      category_color: 'text-primary',
+      heading_text: "A Photographer's 10-Year Study of Ceremony and Color in West Africa",
+      author: 'Sana Kovač',
+      date: '2026-07-07',
+      show_divider: false,
+    }) }}
+    {{ include('vartheme_bs5_rightup:article-teaser', {
+      media_image: demo_media_2,
+      image_ratio: 'ratio-4x3',
+      category_label: 'Process',
+      category_color: 'text-primary',
+      heading_text: 'What Fen & Marble Actually Use to Pitch New Clients',
+      author: 'Tom James',
+      date: '2026-07-07',
+      show_divider: false,
+    }) }}
+    {{ include('vartheme_bs5_rightup:article-teaser', {
+      media_image: demo_media_1,
+      image_ratio: 'ratio-4x3',
+      category_label: 'Architecture',
+      category_color: 'text-primary',
+      heading_text: 'A Facade System Built Entirely From Salvaged Material',
+      author: 'Rena Osei',
+      date: '2026-07-07',
+      show_divider: false,
+    }) }}
+    {{ include('vartheme_bs5_rightup:article-teaser', {
+      media_image: demo_media_2,
+      image_ratio: 'ratio-4x3',
+      category_label: 'Design',
+      category_color: 'text-primary',
+      heading_text: 'Inside the Studio Reviving Hand-Thrown Ceramics',
+      author: 'Lior Ben-David',
+      date: '2026-07-07',
+      show_divider: false,
+    }) }}
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story TwoVisible with {
+  name: 'Two Visible',
+  args: {
+    label: 'Related reading',
+    title_color: 'text-dark',
+    divider_color: 'border-primary',
+    show_controls: true,
+    control_bg_color: 'accent',
+    control_icon_color: 'white',
+    control_disabled_opacity: 'opacity-50',
+    visible_items: '2',
+  },
+} %}
+{% embed 'vartheme_bs5_rightup:card-slider' with _context %}
+  {% block cards %}
+    {{ include('vartheme_bs5_rightup:article-teaser', {
+      media_image: demo_media_1,
+      image_ratio: 'ratio-4x3',
+      category_label: 'Culture',
+      category_color: 'text-primary',
+      heading_text: "A Photographer's 10-Year Study of Ceremony and Color in West Africa",
+      author: 'Sana Kovač',
+      date: '2026-07-07',
+      show_divider: false,
+    }) }}
+    {{ include('vartheme_bs5_rightup:article-teaser', {
+      media_image: demo_media_2,
+      image_ratio: 'ratio-4x3',
+      category_label: 'Process',
+      category_color: 'text-primary',
+      heading_text: 'What Fen & Marble Actually Use to Pitch New Clients',
+      author: 'Tom James',
+      date: '2026-07-07',
+      show_divider: false,
+    }) }}
+    {{ include('vartheme_bs5_rightup:article-teaser', {
+      media_image: demo_media_1,
+      image_ratio: 'ratio-4x3',
+      category_label: 'Architecture',
+      category_color: 'text-primary',
+      heading_text: 'A Facade System Built Entirely From Salvaged Material',
+      author: 'Rena Osei',
+      date: '2026-07-07',
+      show_divider: false,
+    }) }}
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story NoLabel with {
+  name: 'No Label',
+  args: {
+    label: '',
+    title_color: 'text-dark',
+    divider_color: 'border-primary',
+    show_controls: true,
+    control_bg_color: 'accent',
+    control_icon_color: 'white',
+    control_disabled_opacity: 'opacity-50',
+    visible_items: '3',
+  },
+} %}
+{% embed 'vartheme_bs5_rightup:card-slider' with _context %}
+  {% block cards %}
+    {{ include('vartheme_bs5_rightup:article-teaser', {
+      media_image: demo_media_1,
+      image_ratio: 'ratio-4x3',
+      category_label: 'Culture',
+      category_color: 'text-primary',
+      heading_text: "A Photographer's 10-Year Study of Ceremony and Color in West Africa",
+      author: 'Sana Kovač',
+      date: '2026-07-07',
+      show_divider: false,
+    }) }}
+    {{ include('vartheme_bs5_rightup:article-teaser', {
+      media_image: demo_media_2,
+      image_ratio: 'ratio-4x3',
+      category_label: 'Process',
+      category_color: 'text-primary',
+      heading_text: 'What Fen & Marble Actually Use to Pitch New Clients',
+      author: 'Tom James',
+      date: '2026-07-07',
+      show_divider: false,
+    }) }}
+  {% endblock %}
+{% endembed %}
+{% endstory %}
+
+{% story OnBlackBackground with {
+  name: 'On Black Background',
+  args: {
+    label: 'On display',
+    title_color: 'text-white',
+    divider_color: 'border-white',
+    show_controls: true,
+    control_bg_color: 'accent',
+    control_icon_color: 'white',
+    control_disabled_opacity: 'opacity-50',
+    visible_items: '3',
+  },
+} %}
+{# Card content here is plain placeholder markup with light text — a real
+ # dark-section card would come from a card component styled/propped for
+ # light text; title_color/divider_color only style the slider's own
+ # header, not whatever component is dropped into the cards slot. #}
+<div class="bg-black p-4">
+{% embed 'vartheme_bs5_rightup:card-slider' with _context %}
+  {% block cards %}
+    <div class="text-white">
+      <div class="ratio ratio-4x3 bg-secondary mb-3"></div>
+      <p class="text-primary fw-bold text-uppercase small mb-2">Culture</p>
+      <h3 class="h5">A Photographer's 10-Year Study of Ceremony and Color in West Africa</h3>
+      <p class="mb-0 text-white-50">By Sana Kovač</p>
+    </div>
+    <div class="text-white">
+      <div class="ratio ratio-4x3 bg-secondary mb-3"></div>
+      <p class="text-primary fw-bold text-uppercase small mb-2">Process</p>
+      <h3 class="h5">What Fen &amp; Marble Actually Use to Pitch New Clients</h3>
+      <p class="mb-0 text-white-50">By Tom James</p>
+    </div>
+    <div class="text-white">
+      <div class="ratio ratio-4x3 bg-secondary mb-3"></div>
+      <p class="text-primary fw-bold text-uppercase small mb-2">Architecture</p>
+      <h3 class="h5">A Facade System Built Entirely From Salvaged Material</h3>
+      <p class="mb-0 text-white-50">By Rena Osei</p>
+    </div>
+  {% endblock %}
+{% endembed %}
+</div>
+{% endstory %}
+{% endstories %}

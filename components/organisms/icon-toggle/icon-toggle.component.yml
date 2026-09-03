@@ -131,6 +131,53 @@ props:
       default: Close search
       examples:
         - Close search
+    icon_color:
+      type: string
+      title: Icon color
+      description: Bootstrap text color utility class used to control the icon's color.
+      enum:
+        - text-body
+        - text-primary
+        - text-secondary
+        - text-success
+        - text-danger
+        - text-warning
+        - text-info
+        - text-light
+        - text-dark
+        - text-white
+        - text-muted
+        - text-body-secondary
+        - text-body-tertiary
+        - text-primary-emphasis
+        - text-secondary-emphasis
+        - text-success-emphasis
+        - text-danger-emphasis
+        - text-warning-emphasis
+        - text-info-emphasis
+      default: text-body
+      examples:
+        - text-body
+      meta:enum:
+        text-body: Body
+        text-primary: Primary
+        text-secondary: Secondary
+        text-success: Success
+        text-danger: Danger
+        text-warning: Warning
+        text-info: Info
+        text-light: Light
+        text-dark: Dark
+        text-white: White
+        text-muted: Muted
+        text-body-secondary: Body secondary
+        text-body-tertiary: Body tertiary
+        text-primary-emphasis: Primary emphasis
+        text-secondary-emphasis: Secondary emphasis
+        text-success-emphasis: Success emphasis
+        text-danger-emphasis: Danger emphasis
+        text-warning-emphasis: Warning emphasis
+        text-info-emphasis: Info emphasis
     placement:
       type: string
       title: Panel alignment
@@ -144,6 +191,13 @@ props:
       default: end
       examples:
         - end
+    expand_in_editor:
+      type: boolean
+      title: Expand in Canvas editor
+      description: Force the popover open while previewed inside the Drupal Canvas editor, so its "content" slot stays reachable for dropping components in. Turn off once content is placed, if the always-open panel clutters the editor view — the front-end click/close behavior is unaffected either way.
+      default: true
+      examples:
+        - true
     attributes:
       type: Drupal\Core\Template\Attribute
       title: Attributes

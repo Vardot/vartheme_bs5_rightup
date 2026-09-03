@@ -1,0 +1,37 @@
+@import "../defaults"; // Global defaults.
+
+// Vartheme BS5 Rightup — Offcanvas Menu header coordination.
+// -----------------------------------------------------------------------------
+//
+// Loaded via the Offcanvas Menu component's own `libraryOverrides.dependencies`
+// (components/organisms/offcanvas-menu/offcanvas-menu.component.yml), so it
+// exists on the page only when that component is actually used.
+//
+// Both rules below target DOM outside the component's own tree — Bootstrap
+// appends `.offcanvas-backdrop` as a <body> sibling, and "the header's main
+// menu" is rendered by a separate organism/template — so neither can be
+// scoped under the component's own `.offcanvas-menu` BEM block and live here
+// instead (same precedent as sticky-header.theme.scss). offcanvas-menu.js
+// toggles `.offcanvas-menu-open` on <body> and publishes
+// `--offcanvas-menu-header-offset` (the header's rendered height) on the
+// root element while the panel is open.
+body.offcanvas-menu-open {
+  // Hide whatever main-menu nav also lives in the header, so it doesn't
+  // visually collide with the open panel. Excludes the component's own
+  // panel body: offcanvas-menu.scss deliberately force-displays a
+  // `.navbar-collapse` dropped into its own "menu" slot
+  // (`.offcanvas-menu__menu .navbar-collapse { display: block !important }`),
+  // and this component can itself be DOM-nested inside
+  // `header[role="banner"]` — without the exclusion this rule would hide
+  // its own slot content the instant the panel opens.
+  header[role="banner"] .navbar-collapse:not(.offcanvas-menu__body .navbar-collapse) {
+    visibility: hidden;
+  }
+
+  // Bootstrap's offcanvas backdrop is a plain full-viewport overlay; offset
+  // its top the same way the panel is offset so it starts below the header
+  // instead of dimming/covering it.
+  .offcanvas-backdrop {
+    top: var(--offcanvas-menu-header-offset, 0);
+  }
+}

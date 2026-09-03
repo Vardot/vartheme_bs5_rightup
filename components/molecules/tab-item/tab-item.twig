@@ -1,0 +1,69 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup Starter Kit implementation for the Tab Item component.
+ *
+ * Available properties:
+ * - title: The tab's label.
+ * - url: Where this tab links to. Used as a plain navigation link when
+ *        pane_id is empty.
+ * - pane_id: Turns this tab into a real Bootstrap JS tab that toggles a
+ *            content pane instead of navigating. Must match the paired Tab
+ *            Pane component's pane_id. Leave empty to use `url` as a plain
+ *            link. Defaults to `''`.
+ * - is_active: (true|false) Whether this tab is the current/active one.
+ *              Defaults to `false`.
+ *
+ * Available attributes:
+ * - attributes: HTML attributes for the link element.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set pane_id = pane_id|default('')|trim %}
+
+{# Variables: boolean props.
+ # SDC validates `type: boolean` props and applies their schema defaults,
+ # so the values arrive as real booleans — only a presence fallback is
+ # needed here, never type coercion.
+ #}
+{% set is_active = is_active ?? false %}
+
+{# Logic: a Pane ID switches this tab from a plain navigation link to a real
+ # Bootstrap JS tab that toggles the matching Tab Pane. #}
+{% set is_js_tab = pane_id is not empty %}
+{% set href = is_js_tab ? '#' ~ pane_id : url %}
+
+{# Logic: merge classes as arrays.
+ # The active tab's background/font color are configured once on the parent
+ # Tabs component (active_bg / active_color props) and applied from there via
+ # a CSS descendant selector (see tabs.scss) — no color classes are added
+ # here, so this tab looks the same regardless of which Tabs instance it's
+ # nested in.
+ #}
+{% set classes = ['nav-link']|merge(is_active ? ['active'] : []) %}
+{% set attributes = attributes.addClass(classes).setAttribute('href', href) %}
+{% if is_js_tab %}
+  {% set attributes = attributes
+    .setAttribute('id', pane_id ~ '-tab')
+    .setAttribute('data-bs-toggle', 'tab')
+    .setAttribute('data-bs-target', '#' ~ pane_id)
+    .setAttribute('role', 'tab')
+    .setAttribute('aria-controls', pane_id)
+    .setAttribute('aria-selected', is_active ? 'true' : 'false')
+  %}
+{% endif %}
+
+{# Print the HTML. #}
+<li class="nav-item" role="presentation">
+  <a{{ attributes }}>{{ title }}</a>
+</li>

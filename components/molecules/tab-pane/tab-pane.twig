@@ -1,0 +1,77 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup Starter Kit implementation for the Tab Pane component.
+ *
+ * Available properties:
+ * - pane_id: Optional. Leave empty to auto-generate. The parent Tabs
+ *            component's tabs.js always assigns this pane's live id/aria
+ *            attributes itself, paired with its Tab Item by position, so no
+ *            value here (or a duplicate one, e.g. after copying this
+ *            component) affects the pairing. Defaults to `''`.
+ * - is_active: (true|false) Whether this pane is the current/visible one.
+ *              Should match its paired Tab Item's is_active. Defaults to
+ *              `false`. Drupal Canvas always shows every pane regardless of
+ *              this value (see tabs.scss's `.is-canvas-preview` override),
+ *              so it can be edited there no matter which tab is active.
+ *
+ * Available attributes:
+ * - attributes: HTML attributes for the pane element.
+ *
+ * Available slots:
+ * - content: The tab's body content.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set pane_id = pane_id|default('')|trim %}
+
+{# Variables: boolean props.
+ # SDC validates `type: boolean` props and applies their schema defaults,
+ # so the values arrive as real booleans — only a presence fallback is
+ # needed here, never type coercion.
+ #}
+{% set is_active = is_active ?? false %}
+
+{# Logic: resolve ID, same fallback pattern as tabs.twig's tabs_id — this
+ # only matters for the no-JS/pre-JS render: the parent Tabs component's
+ # tabs.js always overwrites this id (and pairs it with a Tab Item by
+ # position) once it runs, so an empty or duplicated value here never
+ # breaks the live pairing.
+ #}
+{% if pane_id is empty %}
+  {% set pane_id = 'pane-' ~ random(1000000) %}
+{% endif %}
+
+{# Logic: merge classes as arrays.
+ # Canvas forcing every pane visible while editing is handled entirely in
+ # CSS (tabs.scss's `.is-canvas-preview` override) rather than here: SDC
+ # components compile into an inline template rendered via
+ # TwigEnvironment::renderInline(), which bypasses hook_preprocess() and has
+ # no access to the current route, so Canvas can't reliably be detected from
+ # inside this Twig template.
+ #}
+{% set classes = ['tab-pane', 'fade']|merge(is_active ? ['show', 'active'] : []) %}
+{% set attributes = attributes
+  .addClass(classes)
+  .setAttribute('id', pane_id)
+  .setAttribute('role', 'tabpanel')
+  .setAttribute('aria-labelledby', pane_id ~ '-tab')
+  .setAttribute('tabindex', 0)
+%}
+
+{# Print the HTML. #}
+<div{{ attributes }}>
+  {% block content %}
+    {{ content }}
+  {% endblock %}
+</div>

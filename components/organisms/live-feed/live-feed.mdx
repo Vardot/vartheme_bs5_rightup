@@ -1,0 +1,45 @@
+{/* live-feed.mdx */}
+
+import { Title, Subtitle, Description, Primary, Stories, Controls, Meta, Source } from '@storybook/addon-docs/blocks';
+import * as comStories from './live-feed.stories.json';
+import templateSource from './live-feed.twig?raw';
+
+<Meta of={comStories} name="Docs" />
+
+<Title />
+<Subtitle />
+<Description />
+
+> ### Bootstrap documentation
+> * [Background](https://getbootstrap.com/docs/5.3/utilities/background/)
+> * [Colors](https://getbootstrap.com/docs/5.3/utilities/colors/)
+> * [Flex](https://getbootstrap.com/docs/5.3/utilities/flex/)
+
+<Primary />
+
+## Properties
+<Controls />
+
+<Stories of={comStories} />
+
+## Twig usage example
+```twig
+{% embed "vartheme_bs5_rightup:live-feed" with {
+  label: 'Latest',
+} %}
+  {% block items %}
+    {{ include('vartheme_bs5_rightup:live-feed-item', {
+      time: '5:10 PM',
+      title: 'Adobe Quietly Kills Its Font-Pairing Tool',
+      url: '#',
+    }, with_context: false) }}
+    {{ include('vartheme_bs5_rightup:live-feed-item', {
+      time: '6:00 PM',
+      title: 'Milan Design Week Adds a Fourth Venue for 2027',
+    }, with_context: false) }}
+  {% endblock %}
+{% endembed %}
+```
+
+## Source code
+<Source code={templateSource} />

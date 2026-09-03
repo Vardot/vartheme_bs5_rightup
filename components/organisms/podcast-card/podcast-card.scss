@@ -1,0 +1,31 @@
+// @file
+// Podcast Card: atoms/button's default "inline" alignment adds me-3/mb-3
+// (for buttons flowing in a paragraph); this pairs the button with the
+// footer row's own gap-3 instead, so those utility margins need to be
+// neutralized.
+
+@import "../../defaults";
+
+.podcast-card {
+  // atoms/button's own size variants (btn-sm/md/lg) each set their own
+  // --bs-btn-font-size (including a mobile-breakpoint override), none of
+  // which land on the exact size wanted here — so it's set directly.
+  // atoms/button's own .btn.btn-secondary rule (two classes, higher
+  // specificity than plain .btn-secondary) sets a dark hover background
+  // with white hover text — overridden back to white/black here so hover
+  // only adds an underline, no color change.
+  &__button {
+    margin: 0 !important;
+    font-size: 1.125rem !important;
+    --bs-btn-hover-bg: var(--bs-white) !important;
+    --bs-btn-hover-color: var(--bs-black) !important;
+    --bs-btn-hover-border-color: var(--bs-white) !important;
+    --bs-btn-active-bg: var(--bs-white) !important;
+    --bs-btn-active-color: var(--bs-black) !important;
+    --bs-btn-active-border-color: var(--bs-white) !important;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

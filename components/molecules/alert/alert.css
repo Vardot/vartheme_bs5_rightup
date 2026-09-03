@@ -130,11 +130,11 @@
 }
 
 .alert-primary.alert-dismissible .btn-close {
-  background: #0d6efd;
+  background: #000;
 }
 
 .alert-secondary.alert-dismissible .btn-close {
-  background: #ebe8e5;
+  background: #fff;
 }
 
 .alert-success.alert-dismissible .btn-close {
@@ -162,9 +162,9 @@
 }
 
 .alert-tertiary.alert-dismissible .btn-close {
-  background: #f5f9fe;
+  background: #4f46e1;
 }
 
 .alert-accent.alert-dismissible .btn-close {
-  background: #e4dcff;
+  background: #00f5d4;
 }

@@ -2,7 +2,8 @@
 
 .navbar {
   height: 5.25rem;
-  background: var(--bs-white);
+  // Black, matching the footer (--bs-primary-text-emphasis on both).
+  background: var(--bs-primary-text-emphasis);
 
   .form-inline {
     .form-actions {
@@ -15,12 +16,15 @@
       a.nav-link {
         position: relative;
         font-weight: bold;
-        color: var(--bs-gray-900);
+        color: var(--bs-white);
 
+        // Hover/active/current-page use accent (mint) rather than primary
+        // (black) — on the new black navbar background, primary would be
+        // invisible.
         &:hover,
         &:focus,
         &:active {
-          color: var(--bs-primary) !important;
+          color: var(--bs-accent) !important;
 
           &:after {
             content: "";
@@ -31,7 +35,7 @@
             right: 15% !important;
             height: 1px;
             bottom: 0;
-            background-color: var(--bs-primary);
+            background-color: var(--bs-accent);
           }
         }
 
@@ -43,7 +47,7 @@
             right: 30%;
             height: 1px;
             bottom: 0;
-            background-color: var(--bs-primary);
+            background-color: var(--bs-accent);
           }
         }
       }

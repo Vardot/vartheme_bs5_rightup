@@ -1,0 +1,197 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Card Slider
+group: Card
+status: stable
+description: >
+  Horizontally scrollable slider that shows multiple card components (e.g.
+  Article Teaser) side by side, with an optional label and previous/next
+  controls.
+props:
+  type: object
+  properties:
+    id:
+      type: string
+      title: Slider ID
+      description: Unique id for the slider. Auto-generated when left empty.
+      default: ''
+    label:
+      type: string
+      title: Label
+      description: Small heading shown above the cards (e.g. "On display"). Leave empty to omit it.
+      default: ''
+      examples:
+        - On display
+    title_color:
+      type: string
+      title: Title color
+      description: Text color utility for the label. Use text-white on a black/dark background section.
+      enum:
+        - text-dark
+        - text-body
+        - text-white
+        - text-muted
+      default: text-dark
+      examples:
+        - text-dark
+      meta:enum:
+        text-dark: Dark (default)
+        text-body: Body
+        text-white: White
+        text-muted: Muted
+    divider_color:
+      type: string
+      title: Divider color
+      description: Bootstrap border color utility for the horizontal line. Use border-white on a black/dark background section.
+      enum:
+        - border-primary
+        - border-primary-subtle
+        - border-secondary
+        - border-secondary-subtle
+        - border-success
+        - border-success-subtle
+        - border-danger
+        - border-danger-subtle
+        - border-warning
+        - border-warning-subtle
+        - border-info
+        - border-info-subtle
+        - border-light
+        - border-dark
+        - border-dark-subtle
+        - border-black
+        - border-white
+      default: border-primary
+      examples:
+        - border-primary
+      meta:enum:
+        border-primary: Primary (default)
+        border-primary-subtle: Primary subtle
+        border-secondary: Secondary
+        border-secondary-subtle: Secondary subtle
+        border-success: Success
+        border-success-subtle: Success subtle
+        border-danger: Danger
+        border-danger-subtle: Danger subtle
+        border-warning: Warning
+        border-warning-subtle: Warning subtle
+        border-info: Info
+        border-info-subtle: Info subtle
+        border-light: Light
+        border-dark: Dark
+        border-dark-subtle: Dark subtle
+        border-black: Black
+        border-white: White
+    show_controls:
+      type: boolean
+      title: Show previous/next controls
+      default: true
+      examples: [true]
+    control_bg_color:
+      type: string
+      title: Icon box background color
+      description: Theme color for the previous/next icon box background.
+      enum:
+        - accent
+        - tertiary
+        - primary
+        - secondary
+        - success
+        - danger
+        - warning
+        - info
+        - light
+        - dark
+        - white
+        - black
+      default: accent
+      examples:
+        - accent
+      meta:enum:
+        accent: Accent (default)
+        tertiary: Tertiary
+        primary: Primary
+        secondary: Secondary
+        success: Success
+        danger: Danger
+        warning: Warning
+        info: Info
+        light: Light
+        dark: Dark
+        white: White
+        black: Black
+    control_icon_color:
+      type: string
+      title: Icon color
+      description: Theme color for the previous/next chevron icon.
+      enum:
+        - white
+        - black
+        - dark
+        - light
+        - accent
+        - tertiary
+        - primary
+        - secondary
+        - success
+        - danger
+        - warning
+        - info
+      default: white
+      examples:
+        - white
+      meta:enum:
+        white: White (default)
+        black: Black
+        dark: Dark
+        light: Light
+        accent: Accent
+        tertiary: Tertiary
+        primary: Primary
+        secondary: Secondary
+        success: Success
+        danger: Danger
+        warning: Warning
+        info: Info
+    control_disabled_opacity:
+      type: string
+      title: Disabled icon box opacity
+      description: Opacity of the icon box when its direction has no more cards to scroll to (e.g. Previous at the start of the track).
+      enum:
+        - opacity-0
+        - opacity-25
+        - opacity-50
+        - opacity-75
+        - opacity-100
+      default: opacity-50
+      examples:
+        - opacity-50
+      meta:enum:
+        opacity-0: 0% (invisible)
+        opacity-25: 25%
+        opacity-50: 50% (default)
+        opacity-75: 75%
+        opacity-100: 100% (no dimming)
+    visible_items:
+      type: [string, number]
+      title: Visible cards (desktop)
+      description: How many cards are visible at once on desktop (md, 768px, and up). Narrow viewports show fewer — 2 (or fewer) from sm (576px) up to md, 1 below that.
+      enum:
+        - '1'
+        - '2'
+        - '3'
+        - '4'
+      default: '3'
+      examples:
+        - '3'
+      meta:enum:
+        '1': 1 card
+        '2': 2 cards
+        '3': 3 cards
+        '4': 4 cards
+slots:
+  cards:
+    title: Cards
+    description: Add two or more card components here (e.g. Article Teaser). Unlimited, drag & drop reorder.
+libraryOverrides:
+  dependencies:
+    - core/once

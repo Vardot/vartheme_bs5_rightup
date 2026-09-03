@@ -1,0 +1,50 @@
+import { Title, Subtitle, Meta, Description, Primary, Stories, Controls, Source } from '@storybook/addon-docs/blocks';
+import * as comStories from './text-number-card.stories.json';
+import templateSource from './text-number-card.twig?raw';
+
+<Meta of={comStories} name="Docs"/>
+
+<Title />
+<Subtitle />
+<Description />
+
+> ### Bootstrap Documentation
+> * [Colors](https://getbootstrap.com/docs/5.3/utilities/colors/)
+
+<Primary />
+
+## Properties
+<Controls />
+
+<Stories of={comStories} />
+
+## Attributes
+* `attributes` — HTML attributes for the root element
+* `number_attributes` — HTML attributes for the number badge element
+* `content_attributes` — HTML attributes for the content wrapper element
+
+## Slots
+* `content` — flexible content below the number badge (heading, text, meta line, button, etc.)
+
+## Example
+
+```twig
+{% embed 'vartheme_bs5_rightup:text-number-card' with {
+  number: '01',
+  number_color: 'bg-tertiary',
+  background_color: 'none'
+} only %}
+  {% block content %}
+    {% include 'vartheme_bs5_rightup:heading' with {
+      heading_text: 'Studio Breakdowns',
+      level: 3
+    } only %}
+    {% include 'vartheme_bs5_rightup:text' with {
+      text: '<p>One real project, start to finish, with the parts that usually get cut from the case study.</p>'
+    } only %}
+  {% endblock %}
+{% endembed %}
+```
+
+## Source code
+<Source code={templateSource} />

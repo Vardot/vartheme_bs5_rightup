@@ -1,0 +1,47 @@
+import { Title, Subtitle, Description, Source, Meta, Primary, Stories, Controls } from '@storybook/addon-docs/blocks';
+import * as comStories from './audio-player-local.stories.json';
+import templateSource from './audio-player-local.twig?raw';
+
+<Meta of={comStories} />
+
+<Title />
+<Subtitle />
+<Description />
+
+> ### Bootstrap documentation
+> * [Range](https://getbootstrap.com/docs/5.3/forms/range/)
+
+<Primary />
+
+## Properties
+<Controls />
+
+<Stories />
+
+## Properties reference
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `audio_url` | string | Upload a local audio file. Leave empty to render nothing | `''` |
+| `title` | string | Optional label shown above the controls | `''` |
+| `autoplay` | boolean | Start playing automatically once loaded | `false` |
+| `loop` | boolean | Restart playback automatically at the end | `false` |
+| `preload` | string | How much audio to fetch upfront (`metadata`, `auto`, `none`) | `metadata` |
+| `show_skip` | boolean | Show the skip-back / skip-forward buttons | `true` |
+| `skip_seconds` | string | Seconds the skip buttons jump (`5`, `10`, `15`, `30`) | `15` |
+| `show_time` | boolean | Show the elapsed / total time | `true` |
+| `show_download` | boolean | Show a download button for the audio file | `false` |
+| `accent_color` | string | Bootstrap theme color for the play/pause button and seek bar fill | `default` |
+| `attributes` | object | HTML attributes for the containing element | `{}` |
+
+## Example
+
+```twig
+{{ include('vartheme_bs5_rightup:audio-player-local', {
+  audio_url: 'public://audio/episode-12.mp3',
+  show_download: true
+}, with_context: false) }}
+```
+
+## Source code
+<Source code={templateSource} />

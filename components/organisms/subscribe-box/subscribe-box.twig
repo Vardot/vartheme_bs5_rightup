@@ -1,0 +1,79 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup Starter Kit implementation for the Subscribe Box component.
+ *
+ * A single-row email signup form: an email input and a submit button joined
+ * into one bordered, square-cornered Bootstrap input-group.
+ *
+ * Available properties:
+ * - label: Accessible label for the email input (visually hidden). Defaults
+ *          to `Email address`.
+ * - placeholder: Placeholder text shown inside the empty email input.
+ *                Defaults to `Email Address`.
+ * - input_name: The "name" attribute submitted with the email value.
+ *               Defaults to `email`.
+ * - button_label: Submit button text. Defaults to `Subscribe`.
+ * - button_variant: Bootstrap button style class. (btn-primary | btn-secondary
+ *                   | btn-accent | btn-success | btn-danger | btn-warning
+ *                   | btn-info | btn-light | btn-dark) Defaults to `btn-accent`.
+ * - size: Bootstrap input-group size. (md | sm | lg) Defaults to `md`.
+ * - action: Form action URL. Left empty, the form submits to the current
+ *           page.
+ * - method: Form method. (post | get) Defaults to `post`.
+ *
+ * Available attributes:
+ * - attributes: HTML attributes for the root <form> element.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set label = label|default('Email address'|t) %}
+{% set placeholder = placeholder|default('Email Address'|t) %}
+{% set input_name = input_name|default('email') %}
+{% set button_label = button_label|default('Subscribe'|t) %}
+{% set button_variant = button_variant|default('btn-accent') %}
+{% set size = size|default('md') %}
+{% set action = action|default('') %}
+{% set method = method|default('post') %}
+
+{# Logic: map the size prop to its Bootstrap input-group modifier class ("md"
+ # has none — it's the group's own unmodified default size).
+ #}
+{% set size_map = {'sm': 'input-group-sm', 'md': '', 'lg': 'input-group-lg'} %}
+{% set size_class = size_map[size]|default('') %}
+
+{# Logic: merge root classes and the input-group's size modifier as arrays. #}
+{% set classes = ['subscribe-box'] %}
+{% set group_classes = ['input-group']|merge(size_class ? [size_class] : []) %}
+{% set input_id = 'subscribe-box-email-' ~ random(99999) %}
+
+{# Logic: attributes. Action is only set when provided, so an empty value
+ # falls back to the browser's own default (submit to the current page)
+ # instead of rendering an empty action="".
+ #}
+{% set attributes = attributes
+  .addClass(classes)
+  .setAttribute('method', method)
+%}
+{% if action is not empty %}
+  {% set attributes = attributes.setAttribute('action', action) %}
+{% endif %}
+
+{# Print the HTML. #}
+<form{{ attributes }}>
+  <label class="visually-hidden" for="{{ input_id }}">{{ label }}</label>
+  <div class="{{ group_classes|join(' ') }}">
+    <input type="email" class="form-control rounded-0 border-dark" id="{{ input_id }}" name="{{ input_name }}" placeholder="{{ placeholder }}" required>
+    <button type="submit" class="btn {{ button_variant }} rounded-0 border-dark fw-bold">{{ button_label }}</button>
+  </div>
+</form>

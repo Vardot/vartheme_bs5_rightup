@@ -1,0 +1,17 @@
+.horizontal-text-icon-card {
+  --horizontal-text-icon-card-icon-size: 3rem;
+}
+
+.horizontal-text-icon-card__icon {
+  width: var(--horizontal-text-icon-card-icon-size);
+  height: var(--horizontal-text-icon-card-icon-size);
+}
+
+.horizontal-text-icon-card__icon-svg {
+  width: 1.05rem;
+  height: 1.35rem;
+}
+
+.horizontal-text-icon-card:hover .horizontal-text-icon-card__content :is(h1, h2, h3, h4, h5, h6) {
+  text-decoration: underline;
+}

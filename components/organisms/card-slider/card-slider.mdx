@@ -1,0 +1,61 @@
+import { Meta, Source, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as CardSliderStories from './card-slider.stories.json';
+import templateSource from './card-slider.twig?raw';
+
+<Meta of={CardSliderStories} name="Docs" />
+
+# Card Slider
+
+A horizontally scrollable slider that shows multiple card components (e.g. Article Teaser) side by side, with an optional label and previous/next controls. Uses slot content for the cards so Canvas can manage drag/drop ordering — any card-shaped component works.
+
+- `visible_items` controls how many cards are visible at once on desktop (md, 768px, and up); narrower viewports show fewer — 2 (or fewer) from sm (576px) up to md, 1 below that
+- `label` is optional — leave it empty to omit the whole label/divider/controls header row when `show_controls` is also disabled
+- `title_color` and `divider_color` adapt the header to a black/dark background section (`text-white` / `border-white`) — they only style the slider's own label and divider, not whatever card component is dropped into the slot
+- `control_bg_color`, `control_icon_color`, and `control_disabled_opacity` independently style the previous/next icon box (fixed 1.875rem square, zero padding), backed by this theme's root color custom properties (`--bs-accent`, `--bs-primary`, etc.)
+- the track is a native scrollable/swipeable flex row with scroll-snap; JavaScript only adds the previous/next click behavior and keeps the controls' disabled state in sync with scroll position
+
+> ### Bootstrap documentation
+> - [Flex](https://getbootstrap.com/docs/5.3/utilities/flex/)
+> - [Gap](https://getbootstrap.com/docs/5.3/utilities/spacing/#gap)
+
+## Properties
+
+<Canvas of={CardSliderStories.Default} />
+<Controls of={CardSliderStories.Default} />
+
+## Stories
+
+<Stories of={CardSliderStories} />
+
+## Example
+
+```twig
+{% embed 'vartheme_bs5_rightup:card-slider' with {
+  label: 'On display',
+  show_controls: true,
+  visible_items: '3',
+} %}
+  {% block cards %}
+    {{ include('vartheme_bs5_rightup:article-teaser', {
+      media_image: { src: '/path/to/photo-1.jpg', alt: 'Photo' },
+      category_label: 'Culture',
+      heading_text: 'A Photographer’s 10-Year Study of Ceremony and Color in West Africa',
+      author: 'Sana Kovač',
+      date: '2026-07-07',
+      show_divider: false,
+    }) }}
+    {{ include('vartheme_bs5_rightup:article-teaser', {
+      media_image: { src: '/path/to/photo-2.jpg', alt: 'Photo' },
+      category_label: 'Process',
+      heading_text: 'What Fen & Marble Actually Use to Pitch New Clients',
+      author: 'Tom James',
+      date: '2026-07-07',
+      show_divider: false,
+    }) }}
+  {% endblock %}
+{% endembed %}
+```
+
+## Source code
+[//]: # (Twig Template source code)
+<Source code={templateSource} />

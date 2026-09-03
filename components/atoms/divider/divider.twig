@@ -3,16 +3,24 @@
  * @file
  * Vartheme BS5 Rightup Starter Kit implementation for the Divider component.
  *
- * A Bootstrap 5.3-compatible horizontal divider using the native <hr> element.
+ * A Bootstrap 5.3-compatible horizontal divider using the native <hr>
+ * element, with an optional label shown before the line.
  *
  * Available properties:
+ * - text: Optional label shown before the line (e.g. "FEATURED"). Leave
+ *         empty for a plain divider. Defaults to `''`.
+ * - text_size: Bootstrap font-size utility class for the label. Only used
+ *              when a label is set. (fs-1 | fs-2 | fs-3 | fs-4 | fs-5 | fs-6)
+ *              Defaults to `fs-6` (0.875rem).
  * - border_width: Bootstrap border width utility class.
  *                 (border-1 | border-2 | border-3 | border-4 | border-5)
  *                 Defaults to `border-1`.
  * - border_color: Bootstrap border color utility class.
- *                 (border-secondary | border-light | border-dark | border-primary
- *                  | border-success | border-danger | border-warning | border-info
- *                  | border-white | border-black) Defaults to `border-secondary`.
+ *                 (border-black | border-secondary | border-primary
+ *                  | border-tertiary | border-accent | border-success
+ *                  | border-danger | border-warning | border-info
+ *                  | border-light | border-dark | border-white)
+ *                 Defaults to `border-black`.
  * - opacity: Bootstrap opacity utility class.
  *            (opacity-25 | opacity-50 | opacity-75 | opacity-100)
  *            Defaults to `opacity-100`.
@@ -22,7 +30,8 @@
  *                  Defaults to `mb-3`.
  *
  * Available attributes:
- * - attributes: Attributes array.
+ * - attributes: Attributes for the root element (the <hr> when there is no
+ *               label, or the label/line wrapper <div> when there is).
  *
  * Available slots:
  * - N/A
@@ -39,22 +48,35 @@
  #}
 
 {# Variables: scalar props with schema defaults. #}
+{% set text = text|default('') %}
+{% set text_size = text_size|default('fs-6') %}
 {% set border_width = border_width|default('border-1') %}
-{% set border_color = border_color|default('border-secondary') %}
+{% set border_color = border_color|default('border-black') %}
 {% set opacity = opacity|default('opacity-100') %}
 {% set margin_top = margin_top|default('mt-3') %}
 {% set margin_bottom = margin_bottom|default('mb-3') %}
 
-{# Logic: merge all classes as arrays. #}
-{% set classes = [
-  border_width,
-  border_color,
-  opacity,
-  margin_top,
-  margin_bottom,
-] %}
+{# Logic: a label switches the root element from a bare <hr> to a
+ # label + line wrapper, moving the spacing utilities to the wrapper and
+ # resetting the nested <hr>'s own margin so it centers on the label. #}
+{% set has_text = text|trim is not empty %}
+{% set hr_classes = [border_width, border_color, opacity] %}
 
-{% set attributes = attributes.addClass(classes) %}
+{% if has_text %}
+  {% set wrapper_classes = ['d-flex', 'align-items-center', margin_top, margin_bottom] %}
+  {% set attributes = attributes.addClass(wrapper_classes) %}
+  {% set text_attributes = create_attribute().addClass(['fw-bold', 'text-uppercase', 'text-nowrap', 'me-3', text_size]) %}
+  {% set line_attributes = create_attribute().addClass(hr_classes|merge(['flex-grow-1', 'my-0'])) %}
+{% else %}
+  {% set attributes = attributes.addClass(hr_classes|merge([margin_top, margin_bottom])) %}
+{% endif %}
 
 {# Print the HTML. #}
-<hr{{ attributes }}>
+{% if has_text %}
+  <div{{ attributes }}>
+    <span{{ text_attributes }}>{{ text }}</span>
+    <hr{{ line_attributes }}>
+  </div>
+{% else %}
+  <hr{{ attributes }}>
+{% endif %}

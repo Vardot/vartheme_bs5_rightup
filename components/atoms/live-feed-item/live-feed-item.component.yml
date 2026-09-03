@@ -1,0 +1,29 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Live Feed Item
+group: Base
+status: stable
+description: A single timestamped news item, meant to be dropped into a Live Feed component's "Items" slot.
+props:
+  type: object
+  required:
+    - time
+    - title
+  properties:
+    time:
+      type: string
+      title: Time
+      description: Short timestamp shown before the title.
+      examples:
+        - '5:10 PM'
+    title:
+      type: string
+      title: Title
+      description: The news item's headline.
+      examples:
+        - Adobe Quietly Kills Its Font-Pairing Tool
+    url:
+      type: string
+      title: Link URL (optional)
+      format: uri-reference
+      description: If provided, the item renders as a link to this URL.
+      default: ''

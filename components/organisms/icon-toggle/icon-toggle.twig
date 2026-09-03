@@ -17,8 +17,21 @@
  *          Defaults to `Search`.
  * - open_label: Accessible label announced while the panel is open.
  *               Defaults to `Close search`.
+ * - icon_color: Bootstrap text color utility class used to control the
+ *               icon's color. (text-body | text-primary | text-secondary
+ *               | text-success | text-danger | text-warning | text-info
+ *               | text-light | text-dark | text-white | text-muted
+ *               | text-body-secondary | text-body-tertiary
+ *               | text-primary-emphasis | text-secondary-emphasis
+ *               | text-success-emphasis | text-danger-emphasis
+ *               | text-warning-emphasis | text-info-emphasis)
+ *               Defaults to `text-body`.
  * - placement: Which side the popover panel aligns to. (end | start)
  *              Defaults to `end`.
+ * - expand_in_editor: Force the popover open while previewed inside the
+ *                      Drupal Canvas editor, so its "content" slot stays
+ *                      reachable for dropping components in. Defaults to
+ *                      `true`.
  *
  * Available attributes:
  * - attributes: HTML attributes for the root element.
@@ -41,10 +54,18 @@
 {% set icon = icon|default('search') %}
 {% set label = label|default('Search'|t) %}
 {% set open_label = open_label|default('Close search'|t) %}
+{% set icon_color = icon_color|default('text-body') %}
 {% set placement = placement|default('end') %}
 
+{# Variables: boolean props.
+ # SDC validates `type: boolean` props and applies their schema defaults,
+ # so the values arrive as real booleans — only a presence fallback is
+ # needed here, never type coercion.
+ #}
+{% set expand_in_editor = expand_in_editor ?? true %}
+
 {# Logic: merge root classes as an array. #}
-{% set classes = ['icon-toggle', 'icon-toggle--' ~ placement] %}
+{% set classes = ['icon-toggle', 'icon-toggle--' ~ placement]|merge(expand_in_editor ? [] : ['icon-toggle--collapsed-in-editor']) %}
 
 {# Logic: static structural class lists and a unique panel id. #}
 {% set button_classes = ['icon-toggle__button'] %}
@@ -64,6 +85,7 @@
     {{ include('vartheme_bs5_rightup:bootstrap-icon', {
       icon: icon,
       icon_size: 'fs-5',
+      color: icon_color,
       attributes: create_attribute().addClass('icon-toggle__icon'),
     }, with_context = false) }}
   </button>

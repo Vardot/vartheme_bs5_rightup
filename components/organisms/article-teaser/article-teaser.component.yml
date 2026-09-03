@@ -1,0 +1,175 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Article Teaser
+group: Card
+description: Editorial article teaser (optional image, category label, headline, byline, and a bottom divider) for magazine-style listings and grids.
+props:
+  type: object
+  properties:
+    media_image:
+      title: Teaser image (optional)
+      description: Optional image shown above the category label. Leave empty for a text-only teaser.
+      $ref: json-schema-definitions://canvas.module/image
+      type: object
+      examples:
+        - src: /themes/contrib/vartheme_bs5_rightup/components/foundation/images/assets/teaser-3.jpg
+          alt: Teaser image
+          width: 800
+          height: 600
+
+    image_ratio:
+      type: string
+      title: Image ratio (crop)
+      description: Keeps a consistent image shape. Only used when a teaser image is set.
+      enum:
+        - ratio-auto
+        - ratio-16x9
+        - ratio-4x3
+        - ratio-1x1
+        - ratio-21x9
+      default: ratio-4x3
+      examples:
+        - ratio-4x3
+      meta:enum:
+        ratio-auto: Auto (no crop)
+        ratio-16x9: Wide (16:9)
+        ratio-4x3: Standard (4:3)
+        ratio-1x1: Square (1:1)
+        ratio-21x9: Ultra-wide (21:9)
+
+    category_label:
+      type: string
+      title: Category label
+      description: Small uppercase label shown above the headline (e.g. "ARCHITECTURE"). Leave empty to omit it.
+      default: ''
+
+    category_url:
+      type: string
+      title: Category link (optional)
+      format: uri-reference
+      description: If provided, the category label renders as a link.
+      default: ''
+
+    category_color:
+      type: string
+      title: Category color
+      description: Bootstrap text color utility class for the category label.
+      enum:
+        - text-primary
+        - text-secondary
+        - text-success
+        - text-danger
+        - text-warning
+        - text-info
+        - text-dark
+      default: text-primary
+      examples:
+        - text-primary
+      meta:enum:
+        text-primary: Primary
+        text-secondary: Secondary
+        text-success: Success
+        text-danger: Danger
+        text-warning: Warning
+        text-info: Info
+        text-dark: Dark
+
+    heading_text:
+      type: string
+      title: Headline
+      default: 'Enter the title'
+      examples:
+        - 'Enter the title'
+
+    heading_level:
+      type: integer
+      title: Heading level
+      description: HTML heading tag.
+      enum: [1, 2, 3, 4, 5, 6]
+      default: 3
+      examples:
+        - 3
+
+    heading_size:
+      type: string
+      title: Headline size
+      description: Optional Bootstrap typography utility. Leave as "Default" to match the selected heading level.
+      enum:
+        - default
+        - h1
+        - h2
+        - h3
+        - h4
+        - h5
+        - h6
+        - display-1
+        - display-2
+        - display-3
+        - display-4
+        - display-5
+        - display-6
+      default: default
+      examples:
+        - default
+      meta:enum:
+        default: Default (matches heading level)
+        h1: 'Heading size: H1'
+        h2: 'Heading size: H2'
+        h3: 'Heading size: H3'
+        h4: 'Heading size: H4'
+        h5: 'Heading size: H5'
+        h6: 'Heading size: H6'
+        display-1: Display 1
+        display-2: Display 2
+        display-3: Display 3
+        display-4: Display 4
+        display-5: Display 5
+        display-6: Display 6
+
+    heading_url:
+      type: string
+      title: Headline link (optional)
+      format: uri-reference
+      description: If provided, the headline renders as a link.
+      default: ''
+
+    heading_target:
+      type: string
+      title: Headline link target
+      description: Controls where the linked headline opens. Only used when a headline link is set.
+      enum:
+        - _self
+        - _blank
+      default: _self
+      examples:
+        - _self
+      meta:enum:
+        _self: Same tab
+        _blank: New tab
+
+    author:
+      type: string
+      title: Author name (optional)
+      description: Shown after "By" in the byline. Leave empty to omit the byline's author.
+      default: ''
+
+    author_url:
+      type: string
+      title: Author link (optional)
+      format: uri-reference
+      description: If provided, the author name renders as a link.
+      default: ''
+
+    date:
+      type: string
+      format: date
+      title: Date (optional)
+      description: ISO 8601 date string (YYYY-MM-DD). Leave empty to omit the byline's date.
+      default: ''
+
+    show_divider:
+      type: boolean
+      title: Show bottom divider
+      description: Adds a thin divider line below the byline, for stacking teasers in a list.
+      default: true
+      examples:
+        - true

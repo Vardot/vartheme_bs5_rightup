@@ -1,0 +1,128 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Local Audio Player
+description: An audio player for a locally uploaded audio file. Upload a file directly; manage playback the same way as the Remote Audio Player component.
+props:
+  type: object
+  properties:
+    audio_url:
+      $ref: json-schema-definitions://canvas.module/stream-wrapper-uri
+      type: string
+      title: Audio file
+      description: Upload a local audio file. Leave empty to render nothing (e.g. while a file hasn't been set yet).
+      default: ''
+    title:
+      type: string
+      title: Title
+      description: Optional label shown above the controls. Leave empty to omit.
+      default: ''
+    autoplay:
+      type: boolean
+      title: Autoplay
+      description: Start playing automatically once loaded. Most browsers block autoplay with sound until the visitor has interacted with the page.
+      default: false
+      examples:
+        - false
+    loop:
+      type: boolean
+      title: Loop
+      description: Restart playback automatically when it reaches the end.
+      default: false
+      examples:
+        - false
+    preload:
+      type: string
+      title: Preload
+      description: How much of the audio the browser should fetch before playback starts.
+      enum:
+        - metadata
+        - auto
+        - none
+      default: metadata
+      examples:
+        - metadata
+      meta:enum:
+        metadata: Metadata only (duration, faster page load)
+        auto: Full file (smoother instant playback)
+        none: Nothing until play is pressed
+    show_skip:
+      type: boolean
+      title: Show skip buttons
+      description: Show the skip-back / skip-forward buttons.
+      default: true
+      examples:
+        - true
+    skip_seconds:
+      type: string
+      title: Skip amount
+      description: Seconds the skip-back / skip-forward buttons jump. Only applies when Show skip buttons is enabled.
+      enum:
+        - '5'
+        - '10'
+        - '15'
+        - '30'
+      default: '15'
+      examples:
+        - '15'
+      meta:enum:
+        '5': 5 seconds
+        '10': 10 seconds
+        '15': 15 seconds
+        '30': 30 seconds
+    show_time:
+      type: boolean
+      title: Show time
+      description: Show the elapsed / total time next to the controls.
+      default: true
+      examples:
+        - true
+    show_download:
+      type: boolean
+      title: Show download link
+      description: Show a download button for the audio file.
+      default: false
+      examples:
+        - false
+    accent_color:
+      type: string
+      title: Accent color
+      description: Bootstrap theme color for the play/pause button and the seek bar's filled portion. Leave as Default to keep the theme's mint accent.
+      enum:
+        - default
+        - black
+        - secondary
+        - primary
+        - tertiary
+        - accent
+        - success
+        - danger
+        - warning
+        - info
+        - light
+        - dark
+        - white
+      default: default
+      examples:
+        - default
+      meta:enum:
+        default: Default (accent mint)
+        black: Black
+        secondary: Secondary
+        primary: Primary
+        tertiary: Tertiary
+        accent: Accent
+        success: Success
+        danger: Danger
+        warning: Warning
+        info: Info
+        light: Light
+        dark: Dark
+        white: White
+    attributes:
+      type: Drupal\Core\Template\Attribute
+      title: Attributes
+      description: HTML attributes for the containing element.
+
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once

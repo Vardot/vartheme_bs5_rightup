@@ -1,0 +1,149 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup Starter Kit implementation for the Remote Audio Player component.
+ *
+ * Available properties:
+ * - url: URL of the remote audio file to play. Leave empty to render
+ *        nothing. Defaults to `''`.
+ * - title: Optional label shown above the controls. Leave empty to omit.
+ *          Defaults to `''`.
+ * - autoplay: (true|false) Start playing automatically once loaded.
+ *             Defaults to `false`.
+ * - loop: (true|false) Restart playback automatically at the end. Defaults
+ *         to `false`.
+ * - preload: How much audio the browser should fetch upfront.
+ *            (metadata | auto | none) Defaults to `metadata`.
+ * - show_skip: (true|false) Show the skip-back / skip-forward buttons.
+ *              Defaults to `true`.
+ * - skip_seconds: Seconds the skip buttons jump. ('5' | '10' | '15' | '30')
+ *                 Defaults to `'15'`.
+ * - show_time: (true|false) Show the elapsed / total time. Defaults to
+ *              `true`.
+ * - show_download: (true|false) Show a download button for the audio file.
+ *                   Defaults to `false`.
+ * - accent_color: Bootstrap theme color for the play/pause button and the
+ *                 seek bar's filled portion. (default | black | secondary
+ *                  | primary | tertiary | accent | success | danger
+ *                  | warning | info | light | dark | white) Defaults to
+ *                 `default` (accent mint).
+ *
+ * Available attributes:
+ * - attributes: HTML attributes for the containing element.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set url = url|default('') %}
+{% set title = title|default('') %}
+{% set preload = preload|default('metadata') %}
+{% set skip_seconds = skip_seconds|default('15') %}
+{% set accent_color = accent_color|default('default') %}
+
+{# Logic: resolve state flags. #}
+{% set has_src = url|trim is not empty %}
+
+{# Variables: boolean props.
+ # SDC validates `type: boolean` props and applies their schema defaults,
+ # so the values arrive as real booleans — only a presence fallback is
+ # needed here, never type coercion.
+ #}
+{% set autoplay = autoplay ?? false %}
+{% set loop = loop ?? false %}
+{% set show_skip = show_skip ?? true %}
+{% set show_time = show_time ?? true %}
+{% set show_download = show_download ?? false %}
+
+{# Logic: accent color modifier class — see audio-player-remote.scss for
+ # the `--audio-player-remote-accent-*` custom property this sets.
+ #}
+{% set accent_classes = accent_color != 'default' ? ['audio-player-remote--accent-' ~ accent_color] : [] %}
+
+{# Logic: merge classes as arrays. #}
+{% set classes = ['audio-player-remote']|merge(accent_classes) %}
+{% set attributes = attributes
+  .addClass(classes)
+  .setAttribute('data-skip-seconds', skip_seconds)
+%}
+
+{% set audio_attributes = create_attribute({
+  'class': ['audio-player-remote__media', 'visually-hidden'],
+  'preload': preload,
+  'src': url,
+}) %}
+{% if autoplay %}
+  {% set audio_attributes = audio_attributes.setAttribute('autoplay', 'autoplay') %}
+{% endif %}
+{% if loop %}
+  {% set audio_attributes = audio_attributes.setAttribute('loop', 'loop') %}
+{% endif %}
+
+{# Print the HTML. #}
+{% if has_src %}
+  <div{{ attributes }}>
+    <audio{{ audio_attributes }}></audio>
+
+    {% if title|trim is not empty %}
+      <p class="audio-player-remote__title">{{ title }}</p>
+    {% endif %}
+
+    <div class="audio-player-remote__controls">
+      {% if show_skip %}
+        <button type="button" class="audio-player-remote__button audio-player-remote__button--skip-back" aria-label="{{ 'Skip back'|t }}">
+          <i class="bi bi-skip-backward-fill" aria-hidden="true"></i>
+        </button>
+      {% endif %}
+
+      <button type="button" class="audio-player-remote__button audio-player-remote__button--toggle" aria-label="{{ 'Play'|t }}">
+        <i class="bi bi-play-fill audio-player-remote__icon audio-player-remote__icon--play" aria-hidden="true"></i>
+        <i class="bi bi-pause-fill audio-player-remote__icon audio-player-remote__icon--pause d-none" aria-hidden="true"></i>
+      </button>
+
+      {% if show_skip %}
+        <button type="button" class="audio-player-remote__button audio-player-remote__button--skip-forward" aria-label="{{ 'Skip forward'|t }}">
+          <i class="bi bi-skip-forward-fill" aria-hidden="true"></i>
+        </button>
+      {% endif %}
+
+      {% if show_time %}
+        <span class="audio-player-remote__time" aria-hidden="true">
+          <span class="audio-player-remote__time-current">0:00</span><span class="audio-player-remote__time-sep">&nbsp;/&nbsp;</span><span class="audio-player-remote__time-duration">0:00</span>
+        </span>
+      {% endif %}
+
+      <input
+        type="range"
+        class="audio-player-remote__seek"
+        min="0"
+        max="100"
+        value="0"
+        step="0.1"
+        aria-label="{{ 'Seek'|t }}"
+      >
+
+      {% if show_download %}
+        <a href="{{ url }}" download class="audio-player-remote__button audio-player-remote__button--download" aria-label="{{ 'Download audio'|t }}">
+          <i class="bi bi-download" aria-hidden="true"></i>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+{% else %}
+  {# Hidden on the live page; shown only in Drupal Canvas via the
+   # `.is-canvas-preview` body class (see audio-player-remote.scss and
+   # vartheme_bs5_rightup_preprocess_html()) so an unconfigured instance
+   # stays visible/selectable while editing instead of disappearing.
+   #}
+  <div{{ attributes.addClass(['audio-player-remote--empty']) }}>
+    <p class="audio-player-remote__placeholder">{{ 'Remote Audio Player — set an Audio URL to preview playback.'|t }}</p>
+  </div>
+{% endif %}

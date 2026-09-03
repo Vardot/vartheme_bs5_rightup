@@ -1,0 +1,133 @@
+{% stories ArticleTeaser with {
+  title: 'Card/Article Teaser',
+  parameters: {
+    componentSubtitle: 'Editorial article teaser',
+    docs: {
+      description: {
+        component: 'Editorial article teaser (optional image, category label, headline, byline, and a bottom divider) for magazine-style listings and grids.',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    category_label: {
+      name: 'Category label',
+      description: 'Small uppercase label shown above the headline.',
+      defaultValue: '',
+      control: 'text',
+    },
+    heading_text: {
+      name: 'Headline',
+      defaultValue: 'Enter the title',
+      control: 'text',
+    },
+    heading_level: {
+      name: 'Heading level',
+      defaultValue: 3,
+      control: 'select',
+      options: {
+        H1: 1,
+        H2: 2,
+        H3: 3,
+        H4: 4,
+        H5: 5,
+        H6: 6,
+      },
+    },
+    author: {
+      name: 'Author name',
+      defaultValue: '',
+      control: 'text',
+    },
+    date: {
+      name: 'Date',
+      defaultValue: '',
+      control: 'date',
+    },
+    show_divider: {
+      name: 'Show bottom divider',
+      defaultValue: true,
+      control: 'boolean',
+    },
+  },
+} %}
+
+{% story WithImage with {
+  name: 'With Image',
+  args: {
+    category_label: 'Architecture',
+    heading_text: 'Fen & Marble Reveal First Look at Rotterdam Flagship',
+    heading_level: 3,
+    author: 'Tomas Adeyemi',
+    date: '',
+    show_divider: true,
+  },
+} %}
+{% include 'vartheme_bs5_rightup:article-teaser' with {
+  media_image: {
+    src: '/themes/contrib/vartheme_bs5_rightup/components/foundation/images/assets/teaser-3.jpg',
+    alt: 'Rotterdam flagship',
+    width: 800,
+    height: 600,
+  },
+  category_label: category_label,
+  heading_text: heading_text,
+  heading_level: heading_level,
+  author: author,
+  date: date,
+  show_divider: show_divider
+} %}
+{% endstory %}
+
+{% story TextOnly with {
+  name: 'Text Only (No Image)',
+  args: {
+    category_label: 'Process',
+    heading_text: 'What Fen & Marble Actually Use to Pitch New Clients',
+    heading_level: 4,
+    author: 'Tom James',
+    date: '',
+    show_divider: false,
+  },
+} %}
+{% include 'vartheme_bs5_rightup:article-teaser' with {
+  category_label: category_label,
+  heading_text: heading_text,
+  heading_level: heading_level,
+  author: author,
+  date: date,
+  show_divider: show_divider
+} %}
+{% endstory %}
+
+{% story Featured with {
+  name: 'Featured (Large Headline)',
+  args: {
+    category_label: 'Architecture',
+    heading_text: 'The Architecture of Unease: How Brutalism Became Beautiful Again',
+    heading_level: 2,
+    author: '',
+    date: '',
+    show_divider: true,
+  },
+} %}
+{% include 'vartheme_bs5_rightup:article-teaser' with {
+  media_image: {
+    src: '/themes/contrib/vartheme_bs5_rightup/components/foundation/images/assets/teaser-3.jpg',
+    alt: 'Brutalist building',
+    width: 1200,
+    height: 800,
+  },
+  image_ratio: 'ratio-16x9',
+  category_label: category_label,
+  heading_text: heading_text,
+  heading_level: heading_level,
+  heading_size: 'display-6',
+  author: author,
+  date: date,
+  show_divider: show_divider
+} %}
+{% endstory %}
+{% endstories %}

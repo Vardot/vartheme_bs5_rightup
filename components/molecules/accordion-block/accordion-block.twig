@@ -64,11 +64,16 @@
   {% set resolved_color = accordion_color|default('') %}
 {% endif %}
 
-{# Logic: resolve state flags. #}
+{# Logic: resolve state flags.
+ # Always-expanding in Drupal Canvas is handled entirely in CSS
+ # (accordion-block.scss's `.is-canvas-preview` override) rather than here:
+ # SDC components compile into an inline template rendered via
+ # TwigEnvironment::renderInline(), which bypasses hook_preprocess() and has
+ # no access to the current route, so Canvas can't reliably be detected from
+ # inside this Twig template.
+ #}
 {% set allow_multiple    = always_open or (accordion_always_open|default(false)) %}
-{% set route_name        = app.request.attributes.get('_route')|default('') %}
-{% set is_canvas_preview = (route_name matches '/canvas/i') or (route_name matches '/sdc/i') or (route_name matches '/component/i') %}
-{% set expanded          = is_canvas_preview ? true : open_by_default %}
+{% set expanded          = open_by_default %}
 {% set has_slot_content  = accordion_content is defined and accordion_content|render|trim is not empty %}
 
 {# Logic: build class lists as arrays. #}
@@ -85,13 +90,7 @@
   {% set collapse_classes = collapse_classes|merge(['show']) %}
 {% endif %}
 
-{% set body_classes = ['accordion-body'] %}
-{% if is_canvas_preview %}
-  {% set body_classes = body_classes|merge(['accordion-body--canvas']) %}
-{% endif %}
-{% if is_canvas_preview and not has_slot_content %}
-  {% set body_classes = body_classes|merge(['accordion-body--canvas-empty']) %}
-{% endif %}
+{% set body_classes = ['accordion-body']|merge(has_slot_content ? [] : ['accordion-body--empty']) %}
 
 {# Logic: build attributes. #}
 {% set attributes = attributes.addClass(['accordion-item']) %}

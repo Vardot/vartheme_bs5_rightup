@@ -1,0 +1,23 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Live Feed
+group: Organism
+status: stable
+description: A colored ticker bar with a fixed label and a continuously auto-scrolling row of timestamped news items.
+props:
+  type: object
+  properties:
+    label:
+      type: string
+      title: Label
+      description: Fixed label shown before the scrolling feed.
+      default: Latest
+      examples:
+        - Latest
+slots:
+  items:
+    title: Items
+    description: Add one or more "Live Feed Item" components here (unlimited, drag & drop reorder).
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once

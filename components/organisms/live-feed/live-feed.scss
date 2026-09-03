@@ -1,0 +1,77 @@
+// @file
+// Live Feed ticker: a fixed label + a continuously auto-scrolling row of
+// items. The animation only activates once live-feed.js adds the
+// "is-looping" class (after it clones the items group for a seamless loop)
+// — without it, the items render once, in order, fully readable and static.
+// Duration is exposed as a component-local custom property on the block
+// root.
+
+@import "../../defaults";   // Global component defaults.
+
+.live-feed {
+  --live-feed-duration: 30s;
+}
+
+.live-feed__track-wrapper {
+  // Fade the scrolling row's edges rather than cutting items off sharply.
+  mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+}
+
+.live-feed__track {
+  inline-size: max-content;
+  min-block-size: 1.5em;
+
+  &.is-looping {
+    animation: live-feed-scroll var(--live-feed-duration) linear infinite;
+  }
+}
+
+.live-feed__fallback {
+  // Fixed width for the empty-slot placeholder, so Canvas's drag & drop
+  // drop-zone overlay — which measures this element directly, since it's
+  // what actually sits between Canvas's slot markers when there's no real
+  // item yet — always has a real, consistently sized target instead of
+  // shrinking to its text's natural width. 12.5rem is 200px at the
+  // standard 16px root font-size.
+  display: inline-block;
+  inline-size: 12.5rem;
+}
+
+.live-feed:hover .live-feed__track.is-looping,
+.live-feed:focus-within .live-feed__track.is-looping {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-feed__track.is-looping {
+    animation: none;
+  }
+}
+
+.live-feed-item + .live-feed-item {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    inline-size: 0.25rem;
+    block-size: 0.25rem;
+    border-radius: 50%;
+    background-color: var(--bs-black);
+    opacity: 0.3;
+  }
+}
+
+@keyframes live-feed-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}

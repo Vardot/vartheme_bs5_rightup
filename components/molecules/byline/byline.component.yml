@@ -1,0 +1,68 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Byline
+group: Base
+description: Author and/or date byline (e.g. "By Jane Doe · Jan 1, 2026") used under article headlines and teasers.
+props:
+  type: object
+  properties:
+    author:
+      type: string
+      title: Author name
+      description: Author name shown after "By". Leave empty to omit the author.
+      default: ''
+
+    author_url:
+      type: string
+      title: Author link (optional)
+      format: uri-reference
+      description: If provided, the author name renders as a link.
+      default: ''
+
+    date:
+      type: string
+      format: date
+      title: Date (optional)
+      description: ISO 8601 date string (YYYY-MM-DD). Leave empty to omit the date.
+      default: ''
+
+    size:
+      type: string
+      title: Font size
+      description: Bootstrap font-size utility class.
+      enum:
+        - fs-1
+        - fs-2
+        - fs-3
+        - fs-4
+        - fs-5
+        - fs-6
+      meta:enum:
+        fs-1: Display
+        fs-2: Extra large
+        fs-3: Large
+        fs-4: Medium
+        fs-5: Small
+        fs-6: Extra small
+      default: fs-6
+      examples:
+        - fs-6
+
+    text_color:
+      type: string
+      title: Text color
+      description: Bootstrap text color utility class.
+      enum:
+        - text-muted
+        - text-body
+        - text-primary
+        - text-secondary
+        - text-dark
+      meta:enum:
+        text-muted: Muted
+        text-body: Body text color
+        text-primary: Primary
+        text-secondary: Secondary
+        text-dark: Dark
+      default: text-muted
+      examples:
+        - text-muted

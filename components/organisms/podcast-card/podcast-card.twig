@@ -1,0 +1,195 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup Starter Kit implementation for the Podcast Card component.
+ *
+ * A podcast/show card: uploaded cover image, a single drag & drop content
+ * slot, a fixed meta text (bottom-left), a "view show" button (bottom-right),
+ * and an optional stretched-link overlay.
+ *
+ * Available properties:
+ * - media_image: Cover image object (src, alt, width, height).
+ * - content_padding: (true|false) Add padding inside the content area below
+ *                    the image. Defaults to `true`.
+ * - meta_text: Small fixed label shown at the bottom-left of the card (e.g.
+ *              episode count). Leave empty to omit it. Defaults to
+ *              `38 Episodes`.
+ * - image_ratio: Keeps a consistent cover image shape.
+ *                (ratio-auto | ratio-16x9 | ratio-4x3 | ratio-1x1
+ *                 | ratio-21x9) Defaults to `ratio-1x1`.
+ * - image_fit: How the cover image behaves inside the fixed ratio.
+ *              (object-fit-cover | object-fit-contain) Defaults to
+ *              `object-fit-cover`.
+ * - button_text: Label for the "view show" button, shown at the
+ *                bottom-right. Only rendered when Button URL is set.
+ *                Defaults to `View Show`.
+ * - button_url: Destination for the "view show" button. Defaults to `''`.
+ * - button_target: Where to open the button link. (_self | _blank)
+ *                  Defaults to `_self`.
+ * - stretched_link: (true|false) When enabled and Button URL is set, the
+ *                   whole card becomes clickable. Defaults to `false`.
+ *
+ * Available attributes:
+ * - attributes: the outermost <article> element.
+ * - media_attributes: the cover image wrapper.
+ * - body_attributes: the content wrapper below the image.
+ * - footer_attributes: the meta text / button row.
+ *
+ * Available slots:
+ * - content_slot: Drop the card's heading and description here (e.g.
+ *                 atoms/heading + atoms/text, or a rich text field).
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set meta_text = meta_text|default('38 Episodes') %}
+{% set image_ratio = image_ratio|default('ratio-1x1') %}
+{% set image_fit = image_fit|default('object-fit-cover') %}
+{% set button_text = button_text|default('View Show') %}
+{% set button_url = button_url|default('')|trim %}
+{% set button_target = button_target|default('_self') %}
+
+{% set media_image = media_image|default({}) %}
+
+{# Variables: boolean props.
+ # SDC validates `type: boolean` props and applies their schema defaults,
+ # so the values arrive as real booleans — only a presence fallback is
+ # needed here, never type coercion.
+ #}
+{% set content_padding = content_padding ?? true %}
+{% set stretched_link = stretched_link ?? false %}
+
+{# Logic: media / slot rendering decisions. #}
+{% set has_image = (media_image.src|default('')|trim) is not empty %}
+{% set content_content %}{% block content_slot %}{% endblock %}{% endset %}
+{% set has_content = content_content|trim is not empty %}
+{% set has_meta = meta_text|trim is not empty %}
+{% set has_button = button_url is not empty %}
+{% set has_footer = has_meta or has_button %}
+{% set use_stretched_link = stretched_link and has_button %}
+
+{% set image_payload = {
+  media: {
+    src: media_image.src|default(''),
+    alt: media_image.alt|default(''),
+    width: media_image.width|default(null),
+    height: media_image.height|default(null),
+  },
+  ratio: image_ratio,
+  width: 'w-100',
+  fit: image_fit,
+  extra_classes: ['d-block', 'img-fluid', 'w-100'],
+  loading: media_image.loading|default('lazy'),
+  sizes: media_image.sizes|default(''),
+} %}
+
+{# Logic: button target. #}
+{% set target_attr = button_target == '_blank' ? '_blank' : '_self' %}
+
+{# Logic: class arrays merged as arrays. #}
+{% set attributes = attributes.addClass([
+  'podcast-card',
+  'card',
+  'd-flex',
+  'flex-column',
+  'overflow-hidden',
+  'position-relative',
+  'border-0',
+]) %}
+
+{% set media_classes = ['podcast-card__media', 'position-relative', 'overflow-hidden', 'mb-3'] %}
+{% set body_classes = ['podcast-card__body']|merge(content_padding ? ['p-4'] : []) %}
+{% set placeholder_classes = ['text-muted', 'small', 'py-3', 'pe-none'] %}
+{% set footer_justify = has_meta and has_button ? 'justify-content-between' : (has_button ? 'justify-content-end' : 'justify-content-start') %}
+{% set footer_classes = ['podcast-card__footer', 'd-flex', 'align-items-center', footer_justify, 'gap-3', 'mt-2'] %}
+{% set meta_classes = ['podcast-card__meta', 'text-muted', 'small', 'mb-0'] %}
+
+{% set content_placeholder_attributes = create_attribute().addClass(placeholder_classes) %}
+{% set meta_attributes = create_attribute().addClass(meta_classes) %}
+
+{# Bootstrap's stretched-link requires other clickable elements in the same
+ # card to sit above its ::after overlay via position + z-index, or they
+ # become unreachable/unfocusable once the stretched link is active.
+ #}
+{% set button_attributes = create_attribute().addClass(['podcast-card__button', 'position-relative', 'z-2', 'border-0', 'p-0']) %}
+
+{# Logic: per-region attributes objects for the structural wrappers. #}
+{% if not media_attributes %}
+  {% set media_attributes = create_attribute() %}
+{% endif %}
+{% set media_attributes = media_attributes.addClass(media_classes) %}
+
+{% if not body_attributes %}
+  {% set body_attributes = create_attribute() %}
+{% endif %}
+{% set body_attributes = body_attributes.addClass(body_classes) %}
+
+{% if not footer_attributes %}
+  {% set footer_attributes = create_attribute() %}
+{% endif %}
+{% set footer_attributes = footer_attributes.addClass(footer_classes) %}
+
+{% if use_stretched_link %}
+  {% set content_label = content_content|striptags|split('\n')|map(v => v|trim)|filter(v => v is not empty)|join(' ') %}
+  {% set stretched_label = (content_label ~ ' ' ~ button_text)|trim %}
+  {% set stretched_attributes = create_attribute()
+    .addClass(['stretched-link'])
+    .setAttribute('href', button_url|e)
+    .setAttribute('target', target_attr)
+    .setAttribute('aria-label', stretched_label)
+  %}
+  {% if target_attr == '_blank' %}
+    {% set stretched_attributes = stretched_attributes.setAttribute('rel', 'noopener noreferrer') %}
+  {% endif %}
+{% endif %}
+
+{# Print the HTML. #}
+<article{{ attributes }}>
+  {% if has_image %}
+    <div{{ media_attributes }}>
+      {{ include('vartheme_bs5_rightup:image', image_payload, false, true) }}
+    </div>
+  {% endif %}
+
+  <div{{ body_attributes }}>
+    {% if has_content %}
+      {{ content_content }}
+    {% else %}
+      <div{{ content_placeholder_attributes }}>Drop content here</div>
+    {% endif %}
+
+    {% if has_footer %}
+      <div{{ footer_attributes }}>
+        {% if has_meta %}
+          <p{{ meta_attributes }}>{{ meta_text }}</p>
+        {% endif %}
+
+        {% if has_button %}
+          {{ include('vartheme_bs5_rightup:button', {
+            label: button_text,
+            variant: 'btn-secondary',
+            size: 'btn-md',
+            radius: 'rounded-2',
+            icon: 'arrow-right',
+            href: button_url,
+            target: button_target == '_blank' ? 'blank' : 'self',
+            attributes: button_attributes,
+          }, with_context: false) }}
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+
+  {% if use_stretched_link %}
+    <a{{ stretched_attributes }}></a>
+  {% endif %}
+</article>

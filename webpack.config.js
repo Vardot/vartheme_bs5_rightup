@@ -31,6 +31,7 @@ module.exports = {
     // Theme
     "theme/content-moderation.theme": ["./scss/theme/content-moderation.theme.scss"],
     "theme/sticky-header.theme": ["./scss/theme/sticky-header.theme.scss"],
+    "theme/offcanvas-menu.theme": ["./scss/theme/offcanvas-menu.theme.scss"],
   },
   output: {
     path: path.resolve(__dirname, 'css'),

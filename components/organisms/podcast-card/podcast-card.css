@@ -1,0 +1,15 @@
+.podcast-card__button {
+  --bs-btn-hover-bg: var(--bs-white) !important;
+  --bs-btn-hover-color: var(--bs-black) !important;
+  --bs-btn-hover-border-color: var(--bs-white) !important;
+  --bs-btn-active-bg: var(--bs-white) !important;
+  --bs-btn-active-color: var(--bs-black) !important;
+  --bs-btn-active-border-color: var(--bs-white) !important;
+
+  margin: 0 !important;
+  font-size: 1.125rem !important;
+}
+
+.podcast-card__button:hover {
+  text-decoration: underline;
+}

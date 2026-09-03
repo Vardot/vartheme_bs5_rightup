@@ -108,6 +108,19 @@ function vartheme_bs5_rightup_process_menu_level(&$menu_items, $menu_level = 1) 
 }
 
 /**
+ * Implements hook_preprocess_block().
+ */
+function vartheme_bs5_rightup_preprocess_block(&$variables) {
+  // Render the theme's own wordmark in the branding block. logo.png / logo.svg
+  // stay as the drupal.org project artwork, so the front end reads its logo from
+  // the rightup-logo.* pair instead. Skipped when a site has set its own logo.
+  if (($variables['plugin_id'] ?? '') === 'system_branding_block'
+    && theme_get_setting('logo.use_default', 'vartheme_bs5_rightup')) {
+    $variables['site_logo'] = \Drupal::request()->getBaseUrl() . '/' . \Drupal::service('extension.list.theme')->getPath('vartheme_bs5_rightup') . '/rightup-logo.svg';
+  }
+}
+
+/**
  * Implements hook_preprocess_page().
  */
 function vartheme_bs5_rightup_preprocess_page(&$variables) {
@@ -115,7 +128,7 @@ function vartheme_bs5_rightup_preprocess_page(&$variables) {
   $variables['logo_print'] = \Drupal::request()->getBaseUrl() . '/' . \Drupal::service('extension.list.theme')->getPath('vartheme_bs5_rightup') . '/logo-print.png';
 
   // Add the white logo.
-  $variables['logo_white'] = \Drupal::request()->getBaseUrl() . '/' . \Drupal::service('extension.list.theme')->getPath('vartheme_bs5_rightup') . '/logo-white.svg';
+  $variables['logo_white'] = \Drupal::request()->getBaseUrl() . '/' . \Drupal::service('extension.list.theme')->getPath('vartheme_bs5_rightup') . '/rightup-logo-white.svg';
 
   // Add the site name and slogan.
   $variables['site_name'] = \Drupal::config('system.site')->get('name');
@@ -161,6 +174,21 @@ function vartheme_bs5_rightup_preprocess_html(&$variables) {
   // nothing loads when the feature is off.
   if (theme_get_setting('sticky_header') ?? TRUE) {
     $variables['#attached']['library'][] = 'vartheme_bs5_rightup/sticky-header';
+  }
+
+  // Body class for Drupal Canvas's editing canvas (and the SDC/component
+  // preview routes). Canvas's preview iframe (Drupal\canvas\Render\MainContent\
+  // CanvasPreviewRenderer) still runs the full #type: 'html' page render, so
+  // this DOES fire there with the real route name — unlike a Twig-level
+  // check, which single-directory components can't perform themselves
+  // (SDC compiles each component into an inline template rendered via
+  // TwigEnvironment::renderInline(), bypassing hook_preprocess() entirely).
+  // Components that need to always show JS-toggled/collapsed content while
+  // being edited (Tab Pane, Accordion Block, …) key off this class in their
+  // own .scss instead of trying to detect Canvas from within Twig.
+  $route_name = \Drupal::routeMatch()->getRouteName() ?? '';
+  if (preg_match('/(canvas|sdc|component)/i', $route_name)) {
+    $variables['body_classes'][] = 'is-canvas-preview';
   }
 
 }

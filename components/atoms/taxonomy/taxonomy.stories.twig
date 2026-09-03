@@ -5,7 +5,7 @@
     componentSubtitle: 'Taxonomy badge',
     docs: {
       description: {
-        component: 'Taxonomy component that can render as plain text or a link. Styled entirely with Bootstrap utilities — dark background, accent text, and accent border. No custom CSS.',
+        component: 'Taxonomy component that can render as plain text or a link. Bold, uppercase, colored text with no background or border.',
       },
       story: {inline: true},
     },
@@ -43,7 +43,42 @@
         Small: 'taxonomy-sm',
       },
     },
-
+    color: {
+      name: 'Color',
+      description: 'Bootstrap text color utility for the badge label.',
+      defaultValue: 'text-tertiary',
+      control: 'select',
+      options: {
+        'Tertiary (default)': 'text-tertiary',
+        Accent: 'text-accent',
+        Primary: 'text-primary',
+        Secondary: 'text-secondary',
+        Success: 'text-success',
+        Danger: 'text-danger',
+        Warning: 'text-warning',
+        Info: 'text-info',
+        Dark: 'text-dark',
+        White: 'text-white',
+        Muted: 'text-muted',
+      },
+    },
+    no_padding: {
+      name: 'Remove padding',
+      description: "Removes the badge's padding for a flush, zero-padding taxonomy label.",
+      defaultValue: false,
+      control: 'boolean',
+    },
+    justify_content: {
+      name: 'Horizontal alignment',
+      description: 'Controls the horizontal alignment of the badge content (justify-content modifier class).',
+      defaultValue: 'justify-content-center',
+      control: 'select',
+      options: {
+        Left: 'justify-content-start',
+        Center: 'justify-content-center',
+        Right: 'justify-content-end',
+      },
+    },
   },
 } %}
 
@@ -54,6 +89,9 @@
     url: '',
     target: '_self',
     size: 'taxonomy-lg',
+    color: 'text-tertiary',
+    no_padding: false,
+    justify_content: 'justify-content-center',
   },
 } %}
 {{ include('vartheme_bs5_rightup:taxonomy') }}
@@ -75,6 +113,17 @@
     label: 'Linked taxonomy',
     url: 'https://example.com',
     target: '_blank',
+    size: 'taxonomy-lg',
+  },
+} %}
+{{ include('vartheme_bs5_rightup:taxonomy') }}
+{% endstory %}
+
+{% story AccentColor with {
+  name: 'Accent color',
+  args: {
+    label: 'Featured',
+    color: 'text-accent',
     size: 'taxonomy-lg',
   },
 } %}

@@ -1,0 +1,96 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Podcast Card
+group: Card
+status: stable
+description: >
+  A podcast/show card: uploaded cover image, a single drag & drop content
+  slot, a fixed meta text (bottom-left), a "view show" button (bottom-right),
+  and an optional stretched-link overlay.
+props:
+  type: object
+  properties:
+    media_image:
+      $ref: json-schema-definitions://canvas.module/image
+      title: Cover image
+      type: object
+    content_padding:
+      type: boolean
+      title: Content padding
+      description: Add padding inside the content area below the image.
+      default: true
+      examples: [true]
+    meta_text:
+      type: string
+      title: Meta text
+      description: Small fixed label shown at the bottom-left of the card (e.g. episode count). Leave empty to omit it.
+      default: 38 Episodes
+      examples:
+        - 38 Episodes
+    image_ratio:
+      type: string
+      title: Image ratio (crop)
+      description: Keeps a consistent cover image shape.
+      enum:
+        - ratio-auto
+        - ratio-16x9
+        - ratio-4x3
+        - ratio-1x1
+        - ratio-21x9
+      default: ratio-1x1
+      examples:
+        - ratio-1x1
+      meta:enum:
+        ratio-auto: Auto (no crop)
+        ratio-16x9: Wide (16:9)
+        ratio-4x3: Standard (4:3)
+        ratio-1x1: Square (1:1)
+        ratio-21x9: Ultra-wide (21:9)
+    image_fit:
+      type: string
+      title: Image fit
+      description: How the cover image behaves inside the fixed ratio.
+      enum:
+        - object-fit-cover
+        - object-fit-contain
+      default: object-fit-cover
+      examples:
+        - object-fit-cover
+      meta:enum:
+        object-fit-cover: Fill (crop)
+        object-fit-contain: Fit (no crop)
+    button_text:
+      type: string
+      title: Button text
+      description: Label for the "view show" button, shown at the bottom-right. Only rendered when Button URL is set.
+      default: View Show
+      examples:
+        - View Show
+    button_url:
+      type: string
+      title: Button URL
+      format: uri-reference
+      description: Destination for the "view show" button.
+      default: ''
+    button_target:
+      type: string
+      title: Button target
+      description: Where to open the button link.
+      enum:
+        - _self
+        - _blank
+      default: _self
+      examples:
+        - _self
+      meta:enum:
+        _self: Same tab
+        _blank: New tab
+    stretched_link:
+      type: boolean
+      title: Stretched link
+      description: When enabled and Button URL is set, the whole card becomes clickable.
+      default: false
+      examples: [false]
+slots:
+  content_slot:
+    title: Content
+    description: Drop the card's heading and description here (e.g. atoms/heading + atoms/text, or a rich text field).

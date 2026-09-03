@@ -1,0 +1,119 @@
+{% stories Byline with {
+  title: 'Base/Byline',
+  parameters: {
+    componentSubtitle: 'Author and/or date byline',
+    docs: {
+      description: {
+        component: 'Author and/or date byline used under article headlines and teasers.',
+      },
+      story: {
+        inline: true,
+      },
+    },
+  },
+  argTypes: {
+    author: {
+      name: 'Author name',
+      description: 'Author name shown after "By". Leave empty to omit the author.',
+      defaultValue: '',
+      control: 'text',
+    },
+    author_url: {
+      name: 'Author link',
+      description: 'If provided, the author name renders as a link.',
+      defaultValue: '',
+      control: 'text',
+    },
+    date: {
+      name: 'Date',
+      description: 'ISO 8601 date string (YYYY-MM-DD). Leave empty to omit the date.',
+      defaultValue: '',
+      control: 'date',
+    },
+    size: {
+      name: 'Font size',
+      description: 'Bootstrap font-size utility class.',
+      defaultValue: 'fs-6',
+      control: 'select',
+      options: {
+        Display: 'fs-1',
+        "'Extra large'": 'fs-2',
+        Large: 'fs-3',
+        Medium: 'fs-4',
+        Small: 'fs-5',
+        "'Extra small'": 'fs-6',
+      },
+    },
+    text_color: {
+      name: 'Text color',
+      description: 'Bootstrap text color utility class.',
+      defaultValue: 'text-muted',
+      control: 'select',
+      options: {
+        Muted: 'text-muted',
+        "'Body text color'": 'text-body',
+        Primary: 'text-primary',
+        Secondary: 'text-secondary',
+        Dark: 'text-dark',
+      },
+    },
+  },
+} %}
+
+{% story Default with {
+  name: 'Default',
+  args: {
+    author: 'Tomas Adeyemi',
+    author_url: '',
+    date: '',
+    size: 'fs-6',
+    text_color: 'text-muted',
+  },
+} %}
+{% include 'vartheme_bs5_rightup:byline' with {
+  author: author,
+  author_url: author_url,
+  date: date,
+  size: size,
+  text_color: text_color
+} %}
+{% endstory %}
+
+{% story AuthorAndDate with {
+  name: 'Author and Date',
+  args: {
+    author: 'Tomas Adeyemi',
+    author_url: '',
+    date: '2026-01-31',
+    size: 'fs-6',
+    text_color: 'text-muted',
+  },
+} %}
+{% include 'vartheme_bs5_rightup:byline' with {
+  author: author,
+  author_url: author_url,
+  date: date,
+  size: size,
+  text_color: text_color
+} %}
+{% endstory %}
+
+{% story LinkedAuthor with {
+  name: 'Linked Author',
+  args: {
+    author: 'Tomas Adeyemi',
+    author_url: '/authors/tomas-adeyemi',
+    date: '',
+    size: 'fs-6',
+    text_color: 'text-muted',
+  },
+} %}
+{% include 'vartheme_bs5_rightup:byline' with {
+  author: author,
+  author_url: author_url,
+  date: date,
+  size: size,
+  text_color: text_color
+} %}
+{% endstory %}
+{% endstories %}

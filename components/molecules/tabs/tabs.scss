@@ -1,3 +1,97 @@
-.tab-pane.active {
-  font-weight: normal;
+// @file Tabs — filter-style tab bar: active tab as a filled square box (no border radius) on a shared bottom border.
+// The `border_color` prop adds a real Bootstrap border-*/utility class
+// directly on this element (safe to combine with the border-bottom below:
+// Bootstrap's border-color utilities only ever set `border-color`, never
+// width/style, so the other three sides stay invisible regardless).
+// The `active_bg`/`active_color` props can't reach the nested `.nav-link`
+// the same way (it's rendered by the separate Tab Item component, however
+// the `items` slot was composed), so they're resolved as `tabs--active-bg-*`
+// / `tabs--active-color-*` modifier classes on this element instead, and
+// picked up below via a plain CSS descendant selector against Bootstrap's
+// own theme-color custom properties.
+@import "../../defaults";
+
+.tabs.nav-tabs {
+  border-bottom: 1px solid var(--bs-border-color);
+  gap: 0.25rem;
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: var(--size-sm-size-2, 0.5rem);
+    padding: var(--size-sm-size-2, 0.5rem) var(--size-sm-size-3, 0.75rem);
+    color: var(--text-dark-text, #000);
+    background: var(--bs-white, #FFF);
+    font-family: var(--font-heading, Rubik);
+    font-size: 1rem;
+    font-weight: var(--weight-primary-medium, 500);
+    line-height: 1.35;
+    text-transform: capitalize;
+    border: 0;
+    border-radius: 0;
+    // Cancels Bootstrap's own `.nav-tabs .nav-link { margin-bottom: -1px; }`
+    // (its default lets the active tab visually merge into the content
+    // below by overlapping the shared border). This design keeps every tab
+    // — active or not — sitting flush above the border, so it stays visible
+    // under the tabs too instead of only in the empty space after them.
+    margin-bottom: 0;
+
+    &.active {
+      background: var(--brand-tertiary, #4F46E1);
+      color: var(--text-white-text, #FFF);
+    }
+  }
+}
+
+// Active tab color overrides (active_bg / active_color props). Bootstrap's
+// theme colors (including the vartheme-registered tertiary/accent) plus
+// black/white all expose a plain `--bs-<color>` custom property, so one loop
+// covers every enum value with no hand-written per-color rule.
+$tabs-active-colors: primary, secondary, tertiary, accent, success, danger, warning, info, light, dark, black, white;
+
+@each $color in $tabs-active-colors {
+  .tabs.tabs--active-bg-#{$color} .nav-link.active {
+    background: var(--bs-#{$color}) !important;
+  }
+
+  .tabs.tabs--active-color-#{$color} .nav-link.active {
+    color: var(--bs-#{$color}) !important;
+  }
+}
+
+// Bootstrap JS tab content (see the `panes` slot / Tab Pane component).
+// Only rendered when panes are provided, so this spacing never affects the
+// plain filter-link (no-panes) usage.
+.tabs + .tab-content {
+  padding-block-start: #{$spacer};
+}
+
+// Defensive fallback: Tab Item and Tab Pane are separate components, each
+// with their own `is_active` prop (a Tab Pane can't read its paired Tab
+// Item's state — see tab-item.twig/tab-pane.twig) — so it's easy for an
+// author to mark a Tab Item active but forget to also mark its paired Tab
+// Pane, leaving the tab-content area blank on the live page. If no pane in
+// a group is active, show the first one instead of nothing.
+.tab-content:not(:has(> .tab-pane.active)) > .tab-pane:first-child {
+  display: block;
+  opacity: 1;
+}
+
+// Drupal Canvas: always show every pane, regardless of which Tab Item is
+// active — Canvas's editing canvas has no click-driven Bootstrap JS, so a
+// hidden (inactive) pane would be unreachable to edit there.
+// `.is-canvas-preview` is added to <body> by
+// vartheme_bs5_rightup_preprocess_html() from the real current route
+// (Canvas's preview iframe still runs the full page render, so
+// hook_preprocess_html() fires there) — Tab Pane can't reliably detect
+// Canvas from within its own Twig template (see tab-pane.twig).
+.is-canvas-preview .tab-content > .tab-pane {
+  display: block !important;
+  opacity: 1 !important;
+
+  & + .tab-pane {
+    margin-block-start: #{$spacer};
+    padding-block-start: #{$spacer};
+    border-top: 1px solid var(--bs-border-color);
+  }
 }

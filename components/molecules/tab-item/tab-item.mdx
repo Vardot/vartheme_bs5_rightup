@@ -1,0 +1,55 @@
+import { Title, Subtitle, Description, Source, Meta, Primary, Stories, Controls } from '@storybook/addon-docs/blocks';
+import * as comStories from './tab-item.stories.json';
+import templateSource from './tab-item.twig?raw';
+
+<Meta of={comStories} />
+
+<Title />
+<Subtitle />
+<Description />
+
+> ### Bootstrap documentation
+> * [Navs and tabs](https://getbootstrap.com/docs/5.3/components/navs-tabs/)
+> * [JavaScript behavior](https://getbootstrap.com/docs/5.3/components/navs-tabs/#javascript-behavior)
+
+<Primary />
+
+## Properties
+<Controls />
+
+<Stories />
+
+## Properties reference
+
+| Property | Type | Description | Default |
+|---|---|---|---|
+| `title` | string | The tab's label | |
+| `url` | string | Where this tab links to. Used as a plain navigation link when Pane ID is empty | |
+| `pane_id` | string | Turns this tab into a real Bootstrap JS tab that toggles a content pane instead of navigating (only matters for the no-JS render — `tabs.js` promotes plain links into tabs automatically whenever the parent Tabs component has panes) | `''` |
+| `is_active` | boolean | Whether this tab is the current/active one | `false` |
+| `attributes` | object | HTML attributes for the link element | `{}` |
+
+## Example
+
+### Plain link
+
+```twig
+{{ include('vartheme_bs5_rightup:tab-item', {
+  title: 'Architecture',
+  url: '/architecture',
+  is_active: false
+}, with_context: false) }}
+```
+
+### Real Bootstrap JS tab
+
+```twig
+{{ include('vartheme_bs5_rightup:tab-item', {
+  title: 'Architecture',
+  pane_id: 'architecture-pane',
+  is_active: false
+}, with_context: false) }}
+```
+
+## Source code
+<Source code={templateSource} />

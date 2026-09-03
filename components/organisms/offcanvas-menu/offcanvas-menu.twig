@@ -1,0 +1,113 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup Starter Kit implementation for the Offcanvas Menu component.
+ *
+ * A hamburger trigger that opens a full takeover navigation panel using
+ * Bootstrap's native Offcanvas plugin (data-API driven — bs-offcanvas-script
+ * is already part of the theme's global bootstrap-scripts library).
+ * offcanvas-menu.js only handles the Drupal Canvas editor preview; front-end
+ * open/close is pure Bootstrap data-API, no custom JS involved.
+ *
+ * Available properties:
+ * - label: Accessible label for the closed-state trigger button (visually
+ *          hidden). Defaults to `Open menu`.
+ * - close_label: Accessible label for the panel's close button (visually
+ *                hidden). Defaults to `Close menu`.
+ * - placement: Which side the panel slides in from. (start | end)
+ *              Defaults to `start`.
+ * - expand_in_editor: Force the panel open while previewed inside the
+ *                      Drupal Canvas editor, so its slots stay reachable
+ *                      for dropping components in. Defaults to `true`.
+ *
+ * Available attributes:
+ * - attributes: HTML attributes for the root element.
+ *
+ * Available slots:
+ * - menu: The primary navigation links.
+ * - utility: Secondary links shown below the divider.
+ * - search: Search form.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set label = label|default('Open menu'|t) %}
+{% set close_label = close_label|default('Close menu'|t) %}
+{% set placement = placement|default('start') %}
+
+{# Variables: boolean props.
+ # SDC validates `type: boolean` props and applies their schema defaults,
+ # so the values arrive as real booleans — only a presence fallback is
+ # needed here, never type coercion.
+ #}
+{% set expand_in_editor = expand_in_editor ?? true %}
+
+{# Logic: merge root classes as an array. #}
+{% set classes = ['offcanvas-menu']|merge(expand_in_editor ? [] : ['offcanvas-menu--collapsed-in-editor']) %}
+
+{# Logic: static structural class lists and a unique panel id. #}
+{% set panel_classes = ['offcanvas', 'offcanvas-' ~ placement, 'offcanvas-menu__panel'] %}
+{% set panel_id = 'offcanvas-menu-panel-' ~ random(99999) %}
+{% set label_id = panel_id ~ '-label' %}
+
+{# Slot content. Checked for emptiness (not just block-default) because
+ # Canvas passes an empty string for an unfilled slot, which would otherwise
+ # silently win over a default placeholder written inside the block. #}
+{% set menu_content %}{% block menu %}{% endblock %}{% endset %}
+{% set utility_content %}{% block utility %}{% endblock %}{% endset %}
+{% set search_content %}{% block search %}{% endblock %}{% endset %}
+{% set has_menu = menu_content|trim is not empty %}
+{% set has_utility = utility_content|trim is not empty %}
+{% set has_search = search_content|trim is not empty %}
+
+{# Print the HTML. #}
+{% set attributes = attributes.addClass(classes) %}
+<div{{ attributes }}>
+  <button type="button" class="offcanvas-menu__trigger" data-bs-toggle="offcanvas" data-bs-target="#{{ panel_id }}" aria-controls="{{ panel_id }}" aria-label="{{ label }}">
+    {{ include('vartheme_bs5_rightup:bootstrap-icon', {
+      icon: 'list',
+      icon_size: 'fs-3',
+      attributes: create_attribute().addClass('offcanvas-menu__icon'),
+    }, with_context = false) }}
+  </button>
+
+  <div class="{{ panel_classes|join(' ') }}" tabindex="-1" id="{{ panel_id }}" aria-labelledby="{{ label_id }}">
+    <div class="offcanvas-header offcanvas-menu__header">
+      <span class="visually-hidden" id="{{ label_id }}">{{ label }}</span>
+      <button type="button" class="btn-close btn-close-white offcanvas-menu__close" data-bs-dismiss="offcanvas" aria-label="{{ close_label }}"></button>
+    </div>
+
+    <div class="offcanvas-body offcanvas-menu__body">
+      {% if has_menu %}
+        <div class="offcanvas-menu__menu">
+          {{ menu_content }}
+        </div>
+      {% endif %}
+
+      {% if has_menu and has_utility %}
+        <hr class="offcanvas-menu__divider">
+      {% endif %}
+
+      {% if has_utility %}
+        <div class="offcanvas-menu__utility">
+          {{ utility_content }}
+        </div>
+      {% endif %}
+
+      {% if has_search %}
+        <div class="offcanvas-menu__search">
+          {{ search_content }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

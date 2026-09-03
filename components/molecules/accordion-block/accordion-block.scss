@@ -4,30 +4,31 @@
 // Override default bootstrap accordion variables.
 $accordion-padding-y: 0.9375rem;
 $accordion-padding-x: 0.9375rem;
-$accordion-border-width: 1px;
-$accordion-border-color: var(--bs-border-color);
-$accordion-border-radius: 0.125rem;
-$accordion-inner-border-radius: subtract($accordion-border-radius, $accordion-border-width) !default;
+$accordion-border-width: 0;
+$accordion-border-radius: 0;
+$accordion-inner-border-radius: 0;
 
-// Design: $secondary-bg-subtle ($linen) bg, dark text, $secondary ($sand) hover bg, primary hover text.
-$accordion-bg: $secondary-bg-subtle;
+// Design: no border, white background (open or closed), black heading text.
+$accordion-bg: $white;
 
 $accordion-body-padding-y: $accordion-padding-y;
 $accordion-body-padding-x: $accordion-padding-x;
 
 $accordion-button-padding-y: $accordion-padding-y;
 $accordion-button-padding-x: $accordion-padding-x;
-$accordion-button-active-bg: $secondary-bg-subtle;
-$accordion-button-active-color: var(--bs-dark);
+$accordion-button-active-bg: $white;
+$accordion-button-active-color: $black;
 
-$accordion-button-focus-border-color: var(--bs-border-color);
 $accordion-button-focus-box-shadow: none;
 
 $accordion-icon-width: 0.9375rem;
 
 @import "../../../node_modules/bootstrap/scss/accordion";
 
-// Design overrides: secondary-subtle background, dark default text, secondary hover bg, primary hover text.
+// Design overrides: no border or border-radius in any state; white
+// background by default (open or closed); tertiary-subtle background only
+// on hover (open or closed, button and body alike); heading text is always
+// black at 1.25rem.
 .accordion {
   .accordion-item {
     margin-block-start: 1.25rem;
@@ -36,23 +37,28 @@ $accordion-icon-width: 0.9375rem;
       margin-block-start: 0;
     }
 
-    &:not(:first-of-type) {
-      border-block-start: $accordion-border-width solid $accordion-border-color;
+    &:hover .accordion-body {
+      background-color: var(--bs-tertiary-bg-subtle);
     }
   }
 
+  .accordion-body {
+    background-color: var(--bs-white);
+  }
+
   .accordion-button {
+    font-size: 1.25rem;
     font-weight: 700;
-    background-color: var(--bs-secondary-bg-subtle);
-    color: var(--bs-dark);
+    background-color: var(--bs-white);
+    color: var(--bs-black);
     box-shadow: none;
     text-align: start;
 
     &,
     &.collapsed,
     &:not(.collapsed) {
-      background-color: var(--bs-secondary-bg-subtle);
-      color: var(--bs-dark);
+      background-color: var(--bs-white);
+      color: var(--bs-black);
       box-shadow: none;
     }
 
@@ -63,17 +69,11 @@ $accordion-icon-width: 0.9375rem;
     &:hover,
     &:focus,
     &:active {
-      background-color: var(--bs-secondary);
-      color: #0D6EFD;
+      background-color: var(--bs-tertiary-bg-subtle);
+      color: var(--bs-black);
       box-shadow: none;
     }
   }
-}
-
-// Canvas slot alignment fixes.
-.accordion-body--canvas {
-  display: block;
-  inline-size: 100%;
 }
 
 .accordion-body__content {
@@ -89,12 +89,37 @@ $accordion-icon-width: 0.9375rem;
   }
 }
 
-.accordion-body--canvas-empty {
-  padding-block: 0;
-  padding-inline: 0;
+// Drupal Canvas: always show every item's body, regardless of open_by_default
+// — Canvas's editing canvas has no click-driven Bootstrap JS, so a collapsed
+// item would be unreachable to edit there. `.is-canvas-preview` is added to
+// <body> by vartheme_bs5_rightup_preprocess_html() from the real current
+// route (Canvas's preview iframe still runs the full page render, so
+// hook_preprocess_html() fires there) — components can't reliably detect
+// Canvas from within their own Twig template (see accordion-block.twig).
+.is-canvas-preview {
+  .accordion-collapse:not(.show) {
+    display: block;
+  }
 
-  > .accordion-body__content {
-    padding-block: var(--bs-accordion-body-padding-y);
-    padding-inline: var(--bs-accordion-body-padding-x);
+  .accordion-button.collapsed {
+    &::after {
+      background-image: var(--bs-accordion-btn-active-icon);
+      transform: var(--bs-accordion-btn-icon-transform);
+    }
+  }
+
+  .accordion-body {
+    display: block;
+    inline-size: 100%;
+  }
+
+  .accordion-body--empty {
+    padding-block: 0;
+    padding-inline: 0;
+
+    > .accordion-body__content {
+      padding-block: var(--bs-accordion-body-padding-y);
+      padding-inline: var(--bs-accordion-body-padding-x);
+    }
   }
 }

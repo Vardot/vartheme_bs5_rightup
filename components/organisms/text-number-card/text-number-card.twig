@@ -1,0 +1,81 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup Starter Kit implementation for the Text Number Card component.
+ *
+ * Stacked card with a numbered brand-color badge (e.g. "01") and a flexible
+ * content slot below it (heading, text, meta, button, etc.) — for
+ * step-by-step or itemized listings.
+ *
+ * Available properties:
+ * - number: Step or index number shown in the badge. Defaults to `01`.
+ * - number_color: Bootstrap theme color for the number badge background.
+ *                 (bg-tertiary | bg-accent) Defaults to `bg-tertiary`.
+ * - background_color: Brand background color applied to the card.
+ *                      (none | bg-body-tertiary | bg-tertiary | bg-accent | bg-primary
+ *                       | bg-primary-subtle | bg-secondary | bg-secondary-subtle | bg-dark)
+ *                      Defaults to `none`.
+ *
+ * Available attributes:
+ * - attributes: Attributes for the root element.
+ * - number_attributes: HTML attributes for the number badge element.
+ * - content_attributes: HTML attributes for the content wrapper element.
+ *
+ * Available slots:
+ * - content: Flexible content below the number badge — heading, text, meta
+ *            line, button, etc.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set number = number|default('01') %}
+{% set number_color = number_color|default('bg-tertiary') %}
+{% set background_color = background_color|default('none') %}
+
+{# Logic: number badge foreground pairing, matching the same brand-color
+ # contrast used by organisms/horizontal-text-icon-card. #}
+{% set number_text_color = number_color == 'bg-accent' ? 'text-dark' : 'text-white' %}
+
+{# Logic: card background/text pairing. Only the theme colors that read as
+ # visually dark switch to white text; everything else keeps the inherited
+ # (dark) text color. #}
+{% set dark_backgrounds = ['bg-primary', 'bg-tertiary', 'bg-dark', 'bg-body-tertiary'] %}
+{% set background_classes = background_color != 'none' ? [background_color] : [] %}
+{% set text_classes = background_color in dark_backgrounds ? ['text-white'] : [] %}
+
+{# Logic: merge all classes as arrays. #}
+{% set classes = ['text-number-card']|merge(background_classes)|merge(text_classes) %}
+{% set number_classes = ['text-number-card__number', 'd-inline-block', 'fw-bold', 'px-3', 'py-2', 'mb-3', number_color, number_text_color] %}
+{% set content_classes = ['text-number-card__content'] %}
+
+{% set attributes = attributes.addClass(classes) %}
+
+{% if not number_attributes %}
+  {% set number_attributes = create_attribute() %}
+{% endif %}
+{% set number_attributes = number_attributes.addClass(number_classes) %}
+
+{% if not content_attributes %}
+  {% set content_attributes = create_attribute() %}
+{% endif %}
+{% set content_attributes = content_attributes.addClass(content_classes) %}
+
+{# Slot content. #}
+{% set content_slot %}{% block content %}{% endblock %}{% endset %}
+
+{# Print the HTML. #}
+<div{{ attributes }}>
+  <span{{ number_attributes }}>{{ number }}</span>
+  <div{{ content_attributes }}>
+    {{ content_slot }}
+  </div>
+</div>

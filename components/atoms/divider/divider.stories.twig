@@ -12,6 +12,26 @@
     },
   },
   argTypes: {
+    text: {
+      name: 'Label text',
+      description: 'Optional label shown before the line. Leave empty for a plain divider.',
+      defaultValue: '',
+      control: 'text',
+    },
+    text_size: {
+      name: 'Label font size',
+      description: 'Bootstrap font-size utility class for the label. Only used when a label is set.',
+      defaultValue: 'fs-6',
+      control: 'select',
+      options: {
+        "'Extra large'": 'fs-1',
+        Large: 'fs-2',
+        "'Medium large'": 'fs-3',
+        Medium: 'fs-4',
+        Small: 'fs-5',
+        "'Extra small (0.875rem)'": 'fs-6',
+      },
+    },
     border_width: {
       name: 'Border width',
       description: 'Bootstrap border width utility class.',
@@ -135,6 +155,52 @@
   },
 } %}
 {% include 'vartheme_bs5_rightup:divider' with {
+  border_width: border_width,
+  border_color: border_color,
+  opacity: opacity,
+  margin_top: margin_top,
+  margin_bottom: margin_bottom
+} %}
+{% endstory %}
+
+{% story FeaturedLabel with {
+  name: 'Featured Label',
+  args: {
+    text: 'FEATURED',
+    text_size: 'fs-6',
+    border_width: 'border-1',
+    border_color: 'border-primary',
+    opacity: 'opacity-100',
+    margin_top: 'mt-3',
+    margin_bottom: 'mb-3',
+  },
+} %}
+{% include 'vartheme_bs5_rightup:divider' with {
+  text: text,
+  text_size: text_size,
+  border_width: border_width,
+  border_color: border_color,
+  opacity: opacity,
+  margin_top: margin_top,
+  margin_bottom: margin_bottom
+} %}
+{% endstory %}
+
+{% story LargeLabel with {
+  name: 'Large Label',
+  args: {
+    text: 'FEATURED',
+    text_size: 'fs-3',
+    border_width: 'border-1',
+    border_color: 'border-primary',
+    opacity: 'opacity-100',
+    margin_top: 'mt-3',
+    margin_bottom: 'mb-3',
+  },
+} %}
+{% include 'vartheme_bs5_rightup:divider' with {
+  text: text,
+  text_size: text_size,
   border_width: border_width,
   border_color: border_color,
   opacity: opacity,

@@ -1,0 +1,121 @@
+// @file
+// Card Slider: label sizing, the previous/next control's icon box, and a
+// horizontally scrollable track showing multiple card components at once.
+// Track item widths (1-4 visible items) are derived from Bootstrap's own
+// $spacers map (gap-4's value) since Bootstrap has no utility for
+// scroll-snap item widths or hiding a scrollbar.
+
+@import "../../defaults";
+
+// Theme colors as CSS custom properties (base/root/root.css) — includes
+// this theme's "accent" extension color alongside the standard Bootstrap
+// set. Each has a literal fallback matching root.css's own value, in case
+// a derived theme ever ships without that file.
+$card-slider-theme-colors: (
+  "accent": var(--bs-accent, #00f5d4),
+  "tertiary": var(--bs-tertiary, #4f46e1),
+  "primary": var(--bs-primary, #000000),
+  "secondary": var(--bs-secondary, #ffffff),
+  "success": var(--bs-success, #198754),
+  "danger": var(--bs-danger, #dc3545),
+  "warning": var(--bs-warning, #ffc107),
+  "info": var(--bs-info, #0dcaf0),
+  "light": var(--bs-light, #f8f9fa),
+  "dark": var(--bs-dark, #001d38),
+  "white": var(--bs-white, #fff),
+  "black": var(--bs-black, #000),
+);
+
+.card-slider {
+  &__label {
+    font-size: 0.875rem;
+    height: 1.875rem;
+    display: flex;
+    align-items: center;
+  }
+
+  // atoms/button's default "inline" alignment adds me-3/mb-3 (for buttons
+  // flowing in a paragraph); this pairs the controls with their own gap-2
+  // instead, so those utility margins need to be neutralized. Background,
+  // icon color and disabled opacity are set through the button component's
+  // own --bs-btn-* variable API (Bootstrap 5.3 buttons are built on these).
+  // !important guards every override here — the modifier classes and the
+  // "btn-primary" variant class are equal-specificity single classes, so
+  // without it the winner would depend on library aggregation order rather
+  // than on which class is more specific to this component.
+  &__control {
+    width: 1.875rem;
+    height: 1.875rem;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  @each $key, $value in $card-slider-theme-colors {
+    &__control--bg-#{$key} {
+      --bs-btn-bg: #{$value} !important;
+      --bs-btn-hover-bg: #{$value} !important;
+      --bs-btn-active-bg: #{$value} !important;
+      --bs-btn-border-color: #{$value} !important;
+      --bs-btn-hover-border-color: #{$value} !important;
+      --bs-btn-active-border-color: #{$value} !important;
+      --bs-btn-disabled-bg: #{$value} !important;
+      --bs-btn-disabled-border-color: #{$value} !important;
+    }
+
+    &__control--icon-#{$key} {
+      --bs-btn-color: #{$value} !important;
+      --bs-btn-hover-color: #{$value} !important;
+      --bs-btn-active-color: #{$value} !important;
+      --bs-btn-disabled-color: #{$value} !important;
+    }
+  }
+
+  @each $n in (0, 25, 50, 75, 100) {
+    &__control--opacity-#{$n} {
+      --bs-btn-disabled-opacity: calc(#{$n} / 100) !important;
+    }
+  }
+
+  &__track {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    // Mobile always shows one full-width card; tablet/desktop use the
+    // visible-items preset below. `min-width: 0` overrides the flex default
+    // of `auto` (which resolves to content's intrinsic size) — without it,
+    // a card's image forces the item wider than `width` on narrow viewports.
+    > * {
+      flex: 0 0 auto;
+      min-width: 0;
+      scroll-snap-align: start;
+      width: 100%;
+    }
+  }
+
+  @each $n in (2, 3, 4) {
+    &__track--visible-#{$n} {
+      $gap: map-get($spacers, 4);
+      $tablet-visible: min($n, 2);
+
+      @include media-breakpoint-up(sm) {
+        > * {
+          width: calc((100% - #{$gap} * (#{$tablet-visible} - 1)) / #{$tablet-visible});
+        }
+      }
+
+      @include media-breakpoint-up(md) {
+        > * {
+          width: calc((100% - #{$gap} * (#{$n} - 1)) / #{$n});
+        }
+      }
+    }
+  }
+}

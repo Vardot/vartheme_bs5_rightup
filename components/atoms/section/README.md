@@ -21,6 +21,7 @@ Use this component when you need a reusable section wrapper that can:
 
 - `section.component.yml` — component schema and props
 - `section.twig` — component template
+- `section.scss` — column divider styles (source; compiled to `section.css`)
 - `README.md` — usage notes and examples
 - `section.mdx` — Storybook docs page
 - `section.stories.json` — Storybook story configuration
@@ -49,6 +50,8 @@ Use this component when you need a reusable section wrapper that can:
 - `border`: which sides to apply a border to — `none`, `border` (all), `border-top`, `border-bottom`, `border-start`, `border-end`
 - `border_color`: Bootstrap border color utility; only applied when `border` is not `none`
 - `border_width`: Bootstrap border width utility (`border-1` through `border-5`); only applied when `border` is not `none`
+- `column_divider`: adds a vertical divider line between columns (tablet/desktop only — columns stack on mobile); defaults to `false`
+- `column_divider_color`: Bootstrap border color utility for the divider; only applied when `column_divider` is `true`
 
 ### Spacing
 
@@ -93,6 +96,8 @@ When `aos_animation` is not `none`, the attributes `data-aos`, `data-aos-duratio
 | `25-75` | 2 columns, wide right |
 | `67-33` | 2 columns, 8/4 split |
 | `33-67` | 2 columns, 4/8 split |
+| `80-20` | 2 columns, 10/2 split |
+| `20-80` | 2 columns, 2/10 split |
 | `50-25-25` | 3 columns |
 | `25-25-50` | 3 columns |
 | `25-25-25-25` | 4 equal columns |
@@ -172,6 +177,26 @@ When `aos_animation` is not `none`, the attributes `data-aos`, `data-aos-duratio
 } only %}
   {% block col_1 %}Left{% endblock %}
   {% block col_2 %}Right{% endblock %}
+{% endembed %}
+```
+
+## Example: two-column section with a divider
+
+```twig
+{% embed 'vartheme_bs5_rightup:section' with {
+  container_type: 'container',
+  columns: '50-50',
+  gutter: 'gx-4 gy-4',
+  column_divider: true,
+  column_divider_color: 'border-secondary-subtle'
+} only %}
+  {% block col_1 %}
+    <p class="mb-0">Left column content.</p>
+  {% endblock %}
+
+  {% block col_2 %}
+    <p class="mb-0">Right column content.</p>
+  {% endblock %}
 {% endembed %}
 ```
 

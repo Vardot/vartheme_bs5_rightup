@@ -1,0 +1,25 @@
+@import "../../defaults"; // Global component defaults.
+
+.horizontal-text-icon-card {
+  --horizontal-text-icon-card-icon-size: #{$spacer * 3}; // 48 px default
+
+  // Icon: fixed circular size regardless of content length.
+  &__icon {
+    width: var(--horizontal-text-icon-card-icon-size);
+    height: var(--horizontal-text-icon-card-icon-size);
+  }
+
+  // Icon glyph: fixed play triangle size, independent of the circle it sits in.
+  &__icon-svg {
+    width: 1.05rem;
+    height: 1.35rem;
+  }
+
+  // Hover: the slot content is arbitrary, so target any heading level it
+  // contains rather than a fixed class name.
+  &:hover {
+    .horizontal-text-icon-card__content :is(h1, h2, h3, h4, h5, h6) {
+      text-decoration: underline;
+    }
+  }
+}

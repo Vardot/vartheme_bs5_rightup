@@ -1,0 +1,98 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Subscribe Box
+status: stable
+description: "A single-row email signup form: an email input and a submit button joined into one bordered, square-cornered Bootstrap input-group."
+group: Forms
+props:
+  type: object
+  properties:
+    label:
+      type: string
+      title: Email field label
+      description: Accessible label for the email input (visually hidden).
+      default: Email address
+      examples:
+        - Email address
+    placeholder:
+      type: string
+      title: Placeholder
+      description: Placeholder text shown inside the empty email input.
+      default: Email Address
+      examples:
+        - Email Address
+    input_name:
+      type: string
+      title: Field name
+      description: The "name" attribute submitted with the email value.
+      default: email
+      examples:
+        - email
+    button_label:
+      type: string
+      title: Button label
+      default: Subscribe
+      examples:
+        - Subscribe
+    button_variant:
+      type: string
+      title: Button style
+      description: Bootstrap button style class.
+      enum:
+        - btn-primary
+        - btn-secondary
+        - btn-accent
+        - btn-success
+        - btn-danger
+        - btn-warning
+        - btn-info
+        - btn-light
+        - btn-dark
+      default: btn-accent
+      examples:
+        - btn-accent
+      meta:enum:
+        btn-primary: Primary
+        btn-secondary: Secondary
+        btn-accent: Accent
+        btn-success: Success
+        btn-danger: Danger
+        btn-warning: Warning
+        btn-info: Info
+        btn-light: Light
+        btn-dark: Dark
+    size:
+      type: string
+      title: Size
+      description: Bootstrap input-group size.
+      enum:
+        - md
+        - sm
+        - lg
+      default: md
+      examples:
+        - md
+      meta:enum:
+        md: Medium (default)
+        sm: Small
+        lg: Large
+    action:
+      type: string
+      title: Form action URL (optional)
+      format: uri-reference
+      description: Where the form submits to, e.g. a newsletter service endpoint. Left empty, the form submits to the current page.
+    method:
+      type: string
+      title: Form method
+      enum:
+        - post
+        - get
+      default: post
+      examples:
+        - post
+      meta:enum:
+        post: POST
+        get: GET
+    attributes:
+      type: Drupal\Core\Template\Attribute
+      title: Attributes
+      description: HTML attributes for the root element.

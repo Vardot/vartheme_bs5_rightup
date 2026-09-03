@@ -38,6 +38,7 @@ props:
         - bg-body-tertiary
         - bg-tertiary
         - bg-accent
+        - bg-accent-subtle
         - bg-primary
         - bg-primary-subtle
         - bg-secondary
@@ -67,6 +68,7 @@ props:
         bg-body-tertiary: Body tertiary
         bg-tertiary: Tertiary
         bg-accent: Accent
+        bg-accent-subtle: Accent subtle
         bg-primary: Primary
         bg-primary-subtle: Primary subtle
         bg-secondary: Secondary
@@ -140,6 +142,8 @@ props:
         - 25-75
         - 67-33
         - 33-67
+        - 80-20
+        - 20-80
         - 50-25-25
         - 25-25-50
         - 25-25-25-25
@@ -156,6 +160,8 @@ props:
         25-75: 2 columns (25% / 75%)
         67-33: 2 columns (67% / 33%)
         33-67: 2 columns (33% / 67%)
+        80-20: 2 columns (80% / 20%)
+        20-80: 2 columns (20% / 80%)
         50-25-25: 3 columns (50% / 25% / 25%)
         25-25-50: 3 columns (25% / 25% / 50%)
         25-25-25-25: 4 columns (25% each)
@@ -482,6 +488,57 @@ props:
         border-4: Large
         border-5: Extra large
 
+    column_divider:
+      type: boolean
+      title: Column divider
+      description: Add a vertical divider line between columns (tablet/desktop only; columns stack on mobile).
+      default: false
+      examples: [false]
+    column_divider_color:
+      type: string
+      title: Column divider color
+      description: Border color utility for the column divider. Only applies when Column divider is enabled.
+      enum:
+        - none
+        - border-primary
+        - border-primary-subtle
+        - border-secondary
+        - border-secondary-subtle
+        - border-success
+        - border-success-subtle
+        - border-danger
+        - border-danger-subtle
+        - border-warning
+        - border-warning-subtle
+        - border-info
+        - border-info-subtle
+        - border-light
+        - border-dark
+        - border-dark-subtle
+        - border-black
+        - border-white
+      default: none
+      examples:
+        - none
+      meta:enum:
+        none: Default
+        border-primary: Primary
+        border-primary-subtle: Primary subtle
+        border-secondary: Secondary
+        border-secondary-subtle: Secondary subtle
+        border-success: Success
+        border-success-subtle: Success subtle
+        border-danger: Danger
+        border-danger-subtle: Danger subtle
+        border-warning: Warning
+        border-warning-subtle: Warning subtle
+        border-info: Info
+        border-info-subtle: Info subtle
+        border-light: Light
+        border-dark: Dark
+        border-dark-subtle: Dark subtle
+        border-black: Black
+        border-white: White
     vertical_alignment:
       type: string
       title: Vertical alignment
