@@ -109,6 +109,21 @@ function vartheme_bs5_rightup_process_menu_level(&$menu_items, $menu_level = 1) 
 }
 
 /**
+ * Implements hook_theme_suggestions_HOOK_alter() for user templates.
+ *
+ * Core's user module registers no view-mode theme suggestion. Its #[Hook('theme')]
+ * declares only `user` and `username`, and unlike NodeThemeHooks it implements
+ * no themeSuggestionsUser(), so `user--<view-mode>.html.twig` never fires and a
+ * template named for a view mode would look correct while doing nothing. Adding
+ * the suggestion here is what makes a per-view-mode user template possible.
+ */
+function vartheme_bs5_rightup_theme_suggestions_user_alter(array &$suggestions, array $variables) {
+  if (!empty($variables['elements']['#view_mode'])) {
+    $suggestions[] = 'user__' . strtr($variables['elements']['#view_mode'], '.', '_');
+  }
+}
+
+/**
  * Implements hook_preprocess_block().
  */
 function vartheme_bs5_rightup_preprocess_block(&$variables) {

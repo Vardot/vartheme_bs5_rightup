@@ -1,0 +1,26 @@
+{#
+/**
+ * @file
+ * Author banner: the user rendered inside the author page's media banner.
+ *
+ * The author's name is the page's only h1. It cannot come from the view: Views
+ * cannot put an argument-derived title on a page route (ViewPageController
+ * ::getTitle() resolves the title with no arguments set and the view never
+ * executed), and `user.name` is not display-configurable, so the name cannot be
+ * placed in this view mode as a field either. So the heading is printed here,
+ * inside the banner, where the design puts it.
+ *
+ * Order follows the design: name, then the role chip, then the bio — the role
+ * and bio arrive through `content` as field_author_role and field_author_bio.
+ *
+ * Available variables:
+ * - user: the user account being rendered.
+ * - content: the rendered fields of the author_banner view mode.
+ */
+#}
+{{ include('vartheme_bs5_rightup:heading', {
+  heading_text: user.getDisplayName(),
+  level: 1,
+}, with_context: false) }}
+
+{{ content }}
