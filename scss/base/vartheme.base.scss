@@ -276,12 +276,13 @@ h6,
   background-color: var(--bs-body-bg);
   box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.12);
 
-  // Child menu link styling - matches the parent (bold, dark) with the same
+  // Child menu link styling - matches the parent (dark, medium) with the same
   // primary-blue hover treatment but no underline (panel rows already separate).
+  // Nav chrome is Rubik, which ships 400/500 only, so 500 is its heaviest face.
   .dropdown-item {
     padding: 0.5rem 1.25rem;
     color: var(--bs-body-color);
-    font-weight: 700;
+    font-weight: 500;
     font-size: 0.9375rem;
     line-height: 1.4;
 
@@ -489,7 +490,8 @@ footer.footer {
       margin-bottom: 1.5rem;
       padding: 0;
       color: var(--bs-emphasis-color);
-      font-weight: 700;
+      // Rubik heading: 500 is the heaviest shipped face.
+      font-weight: 500;
       font-size: 1.25rem;
       line-height: 1.5;
       pointer-events: none; // heading, not interactive
@@ -724,7 +726,8 @@ footer.footer {
     background: transparent;
     box-shadow: none;
     font-size: 1rem;
-    font-weight: 700;
+    // Form chrome is Rubik: 500, not a synthesized 700.
+    font-weight: 500;
     line-height: 1.35;
 
     &:hover,
@@ -779,5 +782,72 @@ $rightup-dark-section-backgrounds: ".bg-primary", ".bg-success", ".bg-danger", "
     .brand-logo-on-dark {
       display: flex !important;
     }
+  }
+}
+
+// Prose typography: serif body, sans chrome.
+// -----------------------------------------------------------------------------
+// The design binds every body style to the serif and every heading and UI
+// string to the sans. So the serif is applied to prose scopes only, never to
+// $font-family-base, which would put it on buttons, forms, nav and admin text.
+// The same declaration is mirrored inside .ck-content by
+// ckeditor5.bootstrap.base.scss, so the editor and the front end agree.
+// .rich-text is the Canvas path: body fields render through the rich-text SDC,
+// whose wrapper carries no other hook. The field--type-* selectors cover a site
+// rendering body fields through Drupal's own field templates instead.
+.rich-text,
+.field--type-text-long,
+.field--type-text-with-summary,
+.lead {
+  font-family: $font-family-serif;
+}
+
+// Mobile type scale.
+// -----------------------------------------------------------------------------
+// Desktop sizes come from the Bootstrap variables and already match the design;
+// only the phone step is overridden here.
+//
+// H2 and H3 are deliberately absent, for two different reasons.
+//
+// Mobile H2 is not an anomalous size. The design's 14px uppercase style is the
+// section eyebrow, which is what the section label binds its text to, so the
+// specimen table is mixing a label style into a heading scale. The open
+// question is whether that cell is bound to the wrong style, not whether 14px
+// is the intended heading size.
+//
+// Mobile H3 at 30px, larger than desktop's 24px, remains genuinely unexplained
+// and is still with the designer.
+//
+// Worth knowing for any future token mapping: desktop H2's 42px exists only as
+// a local override in the specimen, bound to no style at all. $h2-font-size is
+// the right value, but nothing can bind to `Desktop/Heading/H2`, and reaching
+// for it would ship 14px uppercase headings.
+@include media-breakpoint-down(md) {
+  body {
+    font-size: 1rem;
+  }
+
+  h1,
+  .h1 {
+    font-size: 2.375rem;
+  }
+
+  h4,
+  .h4 {
+    font-size: 1.125rem;
+  }
+
+  h6,
+  .h6 {
+    font-size: 0.75rem;
+  }
+
+  .lead {
+    font-size: 1.125rem;
+  }
+
+  small,
+  .small {
+    font-size: 0.875rem;
   }
 }

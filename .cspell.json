@@ -25,6 +25,9 @@
     "js/bootstrap/**"
   ],
   "words": [
+    "ddev",
+    "nowrap",
+    "strtr",
     "varbase",
     "Varbase",
     "Vardot",
@@ -40,6 +43,7 @@
     "metatag",
     "restui",
     "oembed",
+    "wordmark",
     "yoast",
     "heroslider",
     "redoc",

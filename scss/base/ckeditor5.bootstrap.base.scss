@@ -11,4 +11,17 @@
   @import "../../node_modules/bootstrap/scss/buttons";
   @import "../../node_modules/bootstrap/scss/badge";
   @import "../../node_modules/bootstrap/scss/list-group";
+
+  // Prose in the editor uses the same serif as the front end, so what an
+  // author sees while writing matches what a reader gets. Headings stay sans
+  // via $headings-font-family.
+  //
+  // CKEditor ships its own `.ck-content { font-family: var(--ck-content-font-family) }`
+  // in an INLINE stylesheet. That is the same specificity as this rule and comes
+  // later in the document, so it wins and the editor falls back to Helvetica.
+  // Setting its custom property works with that mechanism instead of fighting it,
+  // so no !important and no specificity escalation is needed.
+  --ck-content-font-family: #{inspect($font-family-serif)};
+
+  font-family: $font-family-serif;
 }

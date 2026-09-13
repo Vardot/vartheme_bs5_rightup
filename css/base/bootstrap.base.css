@@ -47,9 +47,20 @@ h1,
   margin-top: 0;
   margin-bottom: 0.5rem;
   color: var(--bs-heading-color);
-  font-weight: 700;
+  font-family:
+    Rubik,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    "Noto Sans",
+    "Liberation Sans",
+    Arial,
+    sans-serif;
+  font-weight: 500;
   font-style: normal;
-  line-height: 140%;
+  line-height: 1.35;
 }
 
 h1,
@@ -172,7 +183,7 @@ strong {
 
 small,
 .small {
-  font-size: 0.875em;
+  font-size: 1rem;
 }
 
 mark,
@@ -228,7 +239,7 @@ pre {
   overflow: auto;
   margin-top: 0;
   margin-bottom: 1rem;
-  font-size: 0.875em;
+  font-size: 1rem;
 }
 
 pre code {
@@ -240,7 +251,7 @@ pre code {
 code {
   word-wrap: break-word;
   color: var(--bs-code-color);
-  font-size: 0.875em;
+  font-size: 1rem;
 }
 
 a > code {
@@ -252,7 +263,7 @@ kbd {
   color: var(--bs-body-bg);
   border-radius: 0.25rem;
   background-color: var(--bs-body-color);
-  font-size: 0.875em;
+  font-size: 1rem;
 }
 
 kbd kbd {
@@ -468,23 +479,14 @@ progress {
 }
 
 .lead {
-  font-size: calc(1.265625rem + 0.1875vw);
-}
-
-@media (min-width: 1200px) {
-  .lead {
-    font-size: 1.40625rem;
-  }
-}
-
-.lead {
-  font-weight: 500;
+  font-size: 1.25rem;
+  font-weight: 400;
 }
 
 .display-1 {
   font-size: calc(1.4625rem + 2.55vw);
   font-weight: 500;
-  line-height: 140%;
+  line-height: 1.35;
 }
 
 @media (min-width: 1200px) {
@@ -496,7 +498,7 @@ progress {
 .display-2 {
   font-size: calc(1.425rem + 2.1vw);
   font-weight: 500;
-  line-height: 140%;
+  line-height: 1.35;
 }
 
 @media (min-width: 1200px) {
@@ -508,7 +510,7 @@ progress {
 .display-3 {
   font-size: calc(1.3625rem + 1.35vw);
   font-weight: 500;
-  line-height: 140%;
+  line-height: 1.35;
 }
 
 @media (min-width: 1200px) {
@@ -520,7 +522,7 @@ progress {
 .display-4 {
   font-size: calc(1.3125rem + 0.75vw);
   font-weight: 500;
-  line-height: 140%;
+  line-height: 1.35;
 }
 
 @media (min-width: 1200px) {
@@ -532,7 +534,7 @@ progress {
 .display-5 {
   font-size: calc(1.275rem + 0.3vw);
   font-weight: 500;
-  line-height: 140%;
+  line-height: 1.35;
 }
 
 @media (min-width: 1200px) {
@@ -544,7 +546,7 @@ progress {
 .display-6 {
   font-size: 1.125rem;
   font-weight: 500;
-  line-height: 140%;
+  line-height: 1.35;
 }
 
 .list-unstyled {
@@ -582,7 +584,7 @@ progress {
 
 .initialism {
   text-transform: uppercase;
-  font-size: 0.875em;
+  font-size: 1rem;
 }
 
 .blockquote {
@@ -598,7 +600,7 @@ progress {
   margin-top: -1rem;
   margin-bottom: 1rem;
   color: #6c757d;
-  font-size: 0.875em;
+  font-size: 1rem;
 }
 
 .blockquote-footer::before {
@@ -630,7 +632,7 @@ progress {
 
 .figure-caption {
   color: var(--bs-secondary-color);
-  font-size: 0.875em;
+  font-size: 1rem;
 }
 
 .container,
@@ -2630,7 +2632,7 @@ progress {
 .form-text {
   margin-top: 0.25rem;
   color: var(--bs-secondary-color);
-  font-size: 0.875em;
+  font-size: 1rem;
 }
 
 .form-control {
@@ -3499,7 +3501,7 @@ textarea.form-control-lg {
   width: 100%;
   margin-top: 0.25rem;
   color: var(--bs-form-valid-color);
-  font-size: 0.875em;
+  font-size: 1rem;
 }
 
 .valid-tooltip {
@@ -3644,7 +3646,7 @@ textarea.form-control.is-valid {
   width: 100%;
   margin-top: 0.25rem;
   color: var(--bs-form-invalid-color);
-  font-size: 0.875em;
+  font-size: 1rem;
 }
 
 .invalid-tooltip {
@@ -3789,7 +3791,7 @@ textarea.form-control.is-invalid {
   --bs-btn-padding-y: 0.375rem;
   --bs-btn-font-family:;
   --bs-btn-font-size: 1.125rem;
-  --bs-btn-font-weight: 700;
+  --bs-btn-font-weight: 500;
   --bs-btn-line-height: 1.5;
   --bs-btn-color: var(--bs-body-color);
   --bs-btn-bg: transparent;
@@ -5140,7 +5142,7 @@ fieldset:disabled .btn {
   --bs-navbar-toggler-padding-y: 0.25rem;
   --bs-navbar-toggler-padding-x: 0.75rem;
   --bs-navbar-toggler-font-size: 1.125rem;
-  --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 30 30%27%3e%3cpath stroke=%27rgba%2833, 37, 41, 0.75%29%27 stroke-linecap=%27round%27 stroke-miterlimit=%2710%27 stroke-width=%272%27 d=%27M4 7h22M4 15h22M4 23h22%27/%3e%3c/svg%3e");
+  --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 30 30%27%3e%3cpath stroke=%27rgba%2836, 36, 36, 0.75%29%27 stroke-linecap=%27round%27 stroke-miterlimit=%2710%27 stroke-width=%272%27 d=%27M4 7h22M4 15h22M4 23h22%27/%3e%3c/svg%3e");
   --bs-navbar-toggler-border-color: rgba(var(--bs-emphasis-color-rgb), 0.15);
   --bs-navbar-toggler-border-radius: 0;
   --bs-navbar-toggler-focus-width: 0.25rem;

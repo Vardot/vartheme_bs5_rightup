@@ -41,12 +41,17 @@
 %}
 
 {# Print the HTML. #}
+{# Logic: the group title's heading level. Structure is a prop; the visual size
+ # follows the level. `html_tag` and `content` were passed here previously, and
+ # `atoms/heading` declares neither - its API is `heading_text` and `level` - so
+ # the title rendered as an empty <h3> and the text was dropped. #}
+{% set title_level = title_level|default(3) %}
+
 {% if title %}
   {{ include('vartheme_bs5_rightup:heading', {
-      html_tag: 'h3',
-      content: title,
-    },
-  ) }}
+      heading_text: title,
+      level: title_level,
+    }, with_context: false) }}
 {% endif %}
 {% for row in rows %}
   {% if row.content is defined %}

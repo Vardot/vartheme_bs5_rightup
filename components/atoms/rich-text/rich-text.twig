@@ -5,6 +5,9 @@
  *
  * Renders rich HTML with optional smart trimming by words or characters.
  *
+ * Available attributes:
+ * - attributes: Attributes for the root element.
+ *
  * Available properties:
  * - text: The rich HTML content. Defaults to ''.
  * - trim: (true|false) Enable smart trimming. Defaults to `false`.
@@ -95,8 +98,15 @@
   {% endif %}
 {% endif %}
 
+{# Logic: a single class hook so the theme layer can give text-format prose its
+ # own typography. The component itself stays zero-CSS by contract; the styling
+ # lives in scss/base/vartheme.base.scss. Canvas renders body fields through
+ # this component, so without a hook the front end has nothing to target and
+ # cannot be kept in sync with the CKEditor editor stylesheet. #}
+{% set attributes = attributes.addClass(['rich-text']) %}
+
 {# Print the HTML. #}
-<div>
+<div{{ attributes }}>
   {% if render_raw %}
     {{ output|raw }}
   {% else %}

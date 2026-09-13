@@ -223,7 +223,7 @@ h6 a:focus,
   padding: 0.5rem 1.25rem;
   color: var(--bs-body-color);
   font-size: 0.9375rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.4;
 }
 
@@ -422,7 +422,7 @@ footer.footer .block-system-menu-blocksecondary a.nav-link.dropdown-toggle {
   pointer-events: none;
   color: var(--bs-emphasis-color);
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.5;
 }
 
@@ -664,7 +664,7 @@ footer.footer hr {
   background: transparent;
   box-shadow: none;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.35;
 }
 
@@ -741,4 +741,41 @@ footer.footer hr {
 
 .bg-black .brand-logo-on-dark {
   display: flex !important;
+}
+
+.rich-text,
+.field--type-text-long,
+.field--type-text-with-summary,
+.lead {
+  font-family: "EB Garamond", Garamond, "Times New Roman", "Liberation Serif", Georgia, serif;
+}
+
+@media (max-width: 767.98px) {
+  body {
+    font-size: 1rem;
+  }
+
+  h1,
+  .h1 {
+    font-size: 2.375rem;
+  }
+
+  h4,
+  .h4 {
+    font-size: 1.125rem;
+  }
+
+  h6,
+  .h6 {
+    font-size: 0.75rem;
+  }
+
+  .lead {
+    font-size: 1.125rem;
+  }
+
+  small,
+  .small {
+    font-size: 0.875rem;
+  }
 }

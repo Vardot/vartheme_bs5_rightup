@@ -12,6 +12,20 @@ props:
       title: Title
       description: 'The title of this group of rows. May be empty.'
       default: ''
+    title_level:
+      type: integer
+      title: 'Group title heading level'
+      description: 'Heading level for the group title. Structure only - the size follows the level. Defaults to 3, which is what this component emitted before the level was configurable.'
+      enum: [2, 3, 4, 5, 6]
+      default: 3
+      examples:
+        - 3
+      'meta:enum':
+        2: 'H2: a top-level section on the page'
+        3: 'H3: nested under a section heading (default)'
+        4: 'H4'
+        5: 'H5'
+        6: 'H6'
     default_row_class:
       type: boolean
       title: 'Default Row Class'

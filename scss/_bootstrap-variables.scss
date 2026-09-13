@@ -21,15 +21,38 @@ $aspect-ratios: (
 );
 
 // Override the default primary font family to Rubik - Regular and Medium for sans serif.
-$font-family-sans-serif: 'Rubik', sans-serif;
+// Rubik first, then the platform system sans, so a blocked or failed webfont
+// degrades to the OS UI face instead of the browser's default sans.
+$font-family-sans-serif: 'Rubik', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif;
 
-// Secondary font family (EB Garamond — Regular and Bold).
-$font-family-monospace: 'EB Garamond', serif;
+// Secondary/prose font family (EB Garamond — Regular 400 and Bold 700).
+// Prose only: article body, rich text and lead. Chrome (buttons, forms, nav,
+// admin strings) stays on the sans family, which is what the design does.
+$font-family-serif: 'EB Garamond', 'Garamond', 'Times New Roman', 'Liberation Serif', 'Georgia', serif;
+
+// The brand keeps EB Garamond in Bootstrap's monospace slot, so `--bs-font-monospace`
+// carries the secondary family. Same serif fallbacks as $font-family-serif.
+$font-family-monospace: 'EB Garamond', 'Garamond', 'Times New Roman', 'Liberation Serif', 'Georgia', serif;
 
 // Override the default font size.
 $font-size-root: null;
 $font-size-base: 1.125rem; // Assumes the browser default, typically `16px`
 $font-size-sm: 0.875rem;
+
+// The design's Body/Regular/Small step (16px) — captions, bylines, dates.
+// The base is 18px and $font-size-sm is 14px, so there was no 1rem token.
+$font-size-md: 1rem;
+
+// `small` and `.small`. Bootstrap's default is 0.875em, which resolves against
+// the 18px parent and lands at 15.75px; the design's Small step is 16px, so it
+// is pinned to the 1rem token instead. Root-relative on purpose: `em` here
+// would resolve against the parent again and reintroduce the drift.
+$small-font-size: $font-size-md;
+
+// `.lead`. Bootstrap derives this as $font-size-base * 1.25, which the 18px
+// base turns into 22.5px; the design's Lead step is 20px. rem is root-relative,
+// so 1.25rem is exactly 20px regardless of the parent.
+$lead-font-size: 1.25rem;
 $font-size-lg: 1.125rem;
 
 // Override the default quote font size.
@@ -55,14 +78,20 @@ $display-font-sizes: (
 
 // Override the default headings.
 $headings-font-style: normal;
-$headings-font-weight: 700;
-$headings-line-height: 140%;
+// Headings stay on the sans family. Stated explicitly rather than left null:
+// a prose wrapper sets the serif on its subtree, and a null value would let
+// headings inherit it.
+$headings-font-family: $font-family-sans-serif;
+$headings-font-weight: 500;
+$headings-line-height: 1.35;
 
 // Override the default display headings.
 $display-font-weight: 500;
 
-// Override the default lead styling.
-$lead-font-weight: 500;
+// `.lead`. The design binds Lead to Body/Regular/Large: EB Garamond Regular, so
+// weight 400. Bootstrap's own default is 300, and 500 has no Garamond face to
+// render with, so it would be synthesized bold from the 400 file.
+$lead-font-weight: 400;
 
 // Override the dark color to use navy-600.
 $navy: #001D38;
@@ -102,6 +131,9 @@ $border-color: $primary-bg-subtle;
 // Custom color variables with no Bootstrap equivalents.
 $subtle-text: rgba($navy, .7); // subtle-text at 70% opacity
 
+// Body copy colour.
+$body-color: #242424;
+
 // Override body-tertiary to use gray-900 (#212529) for both background and text.
 $gray: #212529;
 $gray-900: shade-color($gray, 0%);
@@ -120,7 +152,9 @@ $breadcrumb-divider: quote("\F285");
 $breadcrumb-divider-flipped: quote("\F285");
 
 // Override border radius for buttons with no radius.
-$btn-font-weight: 700;
+// Buttons render in the sans family (Rubik), which ships 400 and 500 only —
+// 700 would be a synthesized fake bold. 500 is Rubik's heaviest real face.
+$btn-font-weight: 500;
 $btn-border-radius: 0;
 $btn-border-radius-sm: 0;
 $btn-border-radius-lg: 0;
