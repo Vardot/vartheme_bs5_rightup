@@ -17,6 +17,9 @@
   // Design default: the theme's mint accent, with Bootstrap's own computed
   // contrast color for the icon on top of it.
   --audio-player-remote-accent: var(--bs-accent);
+  // Unplayed portion of the seek bar: a translucent echo of the
+  // surrounding text, so one value works on a light and a dark band.
+  --audio-player-remote-track: color-mix(in srgb, currentColor 30%, transparent);
   --audio-player-remote-accent-fg: #{color-contrast($accent)};
 }
 
@@ -53,7 +56,7 @@ $audio-player-remote-accent-colors: map-merge($theme-colors, (
 
 .audio-player-remote__title {
   margin-block-end: 0;
-  color: var(--text-dark-text, #000);
+  color: inherit;
   font-family: var(--font-heading, Rubik);
   font-size: 0.875rem;
   font-weight: var(--weight-primary-medium, 500);
@@ -61,6 +64,24 @@ $audio-player-remote-accent-colors: map-merge($theme-colors, (
 
 .audio-player-remote__controls {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.audio-player-remote__buttons {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 1rem;
+}
+
+// Elapsed time, seek bar and duration read as one unit, so they share
+// a row that takes the width left over by the transport buttons.
+.audio-player-remote__scrubber {
+  display: flex;
+  flex-grow: 1;
+  flex-basis: 15rem;
   align-items: center;
   gap: 0.75rem;
 }
@@ -70,7 +91,7 @@ $audio-player-remote-accent-colors: map-merge($theme-colors, (
   align-items: center;
   justify-content: center;
   padding: 0;
-  color: var(--text-dark-text, #000);
+  color: inherit;
   background: transparent;
   border: 0;
   border-radius: 50rem;
@@ -85,15 +106,15 @@ $audio-player-remote-accent-colors: map-merge($theme-colors, (
 .audio-player-remote__button--skip-back,
 .audio-player-remote__button--skip-forward,
 .audio-player-remote__button--download {
-  width: 1.75rem;
-  height: 1.75rem;
-  font-size: 1.125rem;
+  width: 1.875rem;
+  height: 1.875rem;
+  font-size: 1.375rem;
 }
 
 .audio-player-remote__button--toggle {
   flex-shrink: 0;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 3rem;
+  height: 3rem;
   color: var(--audio-player-remote-accent-fg);
   background: var(--audio-player-remote-accent);
   font-size: 1.25rem;
@@ -105,13 +126,22 @@ $audio-player-remote-accent-colors: map-merge($theme-colors, (
   }
 }
 
-.audio-player-remote__time {
+.audio-player-remote__time-current,
+.audio-player-remote__time-duration {
   flex-shrink: 0;
-  color: var(--text-dark-text, #000);
   font-family: var(--font-heading, Rubik);
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+.audio-player-remote__time-current {
+  color: var(--audio-player-remote-accent);
+}
+
+.audio-player-remote__time-duration {
+  color: inherit;
+  opacity: 0.5;
 }
 
 // Native range input re-skinned as a thin seek bar.
@@ -121,7 +151,7 @@ $audio-player-remote-accent-colors: map-merge($theme-colors, (
 .audio-player-remote__seek {
   flex-grow: 1;
   width: 100%;
-  height: 0.25rem;
+  height: 0.3125rem;
   padding: 0;
   appearance: none;
   background: transparent;
@@ -133,15 +163,15 @@ $audio-player-remote-accent-colors: map-merge($theme-colors, (
   }
 
   @mixin audio-player-remote-track {
-    height: 0.25rem;
+    height: 0.3125rem;
     border: 0;
     border-radius: 50rem;
     background: linear-gradient(
       to right,
       var(--audio-player-remote-accent) 0%,
       var(--audio-player-remote-accent) var(--audio-player-remote-progress, 0%),
-      var(--bs-secondary-bg-subtle, #E9ECEF) var(--audio-player-remote-progress, 0%),
-      var(--bs-secondary-bg-subtle, #E9ECEF) 100%
+      var(--audio-player-remote-track) var(--audio-player-remote-progress, 0%),
+      var(--audio-player-remote-track) 100%
     );
   }
 

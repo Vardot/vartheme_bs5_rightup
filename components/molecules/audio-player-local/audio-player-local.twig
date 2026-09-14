@@ -111,38 +111,44 @@
     {% endif %}
 
     <div class="audio-player-local__controls">
-      {% if show_skip %}
-        <button type="button" class="audio-player-local__button audio-player-local__button--skip-back" aria-label="{{ 'Skip back'|t }}">
-          <i class="bi bi-skip-backward-fill" aria-hidden="true"></i>
+      <div class="audio-player-local__buttons">
+        {% if show_skip %}
+          <button type="button" class="audio-player-local__button audio-player-local__button--skip-back" aria-label="{{ 'Skip back'|t }}">
+            <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i>
+          </button>
+        {% endif %}
+
+        <button type="button" class="audio-player-local__button audio-player-local__button--toggle" aria-label="{{ 'Play'|t }}">
+          <i class="bi bi-play-fill audio-player-local__icon audio-player-local__icon--play" aria-hidden="true"></i>
+          <i class="bi bi-pause-fill audio-player-local__icon audio-player-local__icon--pause d-none" aria-hidden="true"></i>
         </button>
-      {% endif %}
 
-      <button type="button" class="audio-player-local__button audio-player-local__button--toggle" aria-label="{{ 'Play'|t }}">
-        <i class="bi bi-play-fill audio-player-local__icon audio-player-local__icon--play" aria-hidden="true"></i>
-        <i class="bi bi-pause-fill audio-player-local__icon audio-player-local__icon--pause d-none" aria-hidden="true"></i>
-      </button>
+        {% if show_skip %}
+          <button type="button" class="audio-player-local__button audio-player-local__button--skip-forward" aria-label="{{ 'Skip forward'|t }}">
+            <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+          </button>
+        {% endif %}
+      </div>
 
-      {% if show_skip %}
-        <button type="button" class="audio-player-local__button audio-player-local__button--skip-forward" aria-label="{{ 'Skip forward'|t }}">
-          <i class="bi bi-skip-forward-fill" aria-hidden="true"></i>
-        </button>
-      {% endif %}
+      <div class="audio-player-local__scrubber">
+        {% if show_time %}
+          <span class="audio-player-local__time-current" aria-hidden="true">0:00</span>
+        {% endif %}
 
-      {% if show_time %}
-        <span class="audio-player-local__time" aria-hidden="true">
-          <span class="audio-player-local__time-current">0:00</span><span class="audio-player-local__time-sep">&nbsp;/&nbsp;</span><span class="audio-player-local__time-duration">0:00</span>
-        </span>
-      {% endif %}
+        <input
+          type="range"
+          class="audio-player-local__seek"
+          min="0"
+          max="100"
+          value="0"
+          step="0.1"
+          aria-label="{{ 'Seek'|t }}"
+        >
 
-      <input
-        type="range"
-        class="audio-player-local__seek"
-        min="0"
-        max="100"
-        value="0"
-        step="0.1"
-        aria-label="{{ 'Seek'|t }}"
-      >
+        {% if show_time %}
+          <span class="audio-player-local__time-duration" aria-hidden="true">0:00</span>
+        {% endif %}
+      </div>
 
       {% if show_download %}
         <a href="{{ audio_url }}" download class="audio-player-local__button audio-player-local__button--download" aria-label="{{ 'Download audio'|t }}">
