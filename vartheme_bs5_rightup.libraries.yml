@@ -279,3 +279,10 @@ accordion-scripts:
   js:
     js/components/accordion-init.js: {}
 
+# Newsletter subscribe form styles, scoped to the mint hero section so the
+# design's indigo Subscribe button does not reach the indigo call-to-action
+# placements that share the same webform (see issue 3622989).
+newsletter-subscribe:
+  css:
+    theme:
+      css/theme/newsletter-subscribe.theme.css: {}

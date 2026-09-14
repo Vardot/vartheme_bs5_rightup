@@ -1,0 +1,44 @@
+@import "../defaults";   // Global defaults.
+
+// Vartheme BS5 Rightup Newsletter subscribe form.
+// -----------------------------------------------------------------------------
+//
+// The design gives the Newsletter hero an indigo Subscribe button
+// (brand/tertiary). The same `newsletter_subscribe` webform is placed on ten
+// pages of a RightUp site, and every one of those pages also renders it inside
+// an indigo call-to-action section, where an indigo button would sit at 1.00:1
+// against its own background — invisible.
+//
+// So the design's treatment is scoped to the mint hero (`.bg-accent-subtle`)
+// and nowhere else. Every indigo placement keeps the theme's default black
+// button, which measures 3.30:1 there and passes the 3:1 threshold for a user
+// interface component.
+
+.bg-accent-subtle {
+  .webform-submission-newsletter-subscribe-form {
+    .form-submit,
+    .webform-button--submit {
+      --bs-btn-bg: #{$tertiary};
+      --bs-btn-border-color: #{$tertiary};
+      --bs-btn-hover-bg: #{darken($tertiary, 7.5%)};
+      --bs-btn-hover-border-color: #{darken($tertiary, 10%)};
+      --bs-btn-active-bg: #{darken($tertiary, 10%)};
+      --bs-btn-active-border-color: #{darken($tertiary, 12.5%)};
+      --bs-btn-color: #{$white};
+      --bs-btn-hover-color: #{$white};
+      --bs-btn-active-color: #{$white};
+    }
+
+    // The subscription checkboxes sit directly under the email field, laid out
+    // inline as the design shows them, with no fieldset chrome.
+    .js-webform-type-checkboxes,
+    .webform-type-checkboxes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: map-get($spacers, 4);
+      padding: 0;
+      border: 0;
+      background-color: transparent;
+    }
+  }
+}

@@ -21,12 +21,14 @@ props:
       enum:
         - bg-tertiary
         - bg-accent
+        - bg-dark
       default: bg-tertiary
       examples:
         - bg-tertiary
       meta:enum:
         bg-tertiary: Blue
         bg-accent: Accent (Mint)
+        bg-dark: Dark (Black)
 
     background_color:
       type: string

@@ -1,0 +1,22 @@
+.bg-accent-subtle .webform-submission-newsletter-subscribe-form .form-submit,
+.bg-accent-subtle .webform-submission-newsletter-subscribe-form .webform-button--submit {
+  --bs-btn-bg: #4f46e1;
+  --bs-btn-border-color: #4f46e1;
+  --bs-btn-hover-bg: rgb(47.688372093, 37.0872093023, 219.6627906977);
+  --bs-btn-hover-border-color: rgb(44.2604651163, 34.0465116279, 209.9534883721);
+  --bs-btn-active-bg: rgb(44.2604651163, 34.0465116279, 209.9534883721);
+  --bs-btn-active-border-color: rgb(41.9476744186, 32.2674418605, 198.9825581395);
+  --bs-btn-color: #fff;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-active-color: #fff;
+}
+
+.bg-accent-subtle .webform-submission-newsletter-subscribe-form .js-webform-type-checkboxes,
+.bg-accent-subtle .webform-submission-newsletter-subscribe-form .webform-type-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  gap: 1.5rem;
+}

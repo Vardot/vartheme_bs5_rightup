@@ -15,6 +15,7 @@ regions:
   footer: Footer
 libraries:
   - vartheme_bs5_rightup/framework
+  - vartheme_bs5_rightup/newsletter-subscribe
 
 ckeditor_stylesheets: false
 ckeditor5-stylesheets:
