@@ -190,3 +190,13 @@
   --bs-accent-text-emphasis: #212529;
   --bs-accent-border-subtle: rgb(153, 251, 237.8);
 }
+
+:root {
+  --vb-display-letter-spacing: -0.02em;
+  --vb-display-1-font-size-mobile: 2.75rem;
+  --vb-display-2-font-size-mobile: 2.25rem;
+  --vb-display-3-font-size-mobile: 1.875rem;
+  --vb-display-4-font-size-mobile: 1.5rem;
+  --vb-display-5-font-size-mobile: 1.25rem;
+  --vb-display-6-font-size-mobile: 1rem;
+}

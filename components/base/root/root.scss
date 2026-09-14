@@ -16,3 +16,16 @@
   --bs-accent-text-emphasis: #{$accent-text-emphasis};
   --bs-accent-border-subtle: #{$accent-border-subtle};
 }
+
+// Theme-owned display tokens. Bootstrap emits no custom property for a display
+// size and carries no tracking variable at all, so these values are the theme's
+// own and carry the theme's --vb- prefix, never --#{$prefix}: a reader has to be
+// able to tell them from the Bootstrap tokens declared above. Same convention as
+// the --vb-filter-* tokens in scss/base/vartheme.base.scss, which consumes these.
+:root {
+  --vb-display-letter-spacing: #{$rightup-display-letter-spacing};
+
+  @each $display, $font-size in $rightup-display-font-sizes-mobile {
+    --vb-display-#{$display}-font-size-mobile: #{$font-size};
+  }
+}

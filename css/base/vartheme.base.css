@@ -778,4 +778,39 @@ footer.footer hr {
   .small {
     font-size: 0.875rem;
   }
+
+  .display-1 {
+    font-size: var(--vb-display-1-font-size-mobile);
+  }
+
+  .display-2 {
+    font-size: var(--vb-display-2-font-size-mobile);
+  }
+
+  .display-3 {
+    font-size: var(--vb-display-3-font-size-mobile);
+  }
+
+  .display-4 {
+    font-size: var(--vb-display-4-font-size-mobile);
+  }
+
+  .display-5 {
+    font-size: var(--vb-display-5-font-size-mobile);
+  }
+
+  .display-6 {
+    font-size: var(--vb-display-6-font-size-mobile);
+  }
+}
+
+@media (min-width: 768px) {
+  .display-1,
+  .display-2,
+  .display-3,
+  .display-4,
+  .display-5,
+  .display-6 {
+    letter-spacing: var(--vb-display-letter-spacing);
+  }
 }

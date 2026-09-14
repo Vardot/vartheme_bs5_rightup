@@ -88,6 +88,36 @@ $headings-line-height: 1.35;
 // Override the default display headings.
 $display-font-weight: 500;
 
+// Theme-owned display variables. Both are $rightup-prefixed because Bootstrap
+// 5.3 provides no equivalent to extend or override, so neither may pose as a
+// Bootstrap variable:
+//
+//   - There is no per-breakpoint display map. $display-font-sizes is a single
+//     flat map and every narrower viewport is left to RFS, which is tuned
+//     globally rather than per class.
+//   - There is no letter-spacing variable anywhere in Bootstrap 5.3, for the
+//     displays or for anything else.
+//
+// Which display steps exist still comes from Bootstrap: both are keyed to
+// $display-font-sizes, and the desktop sizes stay on $display-font-sizes + RFS.
+
+// Display scale, phone step. RFS's fluid size lands well below the design on a
+// phone (display-1 resolves to about 2.06rem at a 375px viewport against the
+// design's 2.75rem), so the theme carries its own map for the step below md.
+$rightup-display-font-sizes-mobile: (
+  1: 2.75rem,
+  2: 2.25rem,
+  3: 1.875rem,
+  4: 1.5rem,
+  5: 1.25rem,
+  6: 1rem
+);
+
+// Display tracking. The design tracks the displays from md up and leaves the
+// phone step untracked; em keeps it proportional to whichever size RFS or the
+// phone step resolves to.
+$rightup-display-letter-spacing: -0.02em;
+
 // `.lead`. The design binds Lead to Body/Regular/Large: EB Garamond Regular, so
 // weight 400. Bootstrap's own default is 300, and 500 has no Garamond face to
 // render with, so it would be synthesized bold from the 400 file.

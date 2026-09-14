@@ -850,4 +850,39 @@ $rightup-dark-section-backgrounds: ".bg-primary", ".bg-success", ".bg-danger", "
   .small {
     font-size: 0.875rem;
   }
+
+  // Mobile display steps. Declared here rather than left to RFS, whose fluid
+  // sizes land well below the design on a phone. The sizes themselves live in
+  // the $rightup-display-font-sizes-mobile map and reach the page as --vb-
+  // custom properties declared in components/base/root/root.scss. Same
+  // specificity as Bootstrap's own rules, and this stylesheet loads after
+  // bootstrap.base.css, so these win.
+  @each $display, $font-size in $rightup-display-font-sizes-mobile {
+    .display-#{$display} {
+      font-size: var(--vb-display-#{$display}-font-size-mobile);
+    }
+  }
+}
+
+// Display tracking.
+// -----------------------------------------------------------------------------
+// The design tracks the displays from md up and leaves the phone step
+// untracked. The value lives in $rightup-display-letter-spacing and reaches the
+// page as --vb-display-letter-spacing, declared in
+// components/base/root/root.scss. Which steps exist still comes from Bootstrap's
+// own $display-font-sizes.
+//
+// One shared value, so build the selector list and interpolate it once. Looping
+// the rule instead would emit six identical declarations where the file has
+// always carried one grouped selector.
+$rightup-display-selectors: ();
+
+@each $display in map-keys($display-font-sizes) {
+  $rightup-display-selectors: append($rightup-display-selectors, ".display-#{$display}", comma);
+}
+
+@include media-breakpoint-up(md) {
+  #{$rightup-display-selectors} {
+    letter-spacing: var(--vb-display-letter-spacing);
+  }
 }
