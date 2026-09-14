@@ -8,11 +8,18 @@ props:
     - label
   properties:
     label:
-      type: string
+      type:
+        - string
+        - integer
       title: Label
-      description: Text shown inside the taxonomy badge.
+      description: 'Text shown inside the taxonomy badge. An integer is accepted so a numeric field — an episode number, a year — can be bound straight to it.'
       examples:
         - Taxonomy
+    prefix:
+      type: string
+      title: Prefix
+      description: 'Fixed word printed before the label, for an eyebrow whose label comes from a number or a term — for example a Prefix of "Episode" with a label of "17" reads "EPISODE 17". Leave empty to print the label alone.'
+      default: ''
     url:
       type: string
       title: Link (optional)

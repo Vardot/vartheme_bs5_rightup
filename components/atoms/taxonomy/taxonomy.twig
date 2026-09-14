@@ -9,6 +9,9 @@
  *
  * Available properties:
  * - label: Text shown inside the taxonomy badge. (required)
+ * - prefix: Fixed word printed before the label, for an eyebrow whose
+ *           label comes from a number or a term. Leave empty to print the
+ *           label alone. Defaults to ``.
  * - url: If provided, taxonomy will render as a link. Defaults to ``.
  * - target: Where to open the link (only used when Link is provided).
  *           (_self | _blank) Defaults to `_self`.
@@ -42,6 +45,7 @@
 
 {# Variables: scalar props with schema defaults. #}
 {% set url = url|default('') %}
+{% set prefix = prefix|default('') %}
 {% set target = target|default('_self') %}
 {% set size = size|default('taxonomy-lg') %}
 {% set color = color|default('text-tertiary') %}
@@ -62,7 +66,9 @@
 
 {# Logic: base visual styling — Bootstrap utilities plus the component's own
  # size modifiers (Bootstrap's fs-* scale doesn't land on the exact sizes
- # needed here). No background or border — colored text only. #}
+ # needed here). No background or border — colored text only. `fw-medium`,
+ # not `fw-bold`: the heading family ships 400 and 500 only, so 700 is
+ # synthesised. #}
 {% set base_classes = [
   'taxonomy',
   'badge',
@@ -70,7 +76,7 @@
   'align-items-center',
   justify_content,
   'text-nowrap',
-  'fw-bold',
+  'fw-medium',
   'text-uppercase',
   color,
 ]|merge(size_classes)|merge(padding_classes) %}
@@ -88,11 +94,11 @@
       target="_blank" rel="noopener noreferrer"
     {% endif %}
   >
-    {{ label|e }}
+    {{ prefix is not empty ? prefix ~ ' ' ~ label : label }}
   </a>
 {% else %}
   {% set attributes = attributes.addClass(base_classes) %}
   <span{{ attributes }}>
-    {{ label|e }}
+    {{ prefix is not empty ? prefix ~ ' ' ~ label : label }}
   </span>
 {% endif %}

@@ -24,7 +24,8 @@ Use this component when you need to:
 
 ### Content
 
-- `label`: text shown inside the taxonomy badge (required)
+- `label`: text shown inside the taxonomy badge (required). An integer is accepted too, so a numeric field — an episode number, a year — can be bound straight to it
+- `prefix`: fixed word printed before the label, for an eyebrow whose label comes from a number or a term (a prefix of `Episode` with a label of `17` reads `EPISODE 17`); defaults to `''`
 
 ### Link
 
@@ -89,6 +90,8 @@ Use this component when you need to:
 - No background or border — just bold, uppercase, colored text; `color` defaults to `text-tertiary` but can be set to any Bootstrap text color utility, including this theme's `text-accent` token.
 - The `taxonomy-lg`/`taxonomy-sm` size prop values double as the modifier class name. Bootstrap's `fs-*` scale doesn't land on the exact sizes needed, so `taxonomy.scss` sets them directly: `taxonomy-lg` is `0.75rem`, `taxonomy-sm` is `0.625rem`.
 - When `target` is `_blank`, the link also gets `rel="noopener noreferrer"`.
-- The link variant adds `text-decoration-none`; both `label` and `url` are escaped on output.
+- The badge is uppercased and tracked out by `0.08em`, the eyebrow treatment the design uses at every size, stated once on `.taxonomy` in `em` so it follows the size modifier.
+- The weight is `fw-medium`, not `fw-bold`: the heading family ships 400 and 500 only, so a 700 would be synthesised by the browser and the glyphs smear.
+- The link variant adds `text-decoration-none`; `url` is escaped on output, and `prefix` and `label` are printed as one text node so the tracking applies across both.
 - `no_padding: true` adds Bootstrap's `p-0` utility, which overrides the badge's default padding.
 - `justify_content` swaps in Bootstrap's `justify-content-*` flex utility on the badge's own `d-inline-flex` layout.

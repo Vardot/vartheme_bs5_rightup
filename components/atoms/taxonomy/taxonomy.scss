@@ -4,6 +4,13 @@
 
 @import "../../defaults";
 
+// The design tracks the uppercase eyebrow out by 8% of its own size, at
+// every size, so it is stated once on the block in em rather than per
+// modifier in px.
+.taxonomy {
+  letter-spacing: 0.08em;
+}
+
 .taxonomy-lg {
   font-size: 0.75rem;
 }
