@@ -151,6 +151,16 @@ $tertiary-border-subtle: tint-color($tertiary, 60%);
 
 // Accent — mint. Same reasoning as tertiary above.
 $accent:               #00F5D4;
+
+// Form field focus. The design's interaction guideline (VBN Stylesheet, Design
+// Interaction Guideline, "Form Field" and "Search Field") says the border turns
+// into the primary color on focus, over the animation it links to: a 0.35s
+// ease-in-out transition. Bootstrap's own default is tint-color($primary, 50%),
+// which on this theme's black primary resolves to #808080 and reads as grey
+// rather than as the brand.
+$input-focus-border-color: $primary;
+$input-transition: border-color .35s ease-in-out, box-shadow .35s ease-in-out;
+
 $accent-text-emphasis: #212529;
 $accent-bg-subtle:     #E2FCF5;
 $accent-border-subtle: tint-color($accent, 60%);

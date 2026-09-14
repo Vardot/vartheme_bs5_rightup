@@ -178,6 +178,14 @@ props:
         text-danger-emphasis: Danger emphasis
         text-warning-emphasis: Warning emphasis
         text-info-emphasis: Info emphasis
+    panel_width:
+      type: string
+      title: Panel width
+      description: "How wide the revealed panel is. 'popover' anchors a narrow panel under the icon. 'full' spans the full width of the viewport, as a bar directly below the header, which is what the header search uses."
+      enum:
+        - popover
+        - full
+      default: popover
     placement:
       type: string
       title: Panel alignment

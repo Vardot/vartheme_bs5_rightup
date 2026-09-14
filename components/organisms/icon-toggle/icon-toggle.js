@@ -41,22 +41,16 @@
       once('vartheme-bs5-icon-toggle', '.icon-toggle', context).forEach(
         (root) => {
           const button = root.querySelector('.icon-toggle__button');
-          const icon = root.querySelector('.icon-toggle__icon');
           const panel = root.querySelector('.icon-toggle__panel');
 
           if (!button || !panel) {
             return;
           }
 
-          // The configured "closed" icon class (e.g. "bi-search"), captured
-          // once so it can be restored on close regardless of which icon
-          // was picked.
-          const closedIconClass = icon
-            ? [...icon.classList].find(
-                (className) =>
-                  className.startsWith('bi-') && className !== 'bi-x-lg',
-              )
-            : null;
+          // The icon swap is CSS, not JS: both icons are in the markup and
+          // `icon-toggle--open` cross-fades and slides between them, per the
+          // design's interaction guideline. Toggling classes here too would
+          // fight that transition.
 
           const closedLabel = button.getAttribute('aria-label');
           const openLabel = button.dataset.iconToggleOpenLabel || closedLabel;
@@ -68,6 +62,27 @@
           // synchronously right after the panel becomes visible (still
           // within the same task as the `hidden` removal), so the browser
           // paints the corrected position on the first frame — no flicker.
+          // The full-width bar is fixed to the viewport, so it needs the
+          // header's bottom edge as its offset. Measured on open rather than
+          // assumed, because the header's height changes with the sticky
+          // state and the breakpoint.
+          const positionFullBar = () => {
+            if (!root.classList.contains('icon-toggle--panel-full')) {
+              return;
+            }
+            const header =
+              root.closest('header') ||
+              root.closest('[class*="page-region"]') ||
+              root.closest('.navbar');
+            const bottom = header
+              ? header.getBoundingClientRect().bottom
+              : button.getBoundingClientRect().bottom;
+            panel.style.setProperty(
+              '--icon-toggle-panel-offset',
+              `${Math.round(bottom)}px`,
+            );
+          };
+
           const positionPanel = () => {
             root.classList.remove('icon-toggle--flip');
             const rect = panel.getBoundingClientRect();
@@ -82,9 +97,6 @@
             button.setAttribute('aria-expanded', 'false');
             button.setAttribute('aria-label', closedLabel);
             panel.setAttribute('hidden', '');
-            if (icon && closedIconClass) {
-              icon.classList.replace('bi-x-lg', closedIconClass);
-            }
           };
 
           const open = ({ focusInput = true } = {}) => {
@@ -92,10 +104,8 @@
             button.setAttribute('aria-expanded', 'true');
             button.setAttribute('aria-label', openLabel);
             panel.removeAttribute('hidden');
+            positionFullBar();
             positionPanel();
-            if (icon && closedIconClass) {
-              icon.classList.replace(closedIconClass, 'bi-x-lg');
-            }
             if (focusInput) {
               const input = panel.querySelector(
                 'input[type="search"], input[type="text"], input:not([type])',
