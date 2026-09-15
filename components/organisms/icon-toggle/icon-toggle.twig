@@ -102,6 +102,12 @@
     </span>
   </button>
 
+  {# The design dims the page behind an open full-width search. A real
+   # element rather than a pseudo-element, so it can be clicked to dismiss;
+   # aria-hidden and tabindex -1 keep it out of the accessibility tree and
+   # the tab order, since Escape and the toggle already close the panel. #}
+  <button type="button" class="icon-toggle__scrim" aria-hidden="true" tabindex="-1"></button>
+
   <div class="{{ panel_classes|join(' ') }}" id="{{ panel_id }}" hidden>
     <div class="icon-toggle__panel-inner">
       {% if has_content %}

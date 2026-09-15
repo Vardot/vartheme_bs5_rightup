@@ -2,13 +2,23 @@
   --icon-toggle-button-size: 2.5rem;
   --icon-toggle-button-color: var(--bs-body-color);
   --icon-toggle-button-bg: transparent;
-  --icon-toggle-button-bg-hover: var(--bs-secondary-bg);
-  --icon-toggle-button-radius: 50rem;
+  --icon-toggle-button-color-hover: var(--bs-accent);
+  --icon-toggle-button-radius: 0;
   --icon-toggle-focus-ring: 0.25rem solid var(--bs-focus-ring-color);
   --icon-toggle-transition: all 0.2s ease-in-out;
+  --icon-toggle-icon-size: 2rem;
   --icon-toggle-icon-transition: opacity 0.25s ease, transform 0.43s cubic-bezier(0.694, 0.048, 0.335, 1);
-  --icon-toggle-field-height: 2.875rem;
+  --icon-toggle-field-height: 2.1875rem;
   --icon-toggle-field-width: 54rem;
+  --icon-toggle-scrim-bg: rgba(0, 0, 0, 0.4);
+  --icon-toggle-field-bg: #fff;
+  --icon-toggle-field-border: #000;
+  --icon-toggle-field-gutter: 1rem;
+  --icon-toggle-field-icon-size: 1.5rem;
+  --icon-toggle-field-font-size: 0.875rem;
+  --icon-toggle-submit-gutter: 1.5rem;
+  --icon-toggle-submit-font-size: 1rem;
+  --icon-toggle-ui-font: "Rubik", system-ui, -apple-system, "Segoe UI", roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", arial, sans-serif;
   --icon-toggle-submit-width: 6.4375rem;
   --icon-toggle-field-icon: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27 fill=%27%23000%27%3E%3Cpath d=%27M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0%27/%3E%3C/svg%3E");
   --icon-toggle-panel-bg: var(--bs-body-bg);
@@ -41,9 +51,8 @@
   appearance: none;
 }
 
-.icon-toggle__button:hover,
-.icon-toggle__button:focus {
-  background: var(--icon-toggle-button-bg-hover);
+.icon-toggle__button:hover {
+  color: var(--icon-toggle-button-color-hover);
 }
 
 .icon-toggle__button:focus-visible {
@@ -57,8 +66,9 @@
   overflow: hidden;
   align-items: center;
   justify-content: center;
-  width: 1em;
-  height: 1em;
+  width: var(--icon-toggle-icon-size);
+  height: var(--icon-toggle-icon-size);
+  font-size: var(--icon-toggle-icon-size);
 }
 
 .icon-toggle__icon {
@@ -67,6 +77,7 @@
   left: 50%;
   display: inline-flex;
   transition: var(--icon-toggle-icon-transition);
+  font-size: inherit;
   line-height: 1;
 }
 
@@ -158,71 +169,119 @@
 }
 
 .icon-toggle--panel-full .icon-toggle__panel-inner {
-  width: min(100% - 2rem, var(--icon-toggle-field-width));
+  width: min(100%, var(--icon-toggle-field-width));
   margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  .icon-toggle {
+    --icon-toggle-field-height: 2.875rem;
+    --icon-toggle-panel-padding: 2.5rem;
+    --icon-toggle-icon-size: 1.5rem;
+  }
+}
+
+.icon-toggle__scrim {
+  display: none;
+}
+
+.icon-toggle--panel-full.icon-toggle--open .icon-toggle__scrim {
+  position: fixed;
+  z-index: 999;
+  top: var(--icon-toggle-scrim-offset, 0);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  padding: 0;
+  cursor: default;
+  animation: icon-toggle-scrim-in 0.25s ease;
+  border: 0;
+  background: var(--icon-toggle-scrim-bg);
+}
+
+@keyframes icon-toggle-scrim-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-toggle--panel-full.icon-toggle--open .icon-toggle__scrim {
+    animation: none;
+  }
+}
+
+.icon-toggle--panel-full .icon-toggle__panel {
+  border-block: 0;
 }
 
 .icon-toggle--panel-full .icon-toggle__panel .views-exposed-form {
   display: flex;
   align-items: stretch;
+  height: var(--icon-toggle-field-height);
   gap: 0;
 }
 
-.icon-toggle--panel-full .icon-toggle__panel .views-exposed-form .form-item {
+.icon-toggle--panel-full .icon-toggle__panel .views-exposed-form .form-item,
+.icon-toggle--panel-full .icon-toggle__panel .views-exposed-form .form-actions {
   display: flex;
-  flex: 1 1 auto;
-  min-width: 0;
+  align-items: stretch;
   margin-block: 0;
 }
 
-.icon-toggle--panel-full .icon-toggle__panel .views-exposed-form .form-item .form-control,
-.icon-toggle--panel-full .icon-toggle__panel .views-exposed-form .form-actions .btn {
+.icon-toggle--panel-full .icon-toggle__panel .views-exposed-form .form-item {
   flex: 1 1 auto;
-  height: var(--icon-toggle-field-height);
+  min-width: 0;
 }
 
 .icon-toggle--panel-full .icon-toggle__panel .views-exposed-form .form-actions {
-  flex: 0 0 var(--icon-toggle-submit-width);
-  width: var(--icon-toggle-submit-width);
-  margin-block: 0;
-}
-
-.icon-toggle--panel-full .icon-toggle__panel .views-exposed-form .form-actions .btn {
-  width: 100%;
-}
-
-.icon-toggle--panel-full .icon-toggle__panel .views-exposed-form .form-actions .btn {
-  border-start-start-radius: 0;
-  border-end-start-radius: 0;
+  flex: 0 0 auto;
+  margin-inline-start: -1px;
 }
 
 .icon-toggle--panel-full .icon-toggle__panel .views-exposed-form .form-control {
-  border-start-end-radius: 0;
-  border-end-end-radius: 0;
-}
-
-.icon-toggle--panel-full .icon-toggle__panel .form-control,
-.icon-toggle--panel-full .icon-toggle__panel input[type="text"],
-.icon-toggle--panel-full .icon-toggle__panel input[type="search"] {
-  padding-inline-start: 2.25rem;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--icon-toggle-field-border);
+  border-radius: 0;
+  background-color: var(--icon-toggle-field-bg);
   background-image: var(--icon-toggle-field-icon);
   background-repeat: no-repeat;
-  background-position: left 0.75rem center;
-  background-size: 1rem 1rem;
+  background-position: left var(--icon-toggle-field-gutter) center;
+  background-size: var(--icon-toggle-field-icon-size) var(--icon-toggle-field-icon-size);
+  font-family: var(--icon-toggle-ui-font);
+  font-size: var(--icon-toggle-field-font-size);
+  line-height: 1.5;
+  margin-block: 0;
+  padding-inline: calc(var(--icon-toggle-field-gutter) + var(--icon-toggle-field-icon-size) + 0.5rem) var(--icon-toggle-field-gutter);
 }
 
-[dir="rtl"] .icon-toggle--panel-full .icon-toggle__panel .form-control,
-[dir="rtl"] .icon-toggle--panel-full .icon-toggle__panel input[type="text"],
-[dir="rtl"] .icon-toggle--panel-full .icon-toggle__panel input[type="search"] {
-  background-position: right 0.75rem center;
+[dir="rtl"] .icon-toggle--panel-full .icon-toggle__panel .views-exposed-form .form-control {
+  background-position: right var(--icon-toggle-field-gutter) center;
 }
 
-.icon-toggle--panel-full .icon-toggle__panel [dir="rtl"] .form-control {
-  background-position: right 0.75rem center;
+.icon-toggle--panel-full .icon-toggle__panel [dir="rtl"] .views-exposed-form .form-control {
+  background-position: right var(--icon-toggle-field-gutter) center;
 }
 
-[dir="rtl"] .icon-toggle--panel-full .icon-toggle__panel [dir="rtl"] .form-control {
-  background-position: left 0.75rem center;
+[dir="rtl"] .icon-toggle--panel-full .icon-toggle__panel [dir="rtl"] .views-exposed-form .form-control {
+  background-position: left var(--icon-toggle-field-gutter) center;
+}
+
+.icon-toggle--panel-full .icon-toggle__panel .views-exposed-form .form-actions .btn {
+  height: 100%;
+  border-color: var(--icon-toggle-field-border);
+  border-radius: 0;
+  font-family: var(--icon-toggle-ui-font);
+  font-size: var(--icon-toggle-submit-font-size);
+  font-weight: 500;
+  line-height: 1.35;
+  padding-inline: var(--icon-toggle-submit-gutter);
 }
 
 .icon-toggle--end.icon-toggle--flip .icon-toggle__panel {

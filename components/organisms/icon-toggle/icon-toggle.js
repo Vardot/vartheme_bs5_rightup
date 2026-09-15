@@ -57,6 +57,18 @@
 
           const isOpen = () => root.classList.contains('icon-toggle--open');
 
+          // Clicking the dimmed page closes the search, which is what a fade
+          // over the page leads a visitor to expect.
+          const scrimEl = root.querySelector('.icon-toggle__scrim');
+          if (scrimEl) {
+            scrimEl.addEventListener('click', () => {
+              if (isOpen()) {
+                close();
+                button.focus();
+              }
+            });
+          }
+
           // Measures the panel against the viewport and flips it to the
           // other logical side if the configured side overflows. Runs
           // synchronously right after the panel becomes visible (still
@@ -81,6 +93,15 @@
               '--icon-toggle-panel-offset',
               `${Math.round(bottom)}px`,
             );
+            // The fade starts below the bar, so it needs the bar's own height
+            // added. Read after the panel is visible, so it is the real one.
+            const scrim = root.querySelector('.icon-toggle__scrim');
+            if (scrim) {
+              scrim.style.setProperty(
+                '--icon-toggle-scrim-offset',
+                `${Math.round(bottom + panel.getBoundingClientRect().height)}px`,
+              );
+            }
           };
 
           const positionPanel = () => {

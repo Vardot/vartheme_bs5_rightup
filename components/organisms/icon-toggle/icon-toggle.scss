@@ -16,19 +16,34 @@
   --icon-toggle-button-size: #{$spacer * 2.5};
   --icon-toggle-button-color: var(--bs-body-color);
   --icon-toggle-button-bg: transparent;
-  --icon-toggle-button-bg-hover: var(--bs-secondary-bg);
-  --icon-toggle-button-radius: #{$border-radius-pill};
+  --icon-toggle-button-color-hover: var(--bs-accent);
+  --icon-toggle-button-radius: 0;
   --icon-toggle-focus-ring: #{$focus-ring-width} solid var(--bs-focus-ring-color);
   --icon-toggle-transition: #{$transition-base};
+  // Design: the header search icon is 32px on mobile (13550:6143) and
+  // 24px from md up (12728:12897).
+  --icon-toggle-icon-size: #{$spacer * 2};
   --icon-toggle-icon-transition: opacity 0.25s ease, transform 0.43s cubic-bezier(0.694, 0.048, 0.335, 1);
-  --icon-toggle-field-height: #{$spacer * 2.875};
+  // Design: the bar is 35px tall on a 375 phone and 46px from md up.
+  --icon-toggle-field-height: #{$spacer * 2.1875};
   --icon-toggle-field-width: #{$spacer * 54};
+  --icon-toggle-scrim-bg: #{rgba(#000, 0.4)};
+  --icon-toggle-field-bg: #{$white};
+  --icon-toggle-field-border: #{$black};
+  --icon-toggle-field-gutter: #{$spacer};
+  --icon-toggle-field-icon-size: #{$spacer * 1.5};
+  --icon-toggle-field-font-size: #{$spacer * 0.875};
+  --icon-toggle-submit-gutter: #{$spacer * 1.5};
+  --icon-toggle-submit-font-size: #{$spacer};
+  --icon-toggle-ui-font: #{inspect($headings-font-family)};
   --icon-toggle-submit-width: #{$spacer * 6.4375};
   --icon-toggle-field-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0'/%3E%3C/svg%3E");
   --icon-toggle-panel-bg: var(--bs-body-bg);
   --icon-toggle-panel-border: var(--bs-border-color);
   --icon-toggle-panel-radius: #{$border-radius};
   --icon-toggle-panel-shadow: #{$box-shadow};
+  // Design: the band is 67px on mobile (16 + 35 + 16) and 126px from md up
+  // (40 + 46 + 40), so the padding carries the difference.
   --icon-toggle-panel-padding: #{$spacer};
   --icon-toggle-panel-gap: #{$spacer * 0.5};
   --icon-toggle-panel-width: min(24rem, calc(100vw - #{$spacer * 2}));
@@ -53,9 +68,13 @@
     cursor: pointer;
     appearance: none;
 
-    &:hover,
-    &:focus {
-      background: var(--icon-toggle-button-bg-hover);
+    // The design shows a bare 24px icon in the header, with no chrome behind
+    // it. The filled pill was also on :focus rather than :focus-visible, so it
+    // stayed painted after a mouse click. The 40px box is kept as the pointer
+    // and touch target, which is well past the WCAG 2.5.8 minimum, and the
+    // keyboard focus ring below is what remains visible.
+    &:hover {
+      color: var(--icon-toggle-button-color-hover);
     }
 
     &:focus-visible {
@@ -73,13 +92,16 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1em;
-    height: 1em;
+    width: var(--icon-toggle-icon-size);
+    height: var(--icon-toggle-icon-size);
+    font-size: var(--icon-toggle-icon-size);
     overflow: hidden;
   }
 
   &__icon {
     position: absolute;
+    font-size: inherit;
+    line-height: 1;
     top: 50%;
     left: 50%;
     display: inline-flex;
@@ -174,72 +196,124 @@
   // container: 864px wide and 46px tall, with the field at 762 and the button
   // at 103 butted against it.
   &--panel-full &__panel-inner {
-    width: min(100% - #{$spacer * 2}, var(--icon-toggle-field-width));
+    width: min(100%, var(--icon-toggle-field-width));
     margin-inline: auto;
+  }
+
+  @include media-breakpoint-up(md) {
+    --icon-toggle-field-height: #{$spacer * 2.875};
+    --icon-toggle-panel-padding: #{$spacer * 2.5};
+    --icon-toggle-icon-size: #{$spacer * 1.5};
+  }
+
+  // The design dims the page behind the open search rather than leaving it at
+  // full contrast: a "page-fade" layer at rgba(0, 0, 0, 0.4), starting below
+  // the bar and running to the foot of the viewport.
+  &__scrim {
+    display: none;
+  }
+
+  &--panel-full.icon-toggle--open &__scrim {
+    position: fixed;
+    top: var(--icon-toggle-scrim-offset, 0);
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    z-index: $zindex-dropdown - 1;
+    background: var(--icon-toggle-scrim-bg);
+    border: 0;
+    padding: 0;
+    cursor: default;
+    animation: icon-toggle-scrim-in 0.25s ease;
+  }
+
+  @keyframes icon-toggle-scrim-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &--panel-full.icon-toggle--open &__scrim {
+      animation: none;
+    }
   }
 
   // The design puts the field and the submit on one row, with the button
   // attached to the field's trailing edge. Drupal's exposed form stacks them:
   // the textfield wrapper and `.form-actions` are both block-level.
+  // Search bar, from the design (VBN Stylesheet, search-bar component).
+  // Square: the design has no corner radius on either half. The field is white
+  // with a thin black rule; the submit is solid primary. Both sit on one row of
+  // exactly the bar height, with the submit overlapping by 1px so the shared
+  // edge is a single rule rather than two.
+  &--panel-full &__panel {
+    border-block: 0;
+  }
+
   &--panel-full &__panel .views-exposed-form {
     display: flex;
     align-items: stretch;
     gap: 0;
+    height: var(--icon-toggle-field-height);
+  }
+
+  &--panel-full &__panel .views-exposed-form .form-item,
+  &--panel-full &__panel .views-exposed-form .form-actions {
+    display: flex;
+    align-items: stretch;
+    margin-block: 0;
   }
 
   &--panel-full &__panel .views-exposed-form .form-item {
-    display: flex;
     flex: 1 1 auto;
     min-width: 0;
-    margin-block: 0;
   }
 
-  // Both sides are pinned to one height. Relying on `align-items: stretch`
-  // left the input at its content height (41px) beside a 45px button, because
-  // Bootstrap sizes each from its own padding and line-height rather than from
-  // the row.
-  &--panel-full &__panel .views-exposed-form .form-item .form-control,
-  &--panel-full &__panel .views-exposed-form .form-actions .btn {
-    height: var(--icon-toggle-field-height);
-    flex: 1 1 auto;
-  }
-
-  // The design pins the button at 103px rather than letting its label size it,
-  // which gave 87px and pushed the field 15px wider than the design's 762.
   &--panel-full &__panel .views-exposed-form .form-actions {
-    flex: 0 0 var(--icon-toggle-submit-width);
-    width: var(--icon-toggle-submit-width);
-    margin-block: 0;
+    flex: 0 0 auto;
+    margin-inline-start: -#{$border-width};
   }
 
-  &--panel-full &__panel .views-exposed-form .form-actions .btn {
-    width: 100%;
-  }
-
-  &--panel-full &__panel .views-exposed-form .form-actions .btn {
-    border-start-start-radius: 0;
-    border-end-start-radius: 0;
-  }
-
+  // The field. Icon 24px at 16px from the leading edge with an 8px gap, so the
+  // placeholder starts at 48px, and the placeholder is the heading face at
+  // 14px, which is what the design's Forms/Placeholder style resolves to.
   &--panel-full &__panel .views-exposed-form .form-control {
-    border-start-end-radius: 0;
-    border-end-end-radius: 0;
-  }
-
-  // The design puts a magnifier inside the field, at its leading edge.
-  &--panel-full &__panel .form-control,
-  &--panel-full &__panel input[type="text"],
-  &--panel-full &__panel input[type="search"] {
-    padding-inline-start: #{$spacer * 2.25};
+    height: 100%;
+    width: 100%;
+    // The theme gives form controls a 4px top margin, which pushed the field
+    // below its own wrapper and 4px below the submit beside it.
+    margin-block: 0;
+    border: $border-width solid var(--icon-toggle-field-border);
+    border-radius: 0;
+    background-color: var(--icon-toggle-field-bg);
     background-image: var(--icon-toggle-field-icon);
     background-repeat: no-repeat;
-    background-position: left #{$spacer * 0.75} center;
-    background-size: #{$spacer} #{$spacer};
+    background-position: left var(--icon-toggle-field-gutter) center;
+    background-size: var(--icon-toggle-field-icon-size) var(--icon-toggle-field-icon-size);
+    padding-inline: calc(var(--icon-toggle-field-gutter) + var(--icon-toggle-field-icon-size) + #{$spacer * 0.5}) var(--icon-toggle-field-gutter);
+    font-family: var(--icon-toggle-ui-font);
+    font-size: var(--icon-toggle-field-font-size);
+    line-height: 1.5;
   }
 
-  &--panel-full &__panel [dir="rtl"] .form-control {
-    background-position: right #{$spacer * 0.75} center;
+  &--panel-full &__panel [dir="rtl"] .views-exposed-form .form-control {
+    background-position: right var(--icon-toggle-field-gutter) center;
   }
+
+  // The submit. Solid primary, heading face at Medium 16, 24px of horizontal
+  // padding, square like the field.
+  &--panel-full &__panel .views-exposed-form .form-actions .btn {
+    height: 100%;
+    border-radius: 0;
+    border-color: var(--icon-toggle-field-border);
+    padding-inline: var(--icon-toggle-submit-gutter);
+    font-family: var(--icon-toggle-ui-font);
+    font-size: var(--icon-toggle-submit-font-size);
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
 
   &--end.icon-toggle--flip &__panel {
     inset-inline-end: auto;
