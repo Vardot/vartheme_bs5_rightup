@@ -17,8 +17,10 @@
 
   // Hover: the slot content is arbitrary, so target any heading level it
   // contains rather than a fixed class name.
+  // The underline goes on the LINK inside the heading, never on the heading
+  // itself, or it stacks with the one the base stylesheet draws on `a:hover`.
   &:hover {
-    .horizontal-text-icon-card__content :is(h1, h2, h3, h4, h5, h6) {
+    .horizontal-text-icon-card__content :is(h1, h2, h3, h4, h5, h6) a {
       text-decoration: underline;
     }
   }

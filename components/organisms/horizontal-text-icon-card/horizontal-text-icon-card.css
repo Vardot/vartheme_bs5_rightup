@@ -12,6 +12,6 @@
   height: 1.35rem;
 }
 
-.horizontal-text-icon-card:hover .horizontal-text-icon-card__content :is(h1, h2, h3, h4, h5, h6) {
+.horizontal-text-icon-card:hover .horizontal-text-icon-card__content :is(h1, h2, h3, h4, h5, h6) a {
   text-decoration: underline;
 }

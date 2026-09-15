@@ -10,8 +10,14 @@
 
   // Hover: the content slot is arbitrary, so target any heading level it
   // contains rather than a fixed class name.
+  // The underline goes on the LINK inside the heading, never on the heading.
+  // Underlining the heading painted a second line under the one the base
+  // stylesheet already draws on `a:hover`, in a different colour, so a hovered
+  // headline showed a double underline. Targeting the anchor means hovering
+  // anywhere on the card and hovering the link itself both resolve to the same
+  // single decoration on the same element.
   &:hover {
-    .card-body :is(h1, h2, h3, h4, h5, h6) {
+    .card-body :is(h1, h2, h3, h4, h5, h6) a {
       text-decoration: underline;
     }
   }
