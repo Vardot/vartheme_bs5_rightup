@@ -558,10 +558,15 @@ footer.footer hr {
 #views-exposed-form-blog-all {
   --vb-filter-gap: 1rem;
   --vb-filter-col-width: 16.4375rem;
-  --vb-filter-input-bg: var(--bs-body-bg);
-  --vb-filter-input-border: var(--bs-border-color);
-  --vb-filter-input-radius: 0.5rem;
+  --vb-filter-input-bg: #fff;
+  --vb-filter-input-border: #000;
+  --vb-filter-input-border-width: 0.5px;
+  --vb-filter-input-radius: 0;
   --vb-filter-input-focus: var(--bs-primary);
+  --vb-filter-submit-bg: #000;
+  --vb-filter-submit-color: #fff;
+  --vb-filter-submit-padding-x: 1.5rem;
+  --vb-filter-submit-padding-y: 0.75rem;
 
   display: flex;
   flex-wrap: wrap;
@@ -639,7 +644,7 @@ footer.footer hr {
     border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
   color: var(--bs-body-color);
-  border: var(--bs-border-width) solid var(--vb-filter-input-border);
+  border: var(--vb-filter-input-border-width, var(--bs-border-width)) solid var(--vb-filter-input-border);
   border-radius: var(--vb-filter-input-radius);
   background-color: var(--vb-filter-input-bg);
   font-size: 1rem;
@@ -681,13 +686,14 @@ footer.footer hr {
 
 .vb-filter-bar .views-exposed-form .form-submit,
 #views-exposed-form-blog-all .form-submit {
-  padding: 0;
+  padding: var(--vb-filter-submit-padding-y) var(--vb-filter-submit-padding-x);
   transition:
     opacity 0.15s ease-in-out,
     color 0.15s ease-in-out;
-  color: var(--bs-link-color);
+  color: var(--vb-filter-submit-color);
   border: 0;
-  background: transparent;
+  border-radius: 0;
+  background: var(--vb-filter-submit-bg);
   box-shadow: none;
   font-size: 1rem;
   font-weight: 500;
@@ -699,16 +705,17 @@ footer.footer hr {
 #views-exposed-form-blog-all .form-submit:hover,
 #views-exposed-form-blog-all .form-submit:focus {
   opacity: 0.85;
-  color: var(--bs-primary-text-emphasis);
-  background: transparent;
+  color: var(--vb-filter-submit-color);
+  background: var(--vb-filter-submit-bg);
 }
 
 .vb-filter-bar .views-exposed-form [id*="edit-reset"],
 .vb-filter-bar .views-exposed-form input[name="reset"],
 #views-exposed-form-blog-all [id*="edit-reset"],
 #views-exposed-form-blog-all input[name="reset"] {
-  opacity: 0.5;
   color: var(--bs-secondary-color);
+  background: transparent;
+  padding-inline: 0;
 }
 
 .vb-filter-bar .views-exposed-form [id*="edit-reset"]:hover,
@@ -719,8 +726,8 @@ footer.footer hr {
 #views-exposed-form-blog-all [id*="edit-reset"]:focus,
 #views-exposed-form-blog-all input[name="reset"]:hover,
 #views-exposed-form-blog-all input[name="reset"]:focus {
-  opacity: 1;
-  color: var(--bs-primary);
+  color: var(--bs-body-color);
+  background: transparent;
 }
 
 [dir="rtl"] #views-exposed-form-blog-all .form-item-search input[type="text"] {
@@ -1016,4 +1023,12 @@ footer.footer hr {
 .vb-filter-options .facet-item__count,
 .views-exposed-form--search--date-block .facet-item__count {
   color: var(--vb-filter-option-count-color);
+}
+
+.page-content > .inner-content > .views-element-container {
+  padding-block: 3rem;
+}
+
+.page-content > .inner-content > .views-element-container .view-header {
+  margin-block-end: 1rem;
 }

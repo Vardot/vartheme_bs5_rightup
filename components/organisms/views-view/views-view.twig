@@ -72,7 +72,13 @@
     </div>
   {% endif %}
   {% if exposed %}
-    <div class="view-filters">
+    {# `vb-filter-bar` is the theme's shared exposed-filter hook. Emitting it
+     # here means every listing that renders its filters inline opts into the
+     # same bar, rather than each page being styled by its own form id. A page
+     # that needs different metrics retunes the `--vb-filter-*` custom
+     # properties under its own `views-exposed-form--<view>--<display>` class.
+     #}
+    <div class="view-filters vb-filter-bar">
       {{ exposed }}
     </div>
   {% endif %}
