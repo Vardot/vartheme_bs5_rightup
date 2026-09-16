@@ -5,6 +5,7 @@
  * Theme functions to support Vartheme BS5 Rightup theme.
  */
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 
@@ -228,6 +229,21 @@ function vartheme_bs5_rightup_preprocess_html(&$variables) {
  * Implements hook_form_alter().
  */
 function vartheme_bs5_rightup_form_alter(&$form, $form_state, $form_id) {
+
+  // Every exposed filter form gets a class naming the view and display it
+  // belongs to, so a listing can be styled without reaching for the form ID
+  // Views happens to generate. A site runs many exposed filters at once and an
+  // ID selector is both brittle and unshareable: `exposed_block` renders the
+  // form outside the `.view-…` wrapper, so the view classes are not available
+  // as ancestors, which is what otherwise drives people to the ID.
+  // @see components/organisms/views-exposed-filters
+  if ($form_id === 'views_exposed_form') {
+    $view = $form_state->get('view');
+    if ($view !== NULL) {
+      $form['#attributes']['class'][] = Html::getClass('views-exposed-form--' . $view->id());
+      $form['#attributes']['class'][] = Html::getClass('views-exposed-form--' . $view->id() . '--' . $view->current_display);
+    }
+  }
 
   // Have a default style for moderation entity form.
   if ($form_id == 'content_moderation_entity_moderation_form') {

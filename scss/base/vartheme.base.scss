@@ -625,8 +625,12 @@ footer.footer {
   }
 }
 
-// Blog exposed filter row — horizontal Search / Industry / Type with ghost
-// Apply Filter + Reset actions.
+// Exposed filter bar: horizontal controls with ghost submit and reset actions.
+// Carried by `.vb-filter-bar` so any exposed form can opt in, which is the hook
+// Vartheme BS5 defines and the Educare and Horizon Aid search templates already
+// emit. The blog filter row keeps its ID selector alongside it so it renders
+// unchanged without any config edit.
+.vb-filter-bar .views-exposed-form,
 #views-exposed-form-blog-all {
   --vb-filter-gap: 1rem;
   --vb-filter-col-width: 16.4375rem;
@@ -884,5 +888,202 @@ $rightup-display-selectors: ();
 @include media-breakpoint-up(md) {
   #{$rightup-display-selectors} {
     letter-spacing: var(--vb-display-letter-spacing);
+  }
+}
+
+// Search results page
+// -----------------------------------------------------------------------------
+// The design (VBN Stylesheet, Search-Listing 13058:23852) puts the search field
+// on the results page itself, not only in the header: an 864x46 group with the
+// field at 762 and the submit at 103 butted against it, sharing the header
+// bar's metrics. The results page is a Drupal Canvas page, so the body carries
+// `canvas-page path-page` rather than `path-search`. The form is keyed by the
+// view/display class hook_form_alter() adds, never by the form ID Views
+// generates: `exposed_block` renders the form outside the `.view-…` wrapper,
+// so the view classes are not available as ancestors.
+.views-exposed-form--search--results-block {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  width: min(100%, #{$spacer * 54});
+  height: #{$spacer * 2.875};
+  margin-block-end: #{$spacer * 2};
+
+  .form-item {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    margin-block: 0;
+  }
+
+  .form-actions {
+    display: flex;
+    flex: 0 0 #{$spacer * 6.4375};
+    width: #{$spacer * 6.4375};
+    margin-block: 0;
+    margin-inline-start: -#{$border-width};
+  }
+
+  .form-control {
+    height: 100%;
+    width: 100%;
+    margin-block: 0;
+    border: $border-width solid $black;
+    border-radius: 0;
+    background-color: $white;
+    padding-inline: #{$spacer};
+    font-family: #{inspect($headings-font-family)};
+    font-size: #{$spacer * 0.875};
+    line-height: 1.5;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    border-color: $black;
+    padding-inline: #{$spacer * 1.5};
+    font-family: #{inspect($headings-font-family)};
+    font-size: #{$spacer};
+    font-weight: 500;
+    line-height: 1.35;
+  }
+}
+
+// Search results page — the filter rail
+// -----------------------------------------------------------------------------
+// The design's Date Published group (VBN Stylesheet, Search-Listing 13058:23852)
+// lists four cumulative windows — Past 24 Hours, Past Week, Past Month, Past
+// Year. Facets cannot express those: its date processor always renders an
+// actual date label ("2026", "July 2026"), so the group is a Views GROUPED
+// exposed filter rendered as checkboxes by Better Exposed Filters instead.
+//
+// That filter is exposed on two displays, because one form cannot sit in two
+// columns: the keyword bar above the results, and the rail beside them. Each
+// form therefore carries BOTH the keyword field and the date group, and each
+// hides the half it does not own — the hidden input still submits, which is
+// what carries the keyword through a date change and the date through a new
+// search.
+// A facet widget is a list of filters, not a bulleted list, so it carries no
+// list indent — without this the Category and Content Type groups sit 32px in
+// from their own headings while the Date Published radios beside them do not.
+.facets-widget-checkbox > ul {
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.views-exposed-form--search--results-block {
+  // The rail owns the date group.
+  .form-composite {
+    display: none;
+  }
+}
+
+.views-exposed-form--search--date-block {
+  // The bar above the results owns the keyword field, and Better Exposed
+  // Filters submits this form on change, so it needs no button of its own.
+  .form-item-keywords,
+  .form-actions {
+    display: none;
+  }
+
+  // Views wraps a grouped filter in a fieldset that the base theme renders as a
+  // card. The rail prints the group label as its own heading, so the card
+  // chrome — header bar, border, body padding — is all redundant here.
+  .form-composite {
+    margin-block: 0;
+    border: 0;
+    background: none;
+  }
+
+  .card-header,
+  legend {
+    display: none;
+  }
+
+  .card-body {
+    padding: 0;
+  }
+
+  // The Category and Content Type groups above are facets. This group is a
+  // Views grouped exposed filter, so it opts into the shared filter-option
+  // tokens rather than being styled separately — see `.vb-filter-options`.
+  @extend .vb-filter-options;
+}
+
+// Search results listing
+// -----------------------------------------------------------------------------
+// Each result is a Featured Card — the theme's existing horizontal image-and-text
+// card — placed by the search_result view mode. The design separates the rows
+// with 32px and a hairline rule, which is listing rhythm rather than anything
+// the card itself should own, so it lives here.
+.view-search {
+  .views-row + .views-row {
+    margin-block-start: #{$spacer * 2};
+    padding-block-start: #{$spacer * 2};
+    border-block-start: 1px solid #{rgba($black, .1)};
+  }
+}
+
+// Filter options — facet checkboxes and grouped exposed-filter radios
+// -----------------------------------------------------------------------------
+// A page can carry several filter groups rendered by different things: Facets
+// draws checkboxes, a Views grouped exposed filter draws radios. The design
+// (VBN Stylesheet, Search-Listing 13058:23852) gives them one appearance, so
+// they share ONE token set here rather than each being styled where it happens
+// to live. A page that needs different filter metrics retunes these custom
+// properties under its own `views-exposed-form--<view>--<display>` class
+// instead of writing a second set of rules.
+.facets-widget-checkbox,
+.vb-filter-options {
+  --vb-filter-option-row-height: #{$spacer * 1.8125}; // 29px
+  --vb-filter-option-gap: #{$spacer * 0.5}; // 8px
+  --vb-filter-option-box-size: #{$spacer}; // 16px
+  --vb-filter-option-box-border: #{$black};
+  --vb-filter-option-font-size: #{$spacer * 0.875}; // 14px
+  --vb-filter-option-color: #{$black};
+  --vb-filter-option-count-color: #{$tertiary};
+
+  .form-check,
+  .js-form-type-radio,
+  .js-form-type-checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--vb-filter-option-gap);
+    min-height: var(--vb-filter-option-row-height);
+    margin-block: 0;
+    padding-inline-start: 0;
+  }
+
+  // The design draws an unfilled square, not Bootstrap's rounded grey box.
+  input[type="checkbox"],
+  input[type="radio"] {
+    flex: 0 0 auto;
+    width: var(--vb-filter-option-box-size);
+    height: var(--vb-filter-option-box-size);
+    margin: 0;
+    border: #{$border-width} solid var(--vb-filter-option-box-border);
+    border-radius: 0;
+    background-color: transparent;
+  }
+
+  // A radio keeps its circle. The design draws every filter as a square box,
+  // but the Date Published group is single-select, and a square radio reads as
+  // a checkbox — it hides the fact that choosing one clears the others.
+  input[type="radio"] {
+    border-radius: 50%;
+  }
+
+  label {
+    margin-block: 0;
+    color: var(--vb-filter-option-color);
+    font-size: var(--vb-filter-option-font-size);
+    line-height: 1.5;
+  }
+
+  // Facets prints the result count in its own span, which the design sets in
+  // the brand's tertiary next to the black label.
+  .facet-item__count {
+    color: var(--vb-filter-option-count-color);
   }
 }
