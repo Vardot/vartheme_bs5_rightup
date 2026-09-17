@@ -6,6 +6,13 @@ description: A colored ticker bar with a fixed label and a continuously auto-scr
 props:
   type: object
   properties:
+    scroll_speed:
+      type: integer
+      title: Scroll speed
+      description: 'How fast the ticker scrolls, in pixels per second. The duration is derived from this and the row''s actual width, so the reading speed stays the same however many items the feed holds.'
+      default: 60
+      examples:
+        - 60
     label:
       type: string
       title: Label

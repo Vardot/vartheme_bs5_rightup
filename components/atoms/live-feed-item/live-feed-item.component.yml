@@ -6,15 +6,28 @@ description: A single timestamped news item, meant to be dropped into a Live Fee
 props:
   type: object
   required:
-    - time
     - title
   properties:
     time:
       type: string
       title: Time
-      description: Short timestamp shown before the title.
+      description: 'Short timestamp shown before the title. Leave empty and set Timestamp instead when the time comes from a content field.'
+      default: ''
       examples:
         - '5:10 PM'
+    timestamp:
+      type: integer
+      title: Timestamp
+      description: 'UNIX timestamp used instead of Time, so a feed built from content can take the time from a date field. Formatted with Time format.'
+      examples:
+        - 1789459200
+    time_format:
+      type: string
+      title: Time format
+      description: 'PHP date format applied to Timestamp. Defaults to the design''s 12-hour clock.'
+      default: 'g:i A'
+      examples:
+        - 'g:i A'
     title:
       type: string
       title: Title

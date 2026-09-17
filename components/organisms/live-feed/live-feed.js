@@ -68,6 +68,22 @@
           .forEach((el) => el.setAttribute('tabindex', '-1'));
 
         track.appendChild(clone);
+
+        // Duration is derived, not fixed: the animation travels one group's
+        // width per cycle, so a fixed duration would make a longer feed scroll
+        // faster. Deriving it from the measured width keeps the reading speed
+        // constant however many items the view returns.
+        const feed = track.closest('.live-feed');
+        const speed =
+          Number(feed && feed.getAttribute('data-live-feed-speed')) || 60;
+        const distance = group.getBoundingClientRect().width;
+        if (distance > 0) {
+          track.style.setProperty(
+            '--live-feed-duration',
+            `${(distance / speed).toFixed(2)}s`,
+          );
+        }
+
         track.classList.add('is-looping');
       });
     },

@@ -8,7 +8,11 @@
  * a link when a URL is provided, otherwise as a span.
  *
  * Available properties:
- * - time: Short timestamp shown before the title. (required)
+ * - time: Short timestamp shown before the title. Leave empty and set
+ *         timestamp instead when the time comes from a content field.
+ * - timestamp: UNIX timestamp used instead of time, so a feed built from
+ *              content can take the time from a date field.
+ * - time_format: PHP date format applied to timestamp. Defaults to `g:i A`.
  * - title: The news item's headline. (required)
  * - url: If provided, the item renders as a link to this URL. Defaults to ``.
  *
@@ -28,6 +32,16 @@
 
 {# Variables: scalar props with schema defaults. #}
 {% set url = url|default('') %}
+{% set time_format = time_format|default('g:i A') %}
+
+{# Logic: a feed built from content carries a timestamp rather than a typed
+ # string, because Drupal Canvas has no adapter that renders a time of day —
+ # its only date adapter emits Y-m-d. Formatting here keeps the binding a
+ # plain date field. A literal `time` still wins when one is given, so
+ # hand-placed items keep working. #}
+{% set displayed_time = time|default('') is not empty
+  ? time
+  : (timestamp is not empty ? timestamp|date(time_format) : '') %}
 
 {# Logic: URL switches the root tag to a link. #}
 {% set has_url = url is not empty %}
@@ -41,13 +55,13 @@
 {% if has_url %}
   {% set attributes = attributes.addClass(base_classes|merge(['text-decoration-none'])).setAttribute('href', url|e) %}
   <a{{ attributes }}>
-    <span class="{{ time_classes|join(' ') }}">{{ time }}</span>
+    {% if displayed_time is not empty %}<span class="{{ time_classes|join(' ') }}">{{ displayed_time }}</span>{% endif %}
     <span class="{{ title_classes|join(' ') }}">{{ title }}</span>
   </a>
 {% else %}
   {% set attributes = attributes.addClass(base_classes) %}
   <span{{ attributes }}>
-    <span class="{{ time_classes|join(' ') }}">{{ time }}</span>
+    {% if displayed_time is not empty %}<span class="{{ time_classes|join(' ') }}">{{ displayed_time }}</span>{% endif %}
     <span class="{{ title_classes|join(' ') }}">{{ title }}</span>
   </span>
 {% endif %}

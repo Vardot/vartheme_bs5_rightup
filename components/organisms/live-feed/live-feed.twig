@@ -83,6 +83,7 @@
  # slot — so there is a stable, always-measurable drop target for Canvas's
  # drag & drop; `items` always holds either real slot content or the
  # fallback fragment set above, and is always printed the same way here. #}
+{% set attributes = attributes.setAttribute('data-live-feed-speed', scroll_speed|default(60)) %}
 <div{{ attributes }}>
   <div{{ label_attributes }}>{{ label }}</div>
 

@@ -18,6 +18,25 @@
   -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
 }
 
+// A feed driven by a view arrives wrapped: Views emits its own container, a
+// `.view-content` and a `.views-row` per item, all block-level, which breaks
+// the single-line track into a stacked list. `display: contents` dissolves
+// those wrappers so each item becomes a direct flex child of the track, exactly
+// as a hand-placed item is.
+.live-feed__group {
+  // The block wrappers Drupal puts around a placed views block, and the row
+  // wrapper Views puts around each result. `.view-content > *` catches the row
+  // div whether or not it carries the default `views-row` class.
+  .block,
+  .block__content,
+  .views-element-container,
+  .view,
+  .view-content,
+  .view-content > * {
+    display: contents;
+  }
+}
+
 .live-feed__track {
   inline-size: max-content;
   min-block-size: 1.5em;

@@ -6,6 +6,15 @@
   mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
 }
 
+.live-feed__group .block,
+.live-feed__group .block__content,
+.live-feed__group .views-element-container,
+.live-feed__group .view,
+.live-feed__group .view-content,
+.live-feed__group .view-content > * {
+  display: contents;
+}
+
 .live-feed__track {
   inline-size: max-content;
   min-block-size: 1.5em;
