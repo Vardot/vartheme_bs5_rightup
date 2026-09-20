@@ -10,6 +10,47 @@
 
 .live-feed {
   --live-feed-duration: 30s;
+
+  // The bar the design draws (VBN Stylesheet, header-desktop 12725:11524): a
+  // 43px strip — 12px of padding above and below a 19px line — with the page
+  // margin down each side and 40px between the label and the ticker.
+  // The whole strip is set at the design's 14px, so the label, the items and
+  // the track's own `em`-based minimum all resolve against it rather than
+  // against the 18px body size.
+  font-size: #{$spacer * 0.875};
+  line-height: 1.35;
+  padding-block: #{$spacer * 0.75};
+  padding-inline: #{$spacer};
+  gap: #{$spacer * 2.5};
+
+  @include media-breakpoint-up(md) {
+    padding-inline: #{$spacer * 4};
+  }
+}
+
+// The label and the items are the design's 14px at 1.35, not the 18px body
+// size the anchor would otherwise inherit — that inherited size is what made
+// the strip 37px tall with a 27px row inside it.
+.live-feed__label,
+.live-feed-item {
+  padding-block: 0;
+  font-size: #{$spacer * 0.875};
+  line-height: 1.35;
+}
+
+.live-feed__label {
+  padding-inline: 0;
+}
+
+// The design spaces items by a 32px gap rather than by padding on each item,
+// so the first one starts flush against the 40px label gap.
+.live-feed__track,
+.live-feed__group {
+  gap: #{$spacer * 2};
+}
+
+.live-feed-item {
+  padding-inline: 0;
 }
 
 .live-feed__track-wrapper {
@@ -39,7 +80,7 @@
 
 .live-feed__track {
   inline-size: max-content;
-  min-block-size: 1.5em;
+  min-block-size: 1.35em;
 
   &.is-looping {
     animation: live-feed-scroll var(--live-feed-duration) linear infinite;

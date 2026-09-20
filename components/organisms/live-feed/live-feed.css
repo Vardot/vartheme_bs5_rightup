@@ -1,5 +1,37 @@
 .live-feed {
   --live-feed-duration: 30s;
+
+  font-size: 0.875rem;
+  line-height: 1.35;
+  padding-block: 0.75rem;
+  padding-inline: 1rem;
+  gap: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .live-feed {
+    padding-inline: 4rem;
+  }
+}
+
+.live-feed__label,
+.live-feed-item {
+  font-size: 0.875rem;
+  line-height: 1.35;
+  padding-block: 0;
+}
+
+.live-feed__label {
+  padding-inline: 0;
+}
+
+.live-feed__track,
+.live-feed__group {
+  gap: 2rem;
+}
+
+.live-feed-item {
+  padding-inline: 0;
 }
 
 .live-feed__track-wrapper {
@@ -17,7 +49,7 @@
 
 .live-feed__track {
   inline-size: max-content;
-  min-block-size: 1.5em;
+  min-block-size: 1.35em;
 }
 
 .live-feed__track.is-looping {
