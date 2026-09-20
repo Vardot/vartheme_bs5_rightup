@@ -2,6 +2,12 @@
 @import "../../defaults";   // Global component defaults.
 
 footer.footer {
-  background-color: var(--bs-primary-text-emphasis);
+  // The design's footer is brand primary (black) edge to edge. This has to be
+  // a real colour rather than `--bs-primary-text-emphasis`, which resolves to
+  // nothing here and left the footer transparent: while the sections carried
+  // the padding their own `bg-black` covered it up, but once the footer owns
+  // the 80px padding and the 32px gap between the sections, the white page
+  // showed through as bands across the footer.
+  background-color: $black;
   color: var(--bs-white);
 }

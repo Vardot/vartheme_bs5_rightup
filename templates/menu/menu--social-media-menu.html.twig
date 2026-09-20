@@ -1,6 +1,8 @@
 {#
 /**
- * Template for the main menu.
+ * Template for the social media menu.
  */
 #}
+{# The Copy link item carries an hx-on click handler, so the menu brings core's HTMX. #}
+{{ attach_library('core/drupal.htmx') }}
 {% include 'vartheme_bs5_rightup:nav-menu' %}

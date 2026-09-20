@@ -322,11 +322,72 @@ h6,
 // (bg-primary + text-white via page_region YAML). Override --bs-primary-rgb here
 // so the section's `bg-primary` paints in the Vardot dark blue per Figma.
 footer.footer {
-  // Footer outer padding: 80px top, 60px bottom (Figma padding/footer).
-  padding-block: 3rem 0rem;
+  // The design's footer rhythm, owned here rather than split across the
+  // sections: 80px above and below on desktop, 40px on phones, 32px between
+  // the brand row, the rule and the links, 24px between the link rows.
+  --footer-row-gap: #{$spacer * 2};
+  --footer-links-gap: #{$spacer * 1.5};
+  --footer-menu-gap: #{$spacer};
+  --footer-divider-color: #{$secondary-bg-subtle};
+
+  // The footer is brand primary (black) edge to edge. It has to be painted
+  // here, in the base stylesheet: the page-footer component's own CSS is not
+  // linked on the page, and while the Canvas sections carried the padding
+  // their `bg-black` hid that the footer itself was transparent. Once the
+  // footer owns the 80px padding and the 32px gap between the sections, the
+  // white page showed through as bands across the footer.
+  background-color: $black;
+
+  padding-block: #{$spacer * 5};
 
   @include media-breakpoint-down(md) {
-    padding-block: 2.5rem 2rem;
+    padding-block: #{$spacer * 2.5};
+
+    // The design's phone margin is 16px. The row's negative gutter and the
+    // column's gutter padding cancel out, so the container's own padding is the
+    // margin the content ends up at.
+    .container {
+      padding-inline: #{$spacer};
+    }
+
+    // The brand row stacks on a phone: the logo, then the icons beneath it,
+    // 16px apart, as the mobile footer draws it.
+    .flex-row:has(> .block-system-menu-blocksocial-media-menu) {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: #{$spacer} !important;
+
+      // Stacked, the 80px frame belongs to the logo alone, as drawn.
+      > :first-child {
+        display: flex;
+        align-items: center;
+        min-height: #{$spacer * 5};
+      }
+    }
+  }
+
+  // The brand row, the rule and the link rows are separate Canvas sections;
+  // the gaps between them are the design's, not Bootstrap's slot margins.
+  .sdc-section__footer {
+    margin-block-start: var(--footer-row-gap) !important;
+  }
+
+  // Each Canvas section carries `mt-0` and `pt-0` utilities, and Bootstrap's
+  // utilities are !important, so the gap between the sections has to be too.
+  section + section {
+    margin-block-start: var(--footer-row-gap) !important;
+  }
+
+  // The brand row is the design's 80px tall, the logo and the icons centred in
+  // it. The logo artwork itself is 73px; the design's frame adds the rest.
+  .flex-row:has(> .block-system-menu-blocksocial-media-menu) {
+    min-height: #{$spacer * 5};
+  }
+
+  // The copyright is the last line: its paragraph margin would add to the
+  // footer's bottom padding.
+  .sdc-section__inner p:last-child {
+    margin-block-end: 0;
   }
 
   // The main-menu template wraps in <nav class="navbar navbar-expand-lg">
@@ -375,95 +436,116 @@ footer.footer {
   // Invert the white logo image sitting inside the html-code block.
   .footer-logo-image {
     width: auto;
-    height: 1.875rem;
+    height: auto;
   }
 
-  // Sitemap menu: stacked vertical list, right-aligned column (matches
-  // main-bvxea6i-wpafon4fgqxwm.eu.platformsh.site reference layout where
-  // .sitemap-menu sits in an ms-lg-auto column and items stack top-to-bottom).
+  // The two link rows (VBN Stylesheet, footer-desktop): the main menu as the
+  // sitemap row, the footer menu as the policy row beneath it. Both are
+  // horizontal, wrap on narrow screens, and separate their links with a short
+  // vertical rule.
+  //
+  // The rule sits in the column gap as each item's ::before. On a line that
+  // wraps, the rule before the first link of the new line would hang off the
+  // start edge, so the list clips it: `overflow: clip` hides it, and the clip
+  // margin keeps a focused link's outline visible.
+  .block-system-menu-blockmain,
+  .block-system-menu-blockfooter {
+    ul.nav,
+    .navbar-nav {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      column-gap: calc(var(--footer-menu-gap) * 2 + 1px);
+      row-gap: var(--footer-menu-gap);
+      overflow: clip;
+      overflow-clip-margin: #{$spacer * 0.25};
+    }
+
+    .nav-item {
+      position: relative;
+      min-width: 0;
+    }
+
+    .nav-item + .nav-item::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      inset-inline-start: calc(var(--footer-menu-gap) * -1 - 1px);
+      width: 1px;
+      height: 1rem;
+      background-color: var(--footer-divider-color);
+      opacity: 0.5;
+      transform: translateY(-50%);
+    }
+
+    .nav-link {
+      padding: 0;
+      color: var(--bs-white);
+      font-weight: 400;
+      line-height: 1.5;
+      text-decoration: none;
+      white-space: nowrap;
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: var(--bs-white);
+        text-decoration: underline;
+      }
+    }
+
+    // A footer row is a flat link list: no dropdown chevron, no child menus.
+    .nav-link.dropdown-toggle::after,
+    .dropdown-menu {
+      display: none;
+    }
+  }
+
   .block-system-menu-blockmain {
-    margin-inline-start: auto;
+    margin-block-end: var(--footer-links-gap);
+
+    .nav-link {
+      font-family: #{inspect($font-family-sans-serif)};
+      font-size: #{$spacer * 1.25};
+    }
   }
 
-  .block-system-menu-blockmain .navbar-nav,
-  .block-system-menu-blockmain ul.nav {
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    gap: 0.75rem;
-    min-width: 0;
+  // The policy row is quieter: the serif body face, at 60%.
+  .block-system-menu-blockfooter {
+    margin-block-end: var(--footer-links-gap);
+    opacity: 0.6;
+
+    .nav-link {
+      font-family: #{inspect($font-family-serif)};
+      font-size: #{$spacer * 1.125};
+    }
   }
 
-  .block-system-menu-blockmain .nav-item {
-    min-width: 0;
-  }
+  // On a phone the design tightens the gap between links on a line and keeps
+  // a full line of air between wrapped lines.
+  @include media-breakpoint-down(md) {
+    // The mobile footer frames settle this: three lines of 30px links in a
+    // 106px row leave 8px between lines, and two 27px policy lines in a 60px
+    // row leave 6px.
+    .block-system-menu-blockmain ul.nav,
+    .block-system-menu-blockmain .navbar-nav {
+      column-gap: calc(#{$spacer * 0.5} * 2 + 1px);
+      row-gap: #{$spacer * 0.5};
+    }
 
-  .block-system-menu-blockmain .nav-item a.nav-link {
-    position: relative;
-    padding: 0;
-    color: var(--bs-emphasis-color);
-    font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.4;
-    text-decoration: none;
-    white-space: nowrap;
-  }
+    .block-system-menu-blockmain .nav-item + .nav-item::before {
+      inset-inline-start: calc(#{$spacer * -0.5} - 1px);
+    }
 
-  // Short left-aligned underline tick under hovered/active item (reference
-  // site uses 2.4rem tick on hover, 1.3rem tick on is-active, at top:80%).
-  .block-system-menu-blockmain .nav-item a.nav-link.is-active::after {
-    content: "";
-    position: absolute;
-    top: 80%;
-    left: 0;
-    width: 1.3rem;
-    height: 0.0625rem;
-    background-color: var(--bs-emphasis-color);
-  }
+    .block-system-menu-blockfooter ul.nav,
+    .block-system-menu-blockfooter .navbar-nav {
+      column-gap: calc(#{$spacer * 0.375} * 2 + 1px);
+      row-gap: #{$spacer * 0.375};
+    }
 
-  .block-system-menu-blockmain .nav-item a.nav-link:hover::after,
-  .block-system-menu-blockmain .nav-item a.nav-link:focus::after {
-    content: "";
-    position: absolute;
-    top: 80%;
-    left: 0;
-    width: 2.4rem;
-    height: 0.0625rem;
-    background-color: var(--bs-emphasis-color);
-    transition: width 0.3s;
-  }
-
-  // Remove the dropdown chevron on parent items in footer (no dropdown behavior here).
-  .block-system-menu-blockmain .nav-link.dropdown-toggle::after {
-    display: none;
-  }
-
-  // Footer does not expose child menu items - keep it a flat link row.
-  .block-system-menu-blockmain .dropdown-menu {
-    display: none;
-  }
-
-  // Bottom-row secondary menu: small body font, horizontal at right edge.
-  .block-system-menu-blockfooter .navbar-nav,
-  .block-system-menu-blockfooter ul.nav {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.9375rem;
-  }
-
-  .block-system-menu-blockfooter .nav-item a.nav-link {
-    padding: 0;
-    color: var(--bs-emphasis-color);
-    font-weight: 400;
-    font-size: 0.875rem;
-    line-height: 1.4;
-    text-decoration: none;
-  }
-
-  .block-system-menu-blockfooter .nav-item a.nav-link:hover,
-  .block-system-menu-blockfooter .nav-item a.nav-link:focus,
-  .block-system-menu-blockfooter .nav-item a.nav-link:active {
-    text-decoration: underline;
+    .block-system-menu-blockfooter .nav-item + .nav-item::before {
+      inset-inline-start: calc(#{$spacer * -0.375} - 1px);
+    }
   }
 
   // Footer sitemap menu (`secondary`): two grouped columns
@@ -565,15 +647,22 @@ footer.footer {
     .navbar-nav,
     ul.nav {
       flex-direction: row;
-      gap: 0.9375rem;
+      gap: #{$spacer * 0.5};
+    }
+
+    // As a flex box the item is exactly its 40px link. As a block, the
+    // inline-flex link sits on a text baseline and the line box adds
+    // descender space beneath it.
+    li.nav-item {
+      display: flex;
     }
 
     li.nav-item > a {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 1.875rem;
-      height: 1.875rem;
+      width: #{$spacer * 2.5};
+      height: #{$spacer * 2.5};
       color: var(--bs-emphasis-color);
       font-size: 0 !important;
       line-height: 0 !important;
@@ -597,6 +686,43 @@ footer.footer {
           opacity: 0.85;
         }
       }
+    }
+  }
+
+  // The design's own social glyphs (VBN Stylesheet, footer `share`): a bare
+  // Facebook "f", X, Instagram and a chain link for copying the page address.
+  // Drawn as masks in currentColor so hover and focus colours still apply, and
+  // inlined as data URIs because a file url() in this build compiles to a
+  // broken `url([object Module])` (see `.form-required` above). The Bootstrap
+  // Icons class stays on each link, so the icon-font glyph is the fallback.
+  .block-system-menu-blocksocial-media-menu li.nav-item > a {
+    &.bi-facebook,
+    &.bi-twitter-x,
+    &.bi-instagram,
+    &.bi-link-45deg {
+      // The link is a flex box whose visually-hidden text still takes part in
+      // layout, so without flex-shrink the glyph box collapses to a sliver
+      // and the mask is squeezed into it.
+      &::before {
+        content: "";
+        flex-shrink: 0;
+        width: #{$spacer * 2.5};
+        height: #{$spacer * 2.5};
+        background-color: currentcolor;
+        mask-position: center;
+        mask-repeat: no-repeat;
+        mask-size: 100% 100%;
+      }
+    }
+
+    &.bi-facebook::before { mask-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cg%3E %3Cpath id='Vector' d='M17.1257 21.5786V29.3333H21.3012V21.5786H24.4149L25.0628 18.013H21.3012V16.7516C21.3012 14.8667 22.032 14.1448 23.9181 14.1448C24.5049 14.1448 24.9764 14.1594 25.25 14.1885V10.9547C24.7352 10.8125 23.4754 10.6667 22.7483 10.6667C18.9003 10.6667 17.1257 12.5078 17.1257 16.4781V18.013H14.75V21.5786H17.1257Z' fill='white'/%3E %3C/g%3E %3C/svg%3E"); }
+    &.bi-twitter-x::before { mask-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cg%3E %3Cpath id='Vector' d='M25.3663 11.7037H28.23L21.9754 18.7316L29.3333 28.2963H23.5735L19.059 22.4968L13.8995 28.2963H11.0317L17.7204 20.7778L10.6667 11.7037H16.5725L20.649 17.0045L25.3663 11.7037ZM24.3604 26.6131H25.9464L15.7085 13.2991H14.0049L24.3604 26.6131Z' fill='white'/%3E %3C/g%3E %3C/svg%3E"); }
+    &.bi-instagram::before { mask-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cg%3E %3Cpath id='Vector' fill-rule='evenodd' clip-rule='evenodd' d='M24.1481 10.6667H15.8518C12.9882 10.6667 10.6667 12.9882 10.6667 15.8518V24.1481C10.6667 27.0118 12.9882 29.3333 15.8518 29.3333H24.1481C27.0118 29.3333 29.3333 27.0118 29.3333 24.1481V15.8518C29.3333 12.9882 27.0118 10.6667 24.1481 10.6667ZM27.5185 24.1481C27.5128 26.0071 26.0071 27.5128 24.1481 27.5185H15.8518C13.9928 27.5128 12.4872 26.0071 12.4815 24.1481V15.8518C12.4872 13.9928 13.9928 12.4872 15.8518 12.4815H24.1481C26.0071 12.4872 27.5128 13.9928 27.5185 15.8518V24.1481ZM24.9259 16.1111C25.4987 16.1111 25.9629 15.6468 25.9629 15.0741C25.9629 14.5013 25.4987 14.037 24.9259 14.037C24.3532 14.037 23.8889 14.5013 23.8889 15.0741C23.8889 15.6468 24.3532 16.1111 24.9259 16.1111ZM20 15.3333C17.4227 15.3333 15.3333 17.4227 15.3333 20C15.3333 22.5773 17.4227 24.6667 20 24.6667C22.5773 24.6667 24.6667 22.5773 24.6667 20C24.6695 18.7615 24.1786 17.5729 23.3028 16.6971C22.4271 15.8213 21.2385 15.3306 20 15.3333ZM17.1481 20C17.1481 21.575 18.4249 22.8518 20 22.8518C21.575 22.8518 22.8518 21.575 22.8518 20C22.8518 18.4249 21.575 17.1481 20 17.1481C18.4249 17.1481 17.1481 18.4249 17.1481 20Z' fill='white'/%3E %3C/g%3E %3C/svg%3E"); }
+
+    // The chain link is drawn at 21.33px inside the 40px box, as designed.
+    &.bi-link-45deg::before {
+      mask-image: url("data:image/svg+xml,%3Csvg width='21.3333' height='21.3333' viewBox='0 0 21.3333 21.3333' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cg clip-path='url%28%23clip0_0_44%29'%3E %3Cpath id='Vector' fill-rule='evenodd' clip-rule='evenodd' d='M13.1453 8.74429C14.6943 10.5745 14.6911 13.4098 12.8787 15.2223L8.16298 19.938C6.30257 21.7984 3.2569 21.7984 1.39639 19.938C-0.464123 18.0776 -0.464016 15.032 1.39639 13.1714L4.14436 10.4235C4.54019 10.0276 5.18707 10.0276 5.58288 10.4235C5.97871 10.8193 5.97871 11.4662 5.58288 11.862L2.83491 14.61C1.76513 15.6797 1.76513 17.4286 2.83491 18.4984C3.90468 19.5682 5.65354 19.5682 6.7234 18.4984L11.4391 13.7828C12.4745 12.7474 12.488 11.1172 11.5912 10.0588C10.7297 9.04319 12.2703 7.70987 13.1443 8.7432L13.1453 8.74429ZM19.938 1.3953C18.0776 -0.465101 15.032 -0.465101 13.1715 1.3953L8.45578 6.11099C6.64329 7.92347 6.64017 10.7579 8.18911 12.589C9.06305 13.6224 10.6037 12.289 9.74222 11.2734C8.84535 10.2151 8.85993 8.58493 9.8943 7.54948L14.61 2.83379C15.6798 1.76402 17.4286 1.76402 18.4985 2.83379C19.5682 3.90357 19.5682 5.65243 18.4985 6.72229L15.7505 9.47025C15.3547 9.86609 15.3547 10.513 15.7505 10.9088C16.1463 11.3046 16.7932 11.3046 17.189 10.9088L19.937 8.1608C21.7974 6.3004 21.7974 3.25472 19.937 1.39421L19.938 1.3953Z' fill='white'/%3E %3C/g%3E %3Cdefs%3E %3CclipPath id='clip0_0_44'%3E %3Crect width='21.3333' height='21.3333' fill='white'/%3E %3C/clipPath%3E %3C/defs%3E %3C/svg%3E");
+      mask-size: #{$spacer * 1.3333} #{$spacer * 1.3333};
     }
   }
 
