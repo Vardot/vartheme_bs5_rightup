@@ -222,8 +222,6 @@
     display: block;
     z-index: $zindex-dropdown - 1;
     background: var(--icon-toggle-scrim-bg);
-    border: 0;
-    padding: 0;
     cursor: default;
     animation: icon-toggle-scrim-in 0.25s ease;
   }
