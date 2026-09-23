@@ -9,12 +9,15 @@
 // an indigo call-to-action section, where an indigo button would sit at 1.00:1
 // against its own background — invisible.
 //
-// So the design's treatment is scoped to the mint hero (`.bg-accent-subtle`)
-// and nowhere else. Every indigo placement keeps the theme's default black
-// button, which measures 3.30:1 there and passes the 3:1 threshold for a user
-// interface component.
+// So the design's treatment is scoped to the mint hero and nowhere else. The
+// subscribe block on article and podcast pages (VBN 13142:10904) also sits on
+// mint, and its design draws the button BLACK — so mint alone is not the cue.
+// The hero places the webform block straight into its column; the subscribe
+// block wraps it in a Group row first. That direct-child position is the hook.
+// Every other placement keeps the theme's default black button, which measures
+// 3.30:1 on indigo and passes the 3:1 threshold for a user interface component.
 
-.bg-accent-subtle {
+.bg-accent-subtle .row > [class*="col-"] > .block-webform {
   .webform-submission-newsletter-subscribe-form {
     .form-submit,
     .webform-button--submit {
