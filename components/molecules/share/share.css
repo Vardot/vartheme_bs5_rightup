@@ -1,20 +1,20 @@
 .webshare {
   --webshare-button-size: 2.5rem;
-  --webshare-icon-size: 1.5rem;
-  --webshare-gap: 0.5rem;
-  --webshare-heading-gap: 1rem;
-  --webshare-button-bg: var(--bs-secondary-bg);
-  --webshare-button-bg-hover: var(--bs-primary-bg-subtle);
-  --webshare-button-bg-active: var(--bs-primary-border-subtle);
+  --webshare-icon-size: 1.3333rem;
+  --webshare-gap: 0;
+  --webshare-heading-gap: 0.75rem;
+  --webshare-button-bg: transparent;
+  --webshare-button-bg-hover: transparent;
+  --webshare-button-bg-active: transparent;
   --webshare-button-color: var(--bs-body-color);
-  --webshare-button-radius: 0.25rem;
+  --webshare-button-radius: 0;
   --webshare-button-shadow: none;
   --webshare-heading-color: var(--bs-body-color);
-  --webshare-heading-font: var(--bs-body-font-family);
-  --webshare-heading-font-size: 1.125rem;
-  --webshare-heading-font-weight: 700;
+  --webshare-heading-font: eb garamond, garamond, times new roman, liberation serif, georgia, serif;
+  --webshare-heading-font-size: 1rem;
+  --webshare-heading-font-weight: 400;
   --webshare-heading-line-height: 1.5;
-  --webshare-focus-ring: 0.25rem solid var(--bs-focus-ring-color);
+  --webshare-focus-ring: 0.25rem solid #000;
   --webshare-focus-offset: 0.125rem;
   --webshare-transition: all 0.2s ease-in-out;
   --webshare-rail-top: 6rem;
@@ -30,6 +30,20 @@
 .webshare *::before,
 .webshare *::after {
   box-sizing: border-box;
+}
+
+.webshare--horizontal.webshare--inline {
+  display: flex;
+  align-items: center;
+  gap: var(--webshare-heading-gap);
+}
+
+.webshare--horizontal.webshare--inline.webshare--align-end {
+  justify-content: flex-end;
+}
+
+.webshare--horizontal.webshare--inline .webshare__heading {
+  margin: 0;
 }
 
 .webshare__heading {

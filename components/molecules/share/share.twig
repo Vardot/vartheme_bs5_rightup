@@ -101,8 +101,12 @@
   'facebook_share': 'bi-facebook',
   'x': 'bi-twitter-x',
   'whatsapp': 'bi-whatsapp',
-  'copy': 'bi-clipboard',
+  'copy': 'bi-link-45deg',
 } %}
+
+{# The design draws "copy link" as a chain link (13402:7707); the SVG pack
+   ships a clipboard for it, so that one glyph comes from Bootstrap Icons. #}
+{% set icon_from_pack_excluded = ['copy'] %}
 
 {# Logic: build the wrapper element attributes. #}
 {% set attributes = attributes
@@ -177,7 +181,7 @@
             .setAttribute('aria-label', platform.title|default('Copy URL'|t))
           %}
           <button{{ copy_button_attributes }}>
-            {% if platform.icon_html %}
+            {% if platform.icon_html and platform.key not in icon_from_pack_excluded %}
               {% set platform_icon_span_attributes = create_attribute().setAttribute('aria-hidden', 'true') %}
               <span{{ platform_icon_span_attributes }}>{{ platform.icon_html|raw }}</span>
             {% else %}
@@ -198,7 +202,7 @@
             .setAttribute('aria-label', platform.title ~ ' ' ~ '(opens in a new tab)'|t)
           %}
           <a{{ platform_link_attributes }}>
-            {% if platform.icon_html %}
+            {% if platform.icon_html and platform.key not in icon_from_pack_excluded %}
               {% set platform_icon_span_attributes = create_attribute().setAttribute('aria-hidden', 'true') %}
               <span{{ platform_icon_span_attributes }}>{{ platform.icon_html|raw }}</span>
             {% else %}

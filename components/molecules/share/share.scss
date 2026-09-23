@@ -1,8 +1,9 @@
 // @file
 // Vartheme BS5 Rightup — Share component (override of `webshare:share`).
 //
-// Implements the Figma "Share" design (file RJkuWNHla1P8VYHa5z6dnL,
-// nodes 9740:3590 + 9668:2669). All visual values flow through
+// Implements the Figma "Share" design from the VBN Stylesheet
+// (file kvbq4jJHQ8V1gJU8lgEA6h, node 13402:7718) — the label sits inline
+// beside the icons, which are unframed 40 px artwork. All visual values flow through
 // `--webshare-*` tokens that resolve to Bootstrap 5 SCSS variables
 // (`$spacer`, `$primary`, `$border-radius-sm`, `$font-weight-bold`,
 // …) or Bootstrap CSS custom properties (`--bs-*`), so the component
@@ -51,30 +52,35 @@
 .webshare {
   // ── Sizing tokens (all derived from Bootstrap's $spacer = 1rem) ──
   --webshare-button-size: #{$spacer * 2.5};   // 40 px
-  --webshare-icon-size: #{$spacer * 1.5};     // 24 px — Figma node 9740:3621 social-btns/02 frame
-  --webshare-gap: #{$spacer * 0.5};           // 8 px
-  --webshare-heading-gap: #{$spacer};         // 16 px
+  // 21.33 px glyph inside the 40 px target. The VBN icon assets are 40 px
+  // artboards that carry their own padding (the link variant states its
+  // inner size, 12814:16488); our SVG pack fills its viewBox edge to edge,
+  // so the glyph is sized to the artwork inside, not to the artboard.
+  --webshare-icon-size: 1.3333rem;
+  --webshare-gap: 0;                          // icons sit flush in the body row (13402:7707)
+  --webshare-heading-gap: #{$spacer * 0.75};  // 12 px between the label and the icons
 
   // ── Colour + surface tokens (Bootstrap CSS variables) ───────────
-  // Figma "brand/secondary" (#ebe8e5) has no exact Bootstrap default;
-  // map it to --bs-secondary-bg so themes that re-skin secondary
-  // surfaces propagate automatically.
-  --webshare-button-bg: var(--bs-secondary-bg);
-  --webshare-button-bg-hover: var(--bs-primary-bg-subtle);
-  --webshare-button-bg-active: var(--bs-primary-border-subtle);
+  // The VBN design gives the icons no surface at all.
+  --webshare-button-bg: transparent;
+  --webshare-button-bg-hover: transparent;
+  --webshare-button-bg-active: transparent;
   --webshare-button-color: var(--bs-body-color);
-  --webshare-button-radius: #{$border-radius-sm};
+  --webshare-button-radius: 0;
   --webshare-button-shadow: none;
 
   // ── Heading typography (Bootstrap font variables) ───────────────
   --webshare-heading-color: var(--bs-body-color);
-  --webshare-heading-font: var(--bs-body-font-family);
-  --webshare-heading-font-size: 1.125rem; // 18 px — Figma spec
-  --webshare-heading-font-weight: #{$font-weight-bold};
+  --webshare-heading-font: #{$font-family-serif};
+  --webshare-heading-font-size: 1rem; // 16 px — Figma Desktop/Body/Bold/Small
+  --webshare-heading-font-weight: #{$font-weight-normal};
   --webshare-heading-line-height: #{$line-height-base};
 
   // ── Focus + interaction (Bootstrap focus ring + transition) ─────
-  --webshare-focus-ring: #{$focus-ring-width} solid var(--bs-focus-ring-color);
+  // --bs-focus-ring-color is rgba($primary, .25); with this theme's black
+  // $primary it composites to ~#bfbfbf, ~1.9:1 on white — under the 3:1
+  // WCAG 2.4.11 wants for a focus indicator. Use the solid token.
+  --webshare-focus-ring: #{$focus-ring-width} solid #{$primary};
   --webshare-focus-offset: #{$spacer * 0.125}; // 2 px
   --webshare-transition: #{$transition-base};
 
@@ -95,6 +101,23 @@
   *::before,
   *::after {
     box-sizing: border-box;
+  }
+
+  // The VBN design sets the label beside the icons on one row (13402:7718),
+  // so the inline horizontal variant is a flex row and the label carries no
+  // bottom margin. The vertical/rail variants keep the stacked label.
+  &--horizontal#{&}--inline {
+    display: flex;
+    align-items: center;
+    gap: var(--webshare-heading-gap);
+  }
+
+  &--horizontal#{&}--inline#{&}--align-end {
+    justify-content: flex-end;
+  }
+
+  &--horizontal#{&}--inline &__heading {
+    margin: 0;
   }
 
   &__heading {
