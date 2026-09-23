@@ -1,6 +1,13 @@
 /**
  * Hero Slider enhancements (Canvas/SDC-safe)
  *
+ * Does nothing inside the Canvas editor preview. The setup below re-parents
+ * `.carousel-item` nodes so Bootstrap sees them as direct children, and Canvas
+ * wraps every nested component in markup of its own. Moving those nodes breaks
+ * the editor's map from the preview DOM back to the component tree, and the
+ * Review -> Select All -> Publish flow then has nothing to reconcile. Same
+ * `is-canvas-preview` detection as sticky-header.js / icon-toggle.js.
+ *
  * Fixes / features:
  * - Ensure only one .carousel-item is active per carousel.
  * - Build indicators dynamically (Canvas slot content prevents counting in Twig).
@@ -236,9 +243,29 @@
     }
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot);
-  } else {
+  // The preview document runs inside an iframe whose host element carries
+  // `data-canvas-preview`; same-origin lets us read it from within the frame.
+  function inCanvasPreview() {
+    try {
+      return Boolean(
+        window.frameElement && 'canvasPreview' in window.frameElement.dataset,
+      );
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function start() {
+    if (inCanvasPreview()) {
+      document.documentElement.classList.add('is-canvas-preview');
+      return;
+    }
     boot();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
   }
 })();
