@@ -2,7 +2,7 @@
 
 # Vartheme BS5 Rightup
 [![pipeline status](https://git.drupalcode.org/project/vartheme_bs5_rightup/badges/1.0.x/pipeline.svg)](https://git.drupalcode.org/project/vartheme_bs5_rightup/-/pipelines)
-[![Vartheme BS5 Rightup](https://img.shields.io/badge/Vartheme%20BS5%20RightUp-1.0.0--beta1-0d6efc?labelColor=001d38&style=flat-square)](https://git.drupalcode.org/project/vartheme_bs5_rightup/-/pipelines?ref=1.0.0-beta1)
+[![Vartheme BS5 Rightup](https://img.shields.io/badge/Vartheme%20BS5%20RightUp-1.0.0--rc1-0d6efc?labelColor=001d38&style=flat-square)](https://git.drupalcode.org/project/vartheme_bs5_rightup/-/pipelines?ref=1.0.0-rc1)
 [![Automated Functional Testing](https://git.drupalcode.org/project/varbase_project/badges/11.0.x/pipeline.svg)](https://git.drupalcode.org/project/varbase_project/-/pipelines)
 
 The Bootstrap 5 front-end theme for the Rightup media, news and magazine site template, with its own design system.
