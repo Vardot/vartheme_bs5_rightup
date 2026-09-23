@@ -4,8 +4,10 @@
  * Template for the system menu block.
  */
 #}
-{# The block wrapper is the navigation landmark, named by the block label. #}
-{% set attributes = attributes.setAttribute('aria-label', configuration.label) %}
+{# The nav landmark is named by its block label; an empty label sets no name. #}
+{% if configuration.label is not empty %}
+  {% set attributes = attributes.setAttribute('aria-label', configuration.label) %}
+{% endif %}
 {% include 'vartheme_bs5_rightup:block' with {
   html_tag: 'nav'
 } %}
