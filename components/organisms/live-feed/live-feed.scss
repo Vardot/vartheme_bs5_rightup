@@ -109,6 +109,12 @@
   }
 }
 
+// Each ticker link is its own pointer target, so it gets 24px of height.
+.live-feed-item {
+  min-block-size: 1.5rem;
+  align-items: center;
+}
+
 .live-feed-item + .live-feed-item {
   position: relative;
 

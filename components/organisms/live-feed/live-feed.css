@@ -72,6 +72,11 @@
   }
 }
 
+.live-feed-item {
+  align-items: center;
+  min-block-size: 1.5rem;
+}
+
 .live-feed-item + .live-feed-item {
   position: relative;
 }
