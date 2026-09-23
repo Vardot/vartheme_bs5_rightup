@@ -39,13 +39,15 @@
 {% set text_size = text_size|default('none') %}
 {% set text_color = text_color|default('text-body') %}
 {% set opacity = opacity|default('opacity-100') %}
+{% set font_style = font_style|default('normal') %}
 
 {# Logic: optional utility classes, only when set. #}
 {% set size_classes = text_size != 'none' ? [text_size] : [] %}
 {% set color_classes = text_color != 'none' ? [text_color] : [] %}
 
 {# Logic: merge text classes as arrays. #}
-{% set classes = ['rich-text', opacity]|merge(size_classes)|merge(color_classes) %}
+{% set style_classes = font_style == 'italic' ? ['fst-italic'] : [] %}
+{% set classes = ['rich-text', opacity]|merge(size_classes)|merge(color_classes)|merge(style_classes) %}
 
 {# Print the HTML. #}
 {% set attributes = attributes.addClass(classes) %}

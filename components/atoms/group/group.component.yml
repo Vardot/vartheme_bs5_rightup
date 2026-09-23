@@ -67,6 +67,19 @@ props:
         bg-tertiary: "Tertiary"
         bg-accent: "Accent"
 
+    height:
+      type: string
+      title: Height
+      description: Stretch to the parent so justify-content can pin content to the ends.
+      default: auto
+      enum:
+        - auto
+        - h-100
+      examples:
+        - auto
+      meta:enum:
+        auto: Auto
+        h-100: Fill parent
     direction:
       type: string
       title: "Direction"

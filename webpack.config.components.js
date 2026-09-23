@@ -21,6 +21,7 @@ module.exports = {
     // Components
     'base/root/root': ['./components/base/root/root.scss'],
     'atoms/section/section': ['./components/atoms/section/section.scss'],
+    'atoms/divider/divider': ['./components/atoms/divider/divider.scss'],
     'atoms/progress-bar/progress-bar': ['./components/atoms/progress-bar/progress-bar.scss'],
     'molecules/audio-player-local/audio-player-local': ['./components/molecules/audio-player-local/audio-player-local.scss'],
     'molecules/audio-player-remote/audio-player-remote': ['./components/molecules/audio-player-remote/audio-player-remote.scss'],

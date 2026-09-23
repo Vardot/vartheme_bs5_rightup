@@ -2,7 +2,7 @@
   --bs-breadcrumb-padding-x: 0.0625rem;
   --bs-breadcrumb-padding-y: 0;
   --bs-breadcrumb-margin-bottom: 1rem;
-  --bs-breadcrumb-font-size: 1rem;
+  --bs-breadcrumb-font-size: 0.75rem;
   --bs-breadcrumb-bg:;
   --bs-breadcrumb-border-radius:;
   --bs-breadcrumb-divider-color: var(--bs-secondary-color);
@@ -45,12 +45,27 @@
   color: var(--bs-breadcrumb-item-active-color);
 }
 
+.breadcrumb {
+  font-weight: 500;
+  line-height: 1.35;
+}
+
 .breadcrumb .breadcrumb-item {
-  color: var(--bs-dark);
+  color: inherit;
+}
+
+.breadcrumb .breadcrumb-item a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.breadcrumb .breadcrumb-item a:hover,
+.breadcrumb .breadcrumb-item a:focus-visible {
+  text-decoration: underline;
 }
 
 .breadcrumb-item + .breadcrumb-item::before {
-  color: var(--bs-dark);
+  color: inherit;
 }
 
 [data-bs-theme="dark"] .breadcrumb .breadcrumb-item {
@@ -64,7 +79,7 @@
 .breadcrumb-item + .breadcrumb-item::before {
   content: "\f285";
   font-family: bootstrap-icons;
-  font-size: 1.1rem;
+  font-size: 0.75rem;
   font-weight: 500;
 }
 

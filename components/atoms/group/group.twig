@@ -90,6 +90,7 @@
 {# Variables: scalar props with schema defaults. #}
 {% set background_color = background_color|default('none') %}
 {% set direction = direction|default('vertical') %}
+{% set height = height|default('auto') %}
 {% set gap = gap|default('gap-3') %}
 {% set wrap = wrap|default('wrap') %}
 {% set align_items = align_items|default('align-items-stretch') %}
@@ -132,6 +133,7 @@
 
 {# Logic: optional utility classes, only when set. #}
 {% set background_class = background_color != 'none' ? background_color : '' %}
+{% set height_class = height != 'auto' ? height : '' %}
 {% set radius_class = radius != 'none' ? radius : '' %}
 
 {# Logic: merge all classes as arrays. #}
@@ -152,6 +154,7 @@
   margin_inline_end,
   background_class,
   radius_class,
+  height_class,
   border_color_class,
   border_width_class,
 ]|merge(border_classes) %}

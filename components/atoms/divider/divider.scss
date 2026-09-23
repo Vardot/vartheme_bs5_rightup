@@ -1,0 +1,7 @@
+
+// `border_color: none` keeps the theme's own hairline (--bs-border-color)
+// instead of painting a theme colour over it. Bootstrap's hr falls back to
+// currentColor, which is body text and far too dark for a rule.
+.divider--theme-border {
+  border-top-color: var(--bs-border-color);
+}

@@ -2,7 +2,7 @@
 @import "../../defaults";   // Global component defaults.
 
 // Override default bootstrap breadcrumb variables.
-$breadcrumb-font-size: 1rem;
+$breadcrumb-font-size: 0.75rem; // 12px — Desktop/Components/Breadcrumb
 $breadcrumb-padding-x: 0.0625rem;
 
 @import "../../../node_modules/bootstrap/scss/breadcrumb";
@@ -10,14 +10,29 @@ $breadcrumb-padding-x: 0.0625rem;
 // Change default bootstrap breadcrumb style.
 
 // Change the color for text in the breadcrumb.
+// The design's breadcrumb is Rubik Medium, unlinked-looking, and takes the
+// colour of whatever it sits on (white on the dark banner, black on white).
 .breadcrumb {
+  font-weight: $font-weight-medium;
+  line-height: 1.35;
+
   .breadcrumb-item {
-    color: var(--bs-dark);
+    color: inherit;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover,
+      &:focus-visible {
+        text-decoration: underline;
+      }
+    }
   }
 }
 
 .breadcrumb-item + .breadcrumb-item::before {
-  color: var(--bs-dark);
+  color: inherit;
 }
 
 @if $enable-dark-mode {
@@ -37,7 +52,7 @@ $breadcrumb-padding-x: 0.0625rem;
 // Change the breadcrumb divider to use bootstrap-icons.
 .breadcrumb-item + .breadcrumb-item::before {
   font-family: 'bootstrap-icons';
-  font-size: 1.1rem;
+  font-size: 0.75rem;
   font-weight: 500;
   content: quote("\F285");
 }

@@ -32,6 +32,19 @@ props:
         fs-5: Medium
         fs-4: Large
         fs-3: Extra large
+    font_style:
+      type: string
+      title: Font style
+      description: Italic for captions and asides, as the design uses under images.
+      default: normal
+      enum:
+        - normal
+        - italic
+      examples:
+        - normal
+      meta:enum:
+        normal: Normal
+        italic: Italic
     text_color:
       type: string
       title: Text color

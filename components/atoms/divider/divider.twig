@@ -60,7 +60,9 @@
  # label + line wrapper, moving the spacing utilities to the wrapper and
  # resetting the nested <hr>'s own margin so it centers on the label. #}
 {% set has_text = text|trim is not empty %}
-{% set hr_classes = [border_width, border_color, opacity] %}
+{# `none` keeps Bootstrap's own --bs-border-color, which is the design's
+   subtle hairline; any other value paints a theme colour over it. #}
+{% set hr_classes = [border_width, border_color == 'none' ? 'divider--theme-border' : border_color, opacity] %}
 
 {% if has_text %}
   {% set wrapper_classes = ['d-flex', 'align-items-center', margin_top, margin_bottom] %}

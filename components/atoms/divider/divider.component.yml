@@ -58,6 +58,7 @@ props:
       title: Border color
       description: Bootstrap border color utility class.
       enum:
+        - none
         - border-black
         - border-secondary
         - border-primary
@@ -71,6 +72,7 @@ props:
         - border-dark
         - border-white
       meta:enum:
+        none: 'Theme border color'
         border-black: Black
         border-secondary: Secondary
         border-primary: Primary
