@@ -10,6 +10,41 @@
   font-size: 1.125rem !important;
 }
 
-.podcast-card__button:hover {
-  text-decoration: underline;
+.podcast-card__button > span {
+  position: relative;
+  text-decoration: none;
+}
+
+.podcast-card__button > span::after {
+  position: absolute;
+  bottom: 0;
+  height: 0.05em;
+  content: "";
+  transition: transform 0.2s ease-in-out;
+  transform: scaleX(0);
+  transform-origin: right;
+  border-radius: 50rem;
+  background: currentColor;
+  inset-inline: 0;
+}
+
+[dir="rtl"] .podcast-card__button > span::after {
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .podcast-card__button > span::after {
+    transition: none;
+  }
+}
+
+.podcast-card__button:hover > span::after,
+.podcast-card__button:focus-visible > span::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+[dir="rtl"] .podcast-card__button:hover > span::after,
+[dir="rtl"] .podcast-card__button:focus-visible > span::after {
+  transform-origin: right;
 }

@@ -153,6 +153,14 @@
   outline-offset: var(--webshare-focus-offset);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .webshare__item > a,
+  .webshare__item > button,
+  .webshare__item > span {
+    transition: none;
+  }
+}
+
 .webshare__item img,
 .webshare__item svg {
   display: block;
@@ -227,6 +235,12 @@
 .webshare__native-button:focus-visible {
   outline: var(--webshare-focus-ring);
   outline-offset: var(--webshare-focus-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .webshare__native-button {
+    transition: none;
+  }
 }
 
 .webshare__native-button {

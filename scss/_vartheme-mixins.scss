@@ -1,2 +1,42 @@
 // Vartheme custom mixins
 // -----------------------------------------------------------------------------
+
+// Transition on $transition-base timing, narrowed to the given properties.
+// Bootstrap's mixin drops it under prefers-reduced-motion.
+@mixin vartheme-transition($properties...) {
+  $timing: nth($transition-base, 2) nth($transition-base, 3);
+  $list: ();
+
+  @each $property in $properties {
+    $list: append($list, $property $timing, comma);
+  }
+
+  @include transition($list...);
+}
+
+// Link underline drawn as a scaled line, so hover animates transform only.
+// Pair with vartheme-underline-sweep-in on hover and focus; RTLCSS flips the origin.
+@mixin vartheme-underline-sweep($pseudo: after) {
+  position: relative;
+  text-decoration: none;
+
+  &::#{$pseudo} {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 0.05em;
+    background: currentcolor;
+    border-radius: $border-radius-pill;
+    transform: scaleX(0);
+    transform-origin: right;
+    @include vartheme-transition(transform);
+  }
+}
+
+@mixin vartheme-underline-sweep-in($pseudo: after) {
+  &::#{$pseudo} {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}

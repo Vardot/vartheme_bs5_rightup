@@ -1,0 +1,10 @@
+// @file dynamic-responsive-image: honour reduced motion for the Drimage load-in.
+
+// Drimage fades, scales and blurs each image in while it loads. Under reduced
+// motion show the image as it arrives, with no movement.
+@media (prefers-reduced-motion: reduce) {
+  div.drimage.is-loading {
+    animation: none;
+    opacity: 1;
+  }
+}

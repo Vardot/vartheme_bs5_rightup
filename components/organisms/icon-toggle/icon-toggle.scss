@@ -65,6 +65,8 @@
     border-radius: var(--icon-toggle-button-radius);
     background: var(--icon-toggle-button-bg);
     transition: var(--icon-toggle-transition);
+    // Only the color changes; `all` would also animate the focus outline.
+    transition-property: color;
     cursor: pointer;
     appearance: none;
 
@@ -132,6 +134,10 @@
   // Respect a reduced-motion preference: the icons still swap, they just do
   // not travel.
   @media (prefers-reduced-motion: reduce) {
+    &__button {
+      transition: none;
+    }
+
     &__icon {
       transition: opacity 0.01ms;
       transform: translate(-50%, -50%) !important;

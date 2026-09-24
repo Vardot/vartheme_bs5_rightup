@@ -44,6 +44,7 @@
   padding: 0;
   cursor: pointer;
   transition: var(--icon-toggle-transition);
+  transition-property: color;
   color: var(--icon-toggle-button-color);
   border: 0;
   border-radius: var(--icon-toggle-button-radius);
@@ -123,6 +124,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .icon-toggle__button {
+    transition: none;
+  }
+
   .icon-toggle__icon {
     transition: opacity 0.01ms;
     transform: translate(-50%, -50%) !important;

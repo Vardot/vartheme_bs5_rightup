@@ -47,6 +47,10 @@
     outline: var(--webshare-focus-ring);
     outline-offset: var(--webshare-focus-offset);
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 }
 
 .webshare {

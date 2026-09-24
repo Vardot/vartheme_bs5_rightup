@@ -1,0 +1,6 @@
+@media (prefers-reduced-motion: reduce) {
+  div.drimage.is-loading {
+    animation: none;
+    opacity: 1;
+  }
+}

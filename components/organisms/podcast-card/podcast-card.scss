@@ -24,8 +24,13 @@
     --bs-btn-active-color: var(--bs-black) !important;
     --bs-btn-active-border-color: var(--bs-white) !important;
 
-    &:hover {
-      text-decoration: underline;
+    > span {
+      @include vartheme-underline-sweep;
+    }
+
+    &:hover > span,
+    &:focus-visible > span {
+      @include vartheme-underline-sweep-in;
     }
   }
 }

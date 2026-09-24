@@ -44,6 +44,7 @@ module.exports = {
     'organisms/card-impressed/card-impressed': ['./components/organisms/card-impressed/card-impressed.scss'],
     'organisms/card-slider/card-slider': ['./components/organisms/card-slider/card-slider.scss'],
     'organisms/podcast-card/podcast-card': ['./components/organisms/podcast-card/podcast-card.scss'],
+    'molecules/dynamic-responsive-image/dynamic-responsive-image': ['./components/molecules/dynamic-responsive-image/dynamic-responsive-image.scss'],
     'organisms/card-text/card-text': ['./components/organisms/card-text/card-text.scss'],
     'organisms/media-banner/media-banner': ['./components/organisms/media-banner/media-banner.scss'],
     'organisms/heroslider/heroslider': ['./components/organisms/heroslider/heroslider.scss'],
