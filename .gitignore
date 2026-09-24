@@ -6,3 +6,8 @@
 node_modules
 .yarn/*
 .pnp.*
+
+# Functional testing artifacts.
+/tests/reports/
+/tests/screenshots/
+/tests/videos/

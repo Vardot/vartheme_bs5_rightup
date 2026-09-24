@@ -25,6 +25,7 @@
     "js/bootstrap/**"
   ],
   "words": [
+    "infobars",
     "ddev",
     "nowrap",
     "strtr",

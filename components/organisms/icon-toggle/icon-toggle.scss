@@ -333,7 +333,10 @@
 // The design's Search results page carries its own search field in the page
 // body, and its header shows no search icon. Hiding it there avoids offering
 // the same search twice on the one page. Scoped to the full-width variant, so
-// an icon toggle used for anything else on that route is unaffected.
-.path-search .icon-toggle--panel-full {
+// an icon toggle used for anything else on that route is unaffected. The
+// results page is a Drupal Canvas page, whose body carries `path-page`, so it
+// is also matched by the results form the page carries.
+.path-search .icon-toggle--panel-full,
+body:has(.views-exposed-form--search--results-block) .icon-toggle--panel-full {
   display: none;
 }

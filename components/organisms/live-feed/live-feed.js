@@ -11,10 +11,10 @@
  * When this behavior runs (and prefers-reduced-motion is not set), it clones
  * the track's single group of items once and appends the clone, so a CSS
  * `translateX(-50%)` animation can loop seamlessly. The clone is marked
- * aria-hidden (the feed should be announced once, not twice) and every
- * focusable element inside it gets tabindex="-1" — aria-hidden alone does
- * not remove an element from the tab order, so without this a keyboard user
- * could tab into a hidden duplicate link.
+ * aria-hidden (the feed should be announced once, not twice) and inert, so
+ * nothing inside it can take focus. aria-hidden alone does not remove an
+ * element from the tab order, and a per-link tabindex misses what other
+ * behaviors add later, such as the contextual links button.
  *
  * Also skipped inside the Drupal Canvas editor surface: a continuously
  * scrolling ticker there makes it harder to click/select/drag items while
@@ -63,6 +63,7 @@
 
         const clone = group.cloneNode(true);
         clone.setAttribute('aria-hidden', 'true');
+        clone.inert = true;
         clone
           .querySelectorAll('a, button, [tabindex]')
           .forEach((el) => el.setAttribute('tabindex', '-1'));

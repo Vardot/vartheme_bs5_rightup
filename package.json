@@ -18,7 +18,11 @@
     "lint:js": "node ./node_modules/eslint/bin/eslint.js .",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:yaml": "node ./node_modules/eslint/bin/eslint.js --ext .yml .",
-    "spellcheck": "cspell lint ."
+    "spellcheck": "cspell lint .",
+    "test": "cucumber-js --config cucumber.js",
+    "test:chromium": "BROWSER=chromium cucumber-js --config cucumber.js",
+    "test:headed": "HEADLESS=false cucumber-js --config cucumber.js",
+    "generate-reports": "node ./node_modules/@vardot/varbase-e2e/bin/generate-reports.js"
   },
   "license": "GPL-2.0-or-later",
   "keywords": [
@@ -37,8 +41,10 @@
     "@babel/core": "^7.26.0",
     "@babel/eslint-parser": "~7",
     "@babel/preset-env": "^7.26.0",
+    "@cucumber/cucumber": "12.9.0",
     "@fortawesome/fontawesome-free": "~5",
     "@popperjs/core": "~2",
+    "@vardot/varbase-e2e": "^2.0.7",
     "autoprefixer": "^10.4.20",
     "babel-loader": "^9.2.1",
     "bootstrap": "~5",
@@ -121,5 +127,9 @@
     "last 1 Samsung version",
     "Firefox ESR"
   ],
-  "packageManager": "yarn@4.18.0"
+  "packageManager": "yarn@4.18.0",
+  "resolutions": {
+    "@cucumber/cucumber": "12.9.0",
+    "@cucumber/pretty-formatter": "1.0.1"
+  }
 }

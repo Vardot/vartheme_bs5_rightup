@@ -298,6 +298,7 @@
   gap: var(--icon-toggle-panel-gap);
 }
 
-.path-search .icon-toggle--panel-full {
+.path-search .icon-toggle--panel-full,
+body:has(.views-exposed-form--search--results-block) .icon-toggle--panel-full {
   display: none;
 }
