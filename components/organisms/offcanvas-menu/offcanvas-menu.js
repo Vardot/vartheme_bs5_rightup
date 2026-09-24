@@ -54,6 +54,29 @@
       once('vartheme-bs5-offcanvas-menu', '.offcanvas-menu', context).forEach(
         (root) => {
           if (!inCanvasPreview()) {
+            // In a header the panel opens under the bar, so the CSS needs
+            // to know where the bar ends.
+            const header = root.closest('header');
+            const panel = root.querySelector('.offcanvas-menu__panel');
+            if (header && panel) {
+              // Bootstrap's scroll lock would unstick the header the panel
+              // hangs from; the backdrop and focus trap stay.
+              if (window.Offcanvas) {
+                window.Offcanvas.getOrCreateInstance(panel, { scroll: true });
+              }
+              const place = () => {
+                root.style.setProperty(
+                  '--offcanvas-menu-top',
+                  `${Math.round(header.getBoundingClientRect().bottom)}px`,
+                );
+              };
+              panel.addEventListener('show.bs.offcanvas', place);
+              window.addEventListener('resize', () => {
+                if (panel.classList.contains('show')) {
+                  place();
+                }
+              });
+            }
             return;
           }
 

@@ -1,34 +1,46 @@
 // @file
 // Vartheme BS5 Rightup — Offcanvas Menu component.
 //
-// Hamburger trigger + Bootstrap Offcanvas takeover panel: a dark header
-// strip (matches the site's header/footer background) holding the close
-// button, and a light panel body (tinted from the brand-tertiary indigo)
-// holding the main menu, a divider, secondary utility links, and search.
-// All visual values flow through `--offcanvas-menu-*` tokens so the panel
-// follows the active theme; only the brand-tertiary indigo itself is a
-// literal fallback (no Bootstrap token carries it yet).
+// Hamburger trigger + Bootstrap Offcanvas panel, drawn after the design's menu
+// dropdown. Values flow through `--offcanvas-menu-*` tokens.
 
 @import "../../defaults";
 
-$offcanvas-menu-tertiary: #4F46E1;
-// Bootstrap ships no serif stack ($font-family-sans-serif/-monospace only);
-// this theme has no serif webfont loaded, so use a system serif stack for
-// the utility links' italic serif treatment — no new font file/build step.
-$offcanvas-menu-font-serif: Georgia, "Times New Roman", Times, serif;
-
 .offcanvas-menu {
   --offcanvas-menu-trigger-size: #{$spacer * 2.5};
-  --offcanvas-menu-trigger-color: var(--text-white-text, #{$white});
-  --offcanvas-menu-header-bg: var(--bs-primary-text-emphasis);
-  --offcanvas-menu-body-bg: #{tint-color($offcanvas-menu-tertiary, 92%)};
-  --offcanvas-menu-text-color: #{$black};
-  --offcanvas-menu-menu-size: #{$font-size-base * 1.5};
-  --offcanvas-menu-utility-color: var(--brand-tertiary, #{$offcanvas-menu-tertiary});
-  --offcanvas-menu-divider-color: var(--brand-tertiary, #{$offcanvas-menu-tertiary});
-  --offcanvas-menu-panel-width: min(26rem, 100vw);
+  --offcanvas-menu-icon-size: #{$spacer * 1.5625};
+  --offcanvas-menu-icon-menu: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 25 25'%3E%3Cpath d='M0 4.5h25v2H0zM0 11.5h25v2H0zM0 18.5h25v2H0z'/%3E%3C/svg%3E");
+  --offcanvas-menu-icon-close: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M18.75 3.0125L16.9875 1.25L10 8.2375L3.0125 1.25L1.25 3.0125L8.2375 10L1.25 16.9875L3.0125 18.75L10 11.7625L16.9875 18.75L18.75 16.9875L11.7625 10L18.75 3.0125Z'/%3E%3C/svg%3E");
+  --offcanvas-menu-trigger-color: var(--bs-white);
+  --offcanvas-menu-trigger-color-hover: var(--bs-tertiary);
+  --offcanvas-menu-body-bg: var(--bs-tertiary-bg-subtle);
+  --offcanvas-menu-text-color: var(--bs-black);
+  --offcanvas-menu-divider-color: var(--bs-tertiary);
+  // The design's desktop panel: 4rem margins either side of a 26rem column.
+  --offcanvas-menu-panel-width: min(#{$spacer * 34}, 100%);
+  --offcanvas-menu-padding-x: #{$spacer * 4};
+  --offcanvas-menu-padding-y: #{$spacer * 2.5};
+  --offcanvas-menu-group-gap: #{$spacer * 2};
+  --offcanvas-menu-search-gap: #{$spacer * 5};
+  --offcanvas-menu-search-width: #{$spacer * 26};
+  --offcanvas-menu-field-height: #{$spacer * 2.875};
+  --offcanvas-menu-submit-gutter: #{$spacer * 1.5};
+  --offcanvas-menu-submit-font-size: 1rem;
+  --offcanvas-menu-field-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0'/%3E%3C/svg%3E");
 
   display: inline-flex;
+
+  // The design's phone panel is narrower, with tighter margins.
+  @include media-breakpoint-down(lg) {
+    --offcanvas-menu-panel-width: min(#{$spacer * 18.75}, 100%);
+    --offcanvas-menu-padding-x: #{$spacer};
+    --offcanvas-menu-padding-y: #{$spacer * 1.5};
+    --offcanvas-menu-search-gap: #{$spacer * 2.5};
+    --offcanvas-menu-search-width: 100%;
+    --offcanvas-menu-field-height: #{$spacer * 2.1875};
+    --offcanvas-menu-submit-gutter: #{$spacer};
+    --offcanvas-menu-submit-font-size: #{$spacer * 0.875};
+  }
 
   &__trigger {
     display: inline-flex;
@@ -46,7 +58,7 @@ $offcanvas-menu-font-serif: Georgia, "Times New Roman", Times, serif;
 
     &:hover,
     &:focus {
-      color: var(--brand-tertiary, #{$offcanvas-menu-tertiary});
+      color: var(--offcanvas-menu-trigger-color-hover);
     }
 
     &:focus-visible {
@@ -55,107 +67,177 @@ $offcanvas-menu-font-serif: Georgia, "Times New Roman", Times, serif;
     }
   }
 
+  // The design's hamburger and close glyphs, as currentColor masks.
+  &__icon {
+    &::before {
+      content: "";
+      display: block;
+      width: var(--offcanvas-menu-icon-size);
+      height: var(--offcanvas-menu-icon-size);
+      background-color: currentcolor;
+      mask: var(--offcanvas-menu-icon-menu) center / 100% 100% no-repeat;
+    }
+  }
+
+  // The design swaps the hamburger for its close cross while the panel is open.
+  &:has(> .offcanvas-menu__panel.show, > .offcanvas-menu__panel.showing) &__icon::before {
+    mask-image: var(--offcanvas-menu-icon-close);
+    mask-size: 80% 80%;
+  }
+
   &__panel {
-    width: var(--offcanvas-menu-panel-width);
+    --bs-offcanvas-width: var(--offcanvas-menu-panel-width);
+    border: 0;
   }
 
+  // No header strip in the design; the close button shows only when focused.
   &__header {
-    padding: $spacer;
-    background: var(--offcanvas-menu-header-bg);
-
-    // Bootstrap's offcanvas-header lays out its title + close button with
-    // space-between by default; there is no title here, only the visually
-    // hidden label, so push the close button to the end on its own.
     justify-content: flex-end;
+    padding: $spacer;
+    background: var(--offcanvas-menu-body-bg);
+    @include visually-hidden-focusable();
   }
 
-  // Nested under &__body (rather than siblings of it) so the compiled
-  // selectors gain the extra .offcanvas-menu__body ancestor class. The
-  // panel body is a light lavender surface, visually unrelated to the
-  // dark site header it happens to be DOM-nested inside of, so its links
-  // need enough specificity to beat `.page > header[role="banner"]
-  // .nav-link` (which also carries `!important` on hover) — hence the
-  // `!important` on the hover colors below, matched with the higher
-  // specificity from this nesting depth.
+  &__close {
+    filter: none;
+  }
+
   &__body {
-    padding: $spacer * 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: var(--offcanvas-menu-group-gap);
+    padding: var(--offcanvas-menu-padding-y) var(--offcanvas-menu-padding-x);
     color: var(--offcanvas-menu-text-color);
     background: var(--offcanvas-menu-body-bg);
+  }
 
-    .offcanvas-menu__menu {
-      // The "main" menu's block template (menu--main.html.twig) always
-      // wraps its output in <nav class="navbar navbar-expand-lg"> with its
-      // own toggler + collapse — designed for the primary header nav, not
-      // for reuse here. Neutralize it (same treatment the footer already
-      // uses for the same reason) so the menu is always visible instead of
-      // hiding behind a second, redundant, un-clickable hamburger.
-      .navbar {
-        padding: 0;
-      }
-
-      .navbar-toggler {
-        display: none;
-      }
-
-      .navbar-collapse {
-        display: block !important;
-      }
-
-      .nav {
-        flex-direction: column;
-        gap: $spacer;
-      }
-
-      .nav-link {
-        padding: 0;
-        // !important: beats `.page > header[role="banner"] .nav-link`
-        // (white) — this panel is DOM-nested inside the header but is a
-        // visually distinct light surface, and BEM nesting here (`&` does
-        // string concatenation, not an ancestor combinator) doesn't reach
-        // that rule's specificity on its own.
-        color: var(--offcanvas-menu-text-color) !important;
-        font-size: var(--offcanvas-menu-menu-size);
-        font-weight: $font-weight-bold;
-
-        &:hover,
-        &:focus,
-        &:active {
-          color: var(--brand-tertiary, #{$offcanvas-menu-tertiary}) !important;
-          text-decoration: none;
-        }
-      }
+  // The main menu block brings its own toggler and collapse; always open here.
+  &__menu {
+    .navbar {
+      padding: 0;
     }
 
-    .offcanvas-menu__divider {
-      margin: $spacer * 1.5 0;
-      opacity: 0.4;
-      border: 0;
-      border-top: $border-width solid var(--offcanvas-menu-divider-color);
+    .navbar-toggler {
+      display: none;
     }
 
-    .offcanvas-menu__utility {
-      .nav {
-        flex-direction: column;
-        gap: $spacer * 0.75;
+    .navbar-collapse {
+      display: block !important;
+    }
+
+    .nav {
+      flex-direction: column;
+      gap: $spacer;
+    }
+
+    // Beats the navbar's own link padding, which is set from lg up.
+    .navbar-nav .nav-link {
+      padding: 0;
+      font-weight: $font-weight-medium;
+    }
+  }
+
+  &__menu,
+  &__utility {
+    // As wide as its text, so the underline runs under the text, not the row.
+    .nav-link {
+      width: fit-content;
+      padding: 0;
+      color: var(--offcanvas-menu-text-color);
+      font-size: 1rem;
+      line-height: 1.5;
+      @include vartheme-underline-sweep;
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: var(--offcanvas-menu-text-color);
       }
 
-      .nav-link {
-        padding: 0;
-        color: var(--offcanvas-menu-utility-color) !important;
-        font-family: $offcanvas-menu-font-serif;
-        font-size: $font-size-base;
-        font-style: italic;
-
-        &:hover,
-        &:focus,
-        &:active {
-          text-decoration: underline;
-        }
+      &:hover,
+      &:focus,
+      &.is-active {
+        @include vartheme-underline-sweep-in;
       }
     }
+  }
 
-    .offcanvas-menu__search {
-      margin-top: $spacer * 1.5;
+  &__divider {
+    margin: 0;
+    opacity: 1;
+    border: 0;
+    border-top: $border-width solid var(--offcanvas-menu-divider-color);
+  }
+
+  // Secondary links: the serif body face, regular weight, set closer together.
+  &__utility {
+    .nav {
+      flex-direction: column;
+      gap: $spacer * 0.75;
     }
+
+    .nav-link {
+      font-family: $font-family-serif;
+      font-weight: $font-weight-normal;
+    }
+  }
+
+  &__search {
+    width: var(--offcanvas-menu-search-width);
+    max-width: 100%;
+    margin-top: calc(var(--offcanvas-menu-search-gap) - var(--offcanvas-menu-group-gap));
+  }
+
+  // The design's search bar: square field with the glyph, submit butted on.
+  &__search .views-exposed-form {
+    display: flex;
+    align-items: stretch;
+    height: var(--offcanvas-menu-field-height);
+
+    .form-item,
+    .form-actions {
+      display: flex;
+      align-items: stretch;
+      margin: 0;
+    }
+
+    .form-item {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .form-actions {
+      flex: 0 0 auto;
+      margin-inline-start: -#{$border-width};
+    }
+
+    .form-control {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding-inline: ($spacer * 3) $spacer;
+      border: $border-width solid var(--bs-black);
+      border-radius: 0;
+      background: var(--bs-white) var(--offcanvas-menu-field-icon) no-repeat left $spacer center / #{$spacer * 1.5};
+      font-family: $headings-font-family;
+      font-size: $spacer * 0.875;
+      line-height: 1.5;
+    }
+
+    .btn {
+      height: 100%;
+      padding-inline: var(--offcanvas-menu-submit-gutter);
+      border-radius: 0;
+      border-color: var(--bs-black);
+      font-family: $headings-font-family;
+      font-size: var(--offcanvas-menu-submit-font-size);
+      font-weight: $font-weight-medium;
+      line-height: 1.35;
+    }
+  }
+
+  [dir="rtl"] &__search .form-control {
+    background-position: right $spacer center;
+    padding-inline: $spacer ($spacer * 3);
   }
 }

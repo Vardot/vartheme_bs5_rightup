@@ -211,6 +211,10 @@ $card-border-radius: 0;
 $carousel-control-width: 2.1875rem;
 $carousel-control-opacity: 1;
 $carousel-control-hover-opacity: 0.9;
+// The design fades the page behind the open menu panel to 40% black, the same
+// fade as behind the open search.
+$offcanvas-backdrop-opacity: .4;
+
 $carousel-control-transition: opacity .15s ease !default;
 
 $carousel-indicator-width: 0.625rem;

@@ -23,6 +23,8 @@
   // Design: the header search icon is 32px on mobile (13550:6143) and
   // 24px from md up (12728:12897).
   --icon-toggle-icon-size: #{$spacer * 2};
+  --icon-toggle-glyph-search: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M19.3638 8.84124C22.0498 11.5272 22.25 15.7792 19.955 18.697L25.333 24.075L24.0747 25.3333L18.6967 19.9553C17.3533 21.0094 15.7255 21.5389 14.1027 21.5389C13.1512 21.5389 12.1989 21.3563 11.3008 20.996C10.4069 20.6316 9.56631 20.0888 8.84156 19.3641C5.94213 16.4598 5.94213 11.7415 8.84156 8.84124C11.741 5.94181 16.4601 5.94181 19.3644 8.84124H19.3638ZM10.0994 18.105C12.305 20.3107 15.8991 20.3107 18.1047 18.105C20.3103 15.8994 20.3103 12.3053 18.1047 10.0997C17.0015 8.99644 15.5522 8.44524 14.102 8.44524C12.6519 8.44524 11.2026 8.99644 10.0994 10.0997C7.89372 12.3053 7.89372 15.8994 10.0994 18.105Z'/%3E%3C/svg%3E");
+  --icon-toggle-glyph-close: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M25.3333 8.54667L23.4533 6.66667L16 14.12L8.54667 6.66667L6.66667 8.54667L14.12 16L6.66667 23.4533L8.54667 25.3333L16 17.88L23.4533 25.3333L25.3333 23.4533L17.88 16L25.3333 8.54667Z'/%3E%3C/svg%3E");
   --icon-toggle-icon-transition: opacity 0.25s ease, transform 0.43s cubic-bezier(0.694, 0.048, 0.335, 1);
   // Design: the bar is 35px tall on a 375 phone and 46px from md up.
   --icon-toggle-field-height: #{$spacer * 2.1875};
@@ -100,9 +102,10 @@
     overflow: hidden;
   }
 
+  // Beats the template's !important size utility, so the design size applies.
   &__icon {
     position: absolute;
-    font-size: inherit;
+    font-size: inherit !important;
     line-height: 1;
     top: 50%;
     left: 50%;
@@ -129,6 +132,21 @@
   &--open &__icon--open {
     opacity: 1;
     transform: translate(-50%, -50%);
+  }
+
+  // The design's own search and close glyphs, as currentColor masks.
+  &__icon.bi-search::before,
+  &__icon--open.bi-x-lg::before {
+    content: "";
+    display: block;
+    width: var(--icon-toggle-icon-size);
+    height: var(--icon-toggle-icon-size);
+    background-color: currentcolor;
+    mask: var(--icon-toggle-glyph-search) center / 100% 100% no-repeat;
+  }
+
+  &__icon--open.bi-x-lg::before {
+    mask-image: var(--icon-toggle-glyph-close);
   }
 
   // Respect a reduced-motion preference: the icons still swap, they just do
@@ -210,6 +228,8 @@
     --icon-toggle-field-height: #{$spacer * 2.875};
     --icon-toggle-panel-padding: #{$spacer * 2.5};
     --icon-toggle-icon-size: #{$spacer * 1.5};
+    --icon-toggle-glyph-search: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M10.5228 2.63093C12.5373 4.6454 12.6875 7.83441 10.9663 10.0228L14.9998 14.0562L14.056 15L10.0225 10.9665C9.01496 11.757 7.79414 12.1542 6.57701 12.1542C5.86341 12.1542 5.14917 12.0172 4.4756 11.747C3.80515 11.4737 3.17473 11.0666 2.63117 10.5231C0.456596 8.34483 0.456596 4.80614 2.63117 2.63093C4.80574 0.456356 8.34507 0.456356 10.5233 2.63093H10.5228ZM3.57452 9.57878C5.22875 11.233 7.92431 11.233 9.57854 9.57878C11.2328 7.92455 11.2328 5.22899 9.57854 3.57476C8.7511 2.74733 7.66413 2.33393 6.57653 2.33393C5.48892 2.33393 4.40195 2.74733 3.57452 3.57476C1.92029 5.22899 1.92029 7.92455 3.57452 9.57878Z'/%3E%3C/svg%3E");
+    --icon-toggle-glyph-close: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M15 2.41L13.59 1L8 6.59L2.41 1L1 2.41L6.59 8L1 13.59L2.41 15L8 9.41L13.59 15L15 13.59L9.41 8L15 2.41Z'/%3E%3C/svg%3E");
   }
 
   // The design dims the page behind the open search rather than leaving it at

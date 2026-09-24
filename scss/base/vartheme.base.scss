@@ -142,117 +142,122 @@ h6,
   @include vartheme-transition(box-shadow);
 }
 
-// Row 1's group (hamburger / logo / search+newsletter) uses
-// justify-content-between, which only puts the middle item at the visual
-// center when the two flanking items are equal width — they aren't (the
-// hamburger is much narrower than the search icon + Newsletter button), so
-// the logo drifted off-center. Center it with absolute positioning instead,
-// which holds it dead-center regardless of how wide either side is.
-// md+ only: below that there isn't enough spare width for true centering
-// without the logo overlapping the search icon/Newsletter button, so small
-// phones keep the natural (slightly off-center but non-overlapping) flow.
-@include media-breakpoint-up(md) {
-  .page > header[role="banner"] [data-component-id="vartheme_bs5_rightup:group"] {
-    position: relative;
+// Header layout as the design draws it: a two-row bar from lg, one logo-high
+// row below lg with the main links only in the menu panel.
+.page > header[role="banner"] {
+  // The design's logo frame: 5rem tall, the wordmark 7.675rem wide inside it.
+  .navbar-brand {
+    min-height: $spacer * 5;
   }
 
-  // `div.` disambiguates the block wrapper (the actual flex child inside the
-  // group) from the inner `<a class="navbar-brand block-system-branding-block">`
-  // link that shares the same class — only the outer wrapper should be pulled
-  // out of the flex flow and centered.
-  .page > header[role="banner"] div.block-system-branding-block {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+  .brand-logo-image {
+    width: $spacer * 7.675;
+    height: auto;
+  }
+
+  .row {
+    flex-wrap: nowrap;
+  }
+
+  // Toggles as wide as their glyph, so it sits on the bar's margin; the full
+  // height stays as the touch target.
+  .offcanvas-menu__trigger {
+    width: $spacer * 1.5625;
+  }
+
+  .icon-toggle__button {
+    width: auto;
+  }
+
+  // The middle of three equal columns, so the logo is centered on the bar.
+  .row > :nth-child(2) {
+    display: flex;
+    justify-content: center;
+  }
+
+  // The design's Newsletter button, which no size variant matches.
+  .btn-accent {
+    --bs-btn-padding-x: #{$spacer * 1.5};
+    --bs-btn-padding-y: #{$spacer * 0.75};
+    --bs-btn-font-size: 1rem;
+    --bs-btn-line-height: 1.35;
+    --bs-btn-border-width: 0;
   }
 }
 
-// Below lg the header region's two grid columns (brand + menu) each take a full
-// row, stacking the logo above the hamburger and over-growing the header. Anchor
-// the toggler to the brand's line (top-right) so the logo and hamburger share
-// one line, while the menu column keeps its full width and the open menu drops
-// full-width below.
+@include media-breakpoint-up(lg) {
+  .page > header[role="banner"] {
+    .sdc-section__inner {
+      padding-block: $spacer * 1.5;
+    }
+  }
+}
+
 @include media-breakpoint-down(lg) {
   .page > header[role="banner"] {
-    .row {
-      position: relative;
+    .sdc-section__inner {
+      padding-block: 0;
     }
 
-    // The menu column right-aligns + shrinks its block at lg+; on mobile let the
-    // block fill the column so the open menu spans the full width below the logo.
-    .block:has(.navbar) {
-      flex: 1 1 100%;
-      width: 100%;
+    .row > * {
+      width: auto;
     }
 
-    // Neutralize Bootstrap's relative navbar so the toggler anchors to the row.
-    .navbar {
-      position: static;
+    .row > :last-child {
+      margin-inline-start: auto;
     }
 
-    // Float the hamburger up onto the logo's line (top-right of the row). The
-    // gutter offsets match the column padding (x) and row gutter (y) so it lines
-    // up with the brand.
-    .navbar-toggler {
-      position: absolute;
-      inset-block-start: var(--bs-gutter-y, 0);
-      inset-inline-end: calc(var(--bs-gutter-x, 1.5rem) * 0.5);
-      z-index: 2;
-      padding-inline: 0;
-      border: 0;
+    // No Newsletter or main links row on mobile; the utilities are !important.
+    .btn-accent {
+      display: none !important;
+    }
 
-      &:focus {
-        box-shadow: none;
-      }
+    .sdc-section__footer {
+      display: none;
     }
   }
 }
 
-// Header menu uses Bootstrap 5.3 navbar + navbar-expand-lg + navbar-toggler
-// (the wrapper lives in templates/menu/menu--main.html.twig). At lg+ the
-// items render inline horizontally; below lg they stack inside the
-// collapse panel and the hamburger toggles visibility — all handled by
-// stock Bootstrap classes rather than custom media queries.
+// The main links row; the current page and a hovered link carry the underline.
+.page > header[role="banner"] .sdc-section__footer {
+  .navbar-nav {
+    gap: $spacer * 2;
+  }
 
-// Default stacked gap inside the collapsed navbar (< lg).
-.page > header[role="banner"] .navbar-nav {
-  gap: 0.25rem;
-}
+  .nav-link {
+    padding: 0;
+    color: var(--bs-white);
+    font-weight: $font-weight-medium;
+    font-size: 1rem;
+    line-height: 1.5;
+    @include vartheme-underline-sweep;
 
-// At lg+ inline items get a wider 1.875rem gap.
-@include media-breakpoint-up(lg) {
-  .page > header[role="banner"] .navbar-nav {
-    gap: 1.875rem;
+    &:hover,
+    &:focus,
+    &:active {
+      color: var(--bs-white);
+    }
+
+    &:hover,
+    &:focus,
+    &.is-active {
+      @include vartheme-underline-sweep-in;
+    }
   }
 }
 
-// The header is built from two stacked Canvas sections: the top bar
-// (hamburger / logo / search+newsletter) and the bottom bar (centered main
-// menu). The hamburger's offcanvas panel already covers navigation on
-// mobile/tablet, so hide the second (bottom bar) section below lg to avoid
-// duplicate navigation UI.
-@include media-breakpoint-down(lg) {
-  .page > header[role="banner"] section + section {
-    display: none;
-  }
+// The panel carries the same menu, so the row hides while it is open.
+.page > header[role="banner"]:has(.offcanvas-menu__panel.show, .offcanvas-menu__panel.showing) .sdc-section__footer {
+  visibility: hidden;
 }
 
-// Header menu link styling: white on the header's dark (bg-black) background,
-// brand-tertiary (indigo) on hover with no underline.
-.page > header[role="banner"] .nav-link {
-  position: relative;
-  padding: 0.625rem 0;
-  color: var(--text-white-text, #FFF);
-  font-weight: var(--weight-primary-medium, 500);
-  font-size: 1rem;
-  line-height: 1.4;
-  text-decoration: none;
-
-  &:hover,
-  &:focus,
-  &:active {
-    color: var(--brand-tertiary, #4F46E1) !important;
-    text-decoration: none;
+// The panel and fade start under the header bar; offcanvas-menu.js sets where.
+.page > header[role="banner"] .offcanvas-menu {
+  > .offcanvas-menu__panel,
+  > .offcanvas-backdrop {
+    top: var(--offcanvas-menu-top, 0);
+    bottom: 0;
+    height: auto;
   }
 }
 
