@@ -3,7 +3,7 @@
 Automated functional acceptance tests for the theme, written in Gherkin and run
 with [@vardot/varbase-e2e](https://www.npmjs.com/package/@vardot/varbase-e2e)
 (Playwright + Cucumber-js), the same harness as the Varbase functional testing
-suite and the RightUp site template recipe suite.
+suite and The Rightup site template recipe suite.
 
 ## Run it
 
@@ -26,7 +26,7 @@ editor`, `Content admin`, `SEO admin`, `Site admin`, `Super admin`, password
 machine names before running that file. The uid 1 account is read from
 `DRUPAL_ADMIN_USERNAME` / `DRUPAL_ADMIN_PASSWORD`.
 
-The header search scenarios expect the RightUp site template content, where the
+The header search scenarios expect The Rightup site template content, where the
 site header carries the full-width icon toggle and `/search` is the search view.
 
 Search result counts are never asserted (see Drupal CMS work item 3591453).

@@ -12,7 +12,7 @@ module.exports = {
     // Above Playwright's own 30s default, so a locator timeout surfaces as a
     // friendly varbase-e2e error rather than cucumber's raw "function timed out".
     timeout: 60000,
-    // Retry once, as the RightUp recipe suite does: the first signed-in page on
+    // Retry once, as The Rightup recipe suite does: the first signed-in page on
     // a cold cache can outlast a step timeout without any real defect.
     retry: 1,
     paths: [process.env.FEATURES || 'tests/features/**/*.feature'],
