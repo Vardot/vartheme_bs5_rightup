@@ -235,9 +235,48 @@
       line-height: 1.35;
     }
   }
+}
 
-  [dir="rtl"] &__search .form-control {
-    background-position: right $spacer center;
-    padding-inline: $spacer ($spacer * 3);
+// Bootstrap's [dir="rtl"] .offcanvas.offcanvas-start is 0,3,0, so .offcanvas is in the
+// selectors below to win on specificity rather than on stylesheet order.
+// Panel and fade: start under the header bar (offcanvas-menu.js sets where) and
+// clear of Drupal's admin chrome. Without displace.js the 0px fallback leaves the
+// stock behaviour. Displace offsets are physical, the panel side logical, hence
+// the alias.
+.offcanvas-menu {
+  --offcanvas-menu-displace-start: var(--drupal-displace-offset-left, 0px);
+  --offcanvas-menu-displace-end: var(--drupal-displace-offset-right, 0px);
+
+  > .offcanvas-menu__panel,
+  > .offcanvas-backdrop {
+    top: var(--offcanvas-menu-top, 0);
+    bottom: 0;
+    height: auto;
   }
+
+  > .offcanvas-backdrop {
+    inset-inline-start: var(--offcanvas-menu-displace-start);
+    inset-inline-end: var(--offcanvas-menu-displace-end);
+    width: auto;
+  }
+
+  > .offcanvas-menu__panel.offcanvas.offcanvas-start {
+    inset-inline-start: var(--offcanvas-menu-displace-start);
+    max-width: calc(100vw - var(--offcanvas-menu-displace-start));
+  }
+
+  > .offcanvas-menu__panel.offcanvas.offcanvas-end {
+    inset-inline-end: var(--offcanvas-menu-displace-end);
+    max-width: calc(100vw - var(--offcanvas-menu-displace-end));
+  }
+}
+
+[dir="rtl"] .offcanvas-menu {
+  --offcanvas-menu-displace-start: var(--drupal-displace-offset-right, 0px);
+  --offcanvas-menu-displace-end: var(--drupal-displace-offset-left, 0px);
+}
+
+// The panel carries the same menu, so the header row hides while it is open.
+.page > header[role="banner"]:has(.offcanvas-menu__panel.show, .offcanvas-menu__panel.showing) .sdc-section__footer {
+  visibility: hidden;
 }

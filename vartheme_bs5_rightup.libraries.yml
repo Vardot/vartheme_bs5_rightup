@@ -183,18 +183,6 @@ sticky-header:
     - core/drupal
     - core/once
 
-# Offcanvas Menu header-coordination styles (hides the header's main menu and
-# offsets Bootstrap's own offcanvas backdrop while the panel is open — see
-# scss/theme/offcanvas-menu.theme.scss). Declared as a dependency of the
-# Offcanvas Menu SDC itself (offcanvas-menu.component.yml), so it only loads
-# on pages that use that component.
-offcanvas-menu-theme:
-  css:
-    theme:
-      css/theme/offcanvas-menu.theme.css: {}
-  dependencies:
-    - core/drupal
-
 framework-rtl:
   dependencies:
     - vartheme_bs5_rightup/bootstrap-styles-rtl

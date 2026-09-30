@@ -299,11 +299,39 @@
   padding-inline: var(--offcanvas-menu-submit-gutter);
 }
 
-[dir="rtl"] .offcanvas-menu__search .form-control {
-  background-position: right 1rem center;
-  padding-inline: 1rem 3rem;
+.offcanvas-menu {
+  --offcanvas-menu-displace-start: var(--drupal-displace-offset-left, 0px);
+  --offcanvas-menu-displace-end: var(--drupal-displace-offset-right, 0px);
 }
 
-[dir="rtl"] [dir="rtl"] .offcanvas-menu__search .form-control {
-  background-position: left 1rem center;
+.offcanvas-menu > .offcanvas-menu__panel,
+.offcanvas-menu > .offcanvas-backdrop {
+  top: var(--offcanvas-menu-top, 0);
+  bottom: 0;
+  height: auto;
+}
+
+.offcanvas-menu > .offcanvas-backdrop {
+  width: auto;
+  inset-inline-start: var(--offcanvas-menu-displace-start);
+  inset-inline-end: var(--offcanvas-menu-displace-end);
+}
+
+.offcanvas-menu > .offcanvas-menu__panel.offcanvas.offcanvas-start {
+  max-width: calc(100vw - var(--offcanvas-menu-displace-start));
+  inset-inline-start: var(--offcanvas-menu-displace-start);
+}
+
+.offcanvas-menu > .offcanvas-menu__panel.offcanvas.offcanvas-end {
+  max-width: calc(100vw - var(--offcanvas-menu-displace-end));
+  inset-inline-end: var(--offcanvas-menu-displace-end);
+}
+
+[dir="rtl"] .offcanvas-menu {
+  --offcanvas-menu-displace-start: var(--drupal-displace-offset-right, 0px);
+  --offcanvas-menu-displace-end: var(--drupal-displace-offset-left, 0px);
+}
+
+.page > header[role="banner"]:has(.offcanvas-menu__panel.show, .offcanvas-menu__panel.showing) .sdc-section__footer {
+  visibility: hidden;
 }

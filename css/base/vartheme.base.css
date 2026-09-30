@@ -246,17 +246,6 @@ h6 a:focus,
   transform-origin: right;
 }
 
-.page > header[role="banner"]:has(.offcanvas-menu__panel.show, .offcanvas-menu__panel.showing) .sdc-section__footer {
-  visibility: hidden;
-}
-
-.page > header[role="banner"] .offcanvas-menu > .offcanvas-menu__panel,
-.page > header[role="banner"] .offcanvas-menu > .offcanvas-backdrop {
-  top: var(--offcanvas-menu-top, 0);
-  bottom: 0;
-  height: auto;
-}
-
 .page > header[role="banner"] .nav-link.dropdown-toggle::after {
   vertical-align: 0.15em;
   border-top-color: currentColor;

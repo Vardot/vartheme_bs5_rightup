@@ -31,7 +31,6 @@ module.exports = {
     // Theme
     "theme/content-moderation.theme": ["./scss/theme/content-moderation.theme.scss"],
     "theme/sticky-header.theme": ["./scss/theme/sticky-header.theme.scss"],
-    "theme/offcanvas-menu.theme": ["./scss/theme/offcanvas-menu.theme.scss"],
     "theme/newsletter-subscribe.theme": ["./scss/theme/newsletter-subscribe.theme.scss"],
   },
   output: {

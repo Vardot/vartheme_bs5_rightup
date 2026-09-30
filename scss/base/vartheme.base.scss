@@ -246,21 +246,6 @@ h6,
   }
 }
 
-// The panel carries the same menu, so the row hides while it is open.
-.page > header[role="banner"]:has(.offcanvas-menu__panel.show, .offcanvas-menu__panel.showing) .sdc-section__footer {
-  visibility: hidden;
-}
-
-// The panel and fade start under the header bar; offcanvas-menu.js sets where.
-.page > header[role="banner"] .offcanvas-menu {
-  > .offcanvas-menu__panel,
-  > .offcanvas-backdrop {
-    top: var(--offcanvas-menu-top, 0);
-    bottom: 0;
-    height: auto;
-  }
-}
-
 // Dropdown chevron inherits the link color so it also turns brand-tertiary on hover.
 .page > header[role="banner"] .nav-link.dropdown-toggle::after {
   border-top-color: currentColor;
