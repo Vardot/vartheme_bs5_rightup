@@ -260,13 +260,6 @@ ckeditor5-styles:
     - core/components.vartheme_bs5_rightup--alert
     - core/components.vartheme_bs5_rightup--callout
 
-# Accordion behavior script (ensures Bootstrap Collapse works inside Drupal Canvas/SDC renders).
-accordion-scripts:
-  dependencies:
-    - vartheme_bs5_rightup/bs-collapse-script
-  js:
-    js/components/accordion-init.js: {}
-
 # Newsletter subscribe form styles, scoped to the mint hero section so the
 # design's indigo Subscribe button does not reach the indigo call-to-action
 # placements that share the same webform (see issue 3622989).

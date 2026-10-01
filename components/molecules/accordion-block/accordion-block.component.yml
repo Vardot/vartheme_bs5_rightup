@@ -93,5 +93,4 @@ slots:
 libraryOverrides:
   dependencies:
     - vartheme_bs5_rightup/bs-collapse-script
-    - vartheme_bs5_rightup/accordion-styles
 

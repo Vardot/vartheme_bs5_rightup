@@ -76,7 +76,6 @@
 {% set accordion_content %}
     <p class="mb-0">This section contains the accordion body content. You can place any content here including text, lists, images, buttons, or nested components.</p>
   {% endset %}
-{{ attach_library('vartheme_bs5_rightup/accordion-scripts') }}
 {{ include('vartheme_bs5_rightup:accordion-block', {
   title: title,
   heading_level: heading_level,
@@ -102,7 +101,6 @@
 {% set accordion_content %}
     <p class="mb-0">This accordion item is expanded when the page first loads. Use <code>open_by_default: true</code> to reveal content immediately.</p>
   {% endset %}
-{{ attach_library('vartheme_bs5_rightup/accordion-scripts') }}
 {{ include('vartheme_bs5_rightup:accordion-block', {
   title: title,
   heading_level: heading_level,
@@ -128,7 +126,6 @@
 {% set accordion_content %}
     <p class="mb-0">This accordion item starts collapsed. The reader must click the header to reveal this content.</p>
   {% endset %}
-{{ attach_library('vartheme_bs5_rightup/accordion-scripts') }}
 {{ include('vartheme_bs5_rightup:accordion-block', {
   title: title,
   heading_level: heading_level,
@@ -154,7 +151,6 @@
 {% set accordion_content %}
     <p class="mb-0">The header button uses the <strong>Primary</strong> Bootstrap color (<code>text-bg-primary</code>). Any Bootstrap <code>text-bg-*</code> color can be applied directly to the accordion button.</p>
   {% endset %}
-{{ attach_library('vartheme_bs5_rightup/accordion-scripts') }}
 {{ include('vartheme_bs5_rightup:accordion-block', {
   title: title,
   heading_level: heading_level,
@@ -186,7 +182,6 @@
     </ul>
     <p class="mb-0">Returns are accepted within 30 days of purchase. <a href="#">View full returns policy.</a></p>
   {% endset %}
-{{ attach_library('vartheme_bs5_rightup/accordion-scripts') }}
 {{ include('vartheme_bs5_rightup:accordion-block', {
   title: title,
   heading_level: heading_level,
@@ -212,7 +207,6 @@
 {% set accordion_content %}
     <p class="mb-0">This item uses <code>always_open: true</code> so it remains open independently, even when placed inside a grouped accordion container.</p>
   {% endset %}
-{{ attach_library('vartheme_bs5_rightup/accordion-scripts') }}
 {{ include('vartheme_bs5_rightup:accordion-block', {
   title: title,
   heading_level: heading_level,
