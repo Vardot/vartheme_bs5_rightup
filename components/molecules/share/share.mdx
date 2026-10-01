@@ -1,0 +1,39 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ShareStories from './share.stories.json';
+
+<Meta of={ShareStories} name="Docs" />
+
+# Share
+
+Social share buttons with native Web Share API support. This is the Vartheme BS5 Rightup override of `webshare:share`, exposed in Drupal Canvas; its props mirror the legacy Webshare block settings 1:1, so an existing Webshare block maps across without translation.
+
+- `placement` decides how the component sits in the page: `rail-end` pins it as a rail beside the content, `inline` drops it into the flow
+- `orientation` (`vertical` / `horizontal`) and `alignment` (`start` / `end`) are logical, not physical, so the rail lands on the correct side in both LTR and RTL without a second set of values
+- `native_share` adds a button that calls the browser's own Web Share API, which is what surfaces the OS share sheet on mobile; it is off by default because desktop browsers largely ignore it
+- `mobile_visibility` (`all` / `hide_mobile` / `mobile_only`) exists because a share rail that works on desktop is often in the way on a phone
+- `display_title` and `heading_level` control the "Share" label — turn the title off for a bare row of icons, and set the level so the heading fits the surrounding document outline rather than always being an `h2`
+- `url`, `share_title` and `share_text` all default to empty, in which case the component shares the current page; set them to share something else
+
+## Properties
+
+<Canvas of={ShareStories.Default_rail_end_vertical_} />
+<Controls of={ShareStories.Default_rail_end_vertical_} />
+
+## Stories
+
+<Stories of={ShareStories} />
+
+## Example
+
+```twig
+{{ include('vartheme_bs5_rightup:share', {
+  heading: 'Share'|t,
+  display_title: true,
+  heading_level: 2,
+  placement: 'rail-end',
+  orientation: 'vertical',
+  alignment: 'end',
+  mobile_visibility: 'hide_mobile',
+  native_share: true,
+}, with_context: false) }}
+```
