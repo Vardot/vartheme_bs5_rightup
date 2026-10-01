@@ -1,0 +1,41 @@
+"$schema": "https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json"
+name: Read more
+group: Content
+description: "Shows the first lines of long content with a Read More button that expands it in place."
+
+props:
+  type: object
+  properties:
+
+    lines:
+      type: integer
+      title: "Visible lines"
+      description: "How many lines stay visible while collapsed."
+      default: 4
+      examples:
+        - 4
+
+    more_text:
+      type: string
+      title: "Expand label"
+      description: "Button text while the content is collapsed."
+      default: "Read More"
+      examples:
+        - "Read More"
+
+    less_text:
+      type: string
+      title: "Collapse label"
+      description: "Button text while the content is expanded."
+      default: "Read Less"
+      examples:
+        - "Read Less"
+
+slots:
+  content:
+    title: "Content"
+
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once

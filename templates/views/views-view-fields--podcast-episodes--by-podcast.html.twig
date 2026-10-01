@@ -1,0 +1,34 @@
+{#
+/**
+ * @file
+ * One episode in a podcast's episode list, after the design's episode row.
+ */
+#}
+{% set host = fields.field_host.content|striptags|trim %}
+{% set duration = fields.field_duration.content|striptags|trim %}
+{% set number = fields.field_episode_number.content|striptags|trim %}
+{% set hosted = host ? 'Hosted by @host'|t({'@host': host}) ~ '' : '' %}
+{% embed 'vartheme_bs5_rightup:horizontal-text-icon-card' with {
+  end_variant: 'icon',
+  icon_color: 'bg-tertiary',
+  background_color: 'none',
+  padded: false,
+  stretched_link: true,
+  link_url: fields.view_node.content|striptags|trim,
+  link_target: '_self',
+  number: number,
+  hosted: hosted,
+  duration: duration,
+  fields: fields,
+  title: row._entity.label,
+} only %}
+  {% block content %}
+    {% if number %}
+      {{ include('vartheme_bs5_rightup:taxonomy', { label: 'Episode @n'|t({'@n': number}) ~ '', size: 'taxonomy-lg', color: 'text-tertiary', no_padding: true, justify_content: 'justify-content-start' }, false) }}
+    {% endif %}
+    {{ include('vartheme_bs5_rightup:heading', { heading_text: title, level: 2, text_size: 'h3', url: fields.view_node.content|striptags|trim }, false) }}
+    {% if fields.field_description is defined %}<p class="font-serif text-body-secondary mb-2">{{ fields.field_description.content }}</p>{% endif %}
+    {% if hosted or duration %}<p class="font-serif text-body-secondary small mb-0">{{ hosted }}{% if hosted and duration %}<span class="horizontal-text-icon-card__separator" aria-hidden="true"></span>{% endif %}{{ duration }}</p>{% endif %}
+  {% endblock %}
+{% endembed %}
+{{ include('vartheme_bs5_rightup:divider', { border_color: 'border-black', margin_top: 'mt-3', margin_bottom: 'mb-3' }, false) }}

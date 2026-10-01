@@ -12,8 +12,8 @@
   // which land on the exact size wanted here — so it's set directly.
   // atoms/button's own .btn.btn-secondary rule (two classes, higher
   // specificity than plain .btn-secondary) sets a dark hover background
-  // with white hover text — overridden back to white/black here so hover
-  // only adds an underline, no color change.
+  // with white hover text — overridden back to white/black here so the hover
+  // colour comes from the rule below instead; the label is never underlined.
   &__button {
     margin: 0 !important;
     font-size: 1.125rem !important;
@@ -24,13 +24,61 @@
     --bs-btn-active-color: var(--bs-black) !important;
     --bs-btn-active-border-color: var(--bs-white) !important;
 
-    > span {
-      @include vartheme-underline-sweep;
+    > i {
+      transition: transform 0.15s ease-in-out;
     }
+  }
 
-    &:hover > span,
-    &:focus-visible > span {
-      @include vartheme-underline-sweep-in;
-    }
+  // Figma Link/Hover recolours label and arrow to the brand tertiary. The whole
+  // card is a stretched link, so the card's hover drives it, not just the link's.
+  &__button {
+    transition: color 0.15s ease-in-out;
+  }
+
+  &:hover &__button,
+  &:focus-within &__button,
+  &__button:hover,
+  &__button:focus-visible {
+    color: var(--bs-tertiary) !important;
+  }
+
+  &:hover &__button > i,
+  &:focus-within &__button > i {
+    transform: translateX(0.125rem);
+  }
+
+  [dir="rtl"] &:hover &__button > i,
+  [dir="rtl"] &:focus-within &__button > i {
+    transform: translateX(-0.125rem);
+  }
+
+  &:hover &__body :is(h1, h2, h3, h4, h5, h6) a,
+  &:focus-within &__body :is(h1, h2, h3, h4, h5, h6) a {
+    text-decoration: underline;
+  }
+
+  // Figma Desktop/Body/Regular/Medium: the episode meta is 18px, not .small.
+  &__meta {
+    font-size: 1.125rem;
+  }
+
+  // WCAG 1.4.11: the button's inherited focus ring is rgba(217,217,217,.5),
+  // ~1.3:1 on white. Non-text contrast wants 3:1.
+  &__button.btn:focus-visible,
+  &__button:focus-visible {
+    outline: 2px solid var(--bs-tertiary) !important;
+    outline-offset: 2px;
+    box-shadow: none !important;
+  }
+
+  // WCAG 2.4.7: the stretched link is a zero-height box, so its own outline is
+  // invisible. Draw the indicator on the card it covers instead.
+  &:has(.stretched-link:focus-visible) {
+    outline: 2px solid var(--bs-tertiary);
+    outline-offset: 2px;
+  }
+
+  .stretched-link:focus-visible {
+    outline: none;
   }
 }

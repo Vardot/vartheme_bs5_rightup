@@ -81,9 +81,7 @@
   media: {
     src: media_image.src|default(''),
     alt: media_image.alt|default(''),
-    width: media_image.width|default(null),
-    height: media_image.height|default(null),
-  },
+  }|merge(media_image.width is not empty ? { width: media_image.width } : {})|merge(media_image.height is not empty ? { height: media_image.height } : {}),
   ratio: image_ratio,
   width: 'w-100',
   fit: image_fit,

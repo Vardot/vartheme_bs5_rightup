@@ -1,0 +1,27 @@
+.read-more.is-collapsible:not(.is-expanded) .read-more__content {
+  overflow: hidden;
+  max-height: var(--read-more-height);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
+}
+
+.read-more.is-collapsible.is-expanded .read-more__content {
+  margin-bottom: 0.5rem;
+}
+
+.read-more__toggle {
+  padding: 0;
+  text-decoration: underline;
+  color: var(--bs-tertiary);
+  border: 0;
+  background: transparent;
+  font-size: 1.125rem;
+}
+
+.read-more__toggle:hover {
+  text-decoration: none;
+}
+
+.read-more__toggle:focus-visible {
+  outline: 2px solid var(--bs-tertiary);
+  outline-offset: 2px;
+}

@@ -1,0 +1,32 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup Starter Kit implementation for the Read more component.
+ *
+ * Available properties:
+ * - lines: Lines visible while collapsed. Defaults to 4.
+ * - more_text: Button text while collapsed. Defaults to "Read More".
+ * - less_text: Button text while expanded. Defaults to "Read Less".
+ *
+ * Available slots:
+ * - content: The content to collapse.
+ */
+#}
+
+{# Variables: scalar props with schema defaults. #}
+{% set lines = lines|default(4) %}
+{% set more_text = more_text|default('Read More'|t) %}
+{% set less_text = less_text|default('Read Less'|t) %}
+{% set content_id = 'read-more-' ~ random() %}
+
+{% set block_content %}{% block content %}{% endblock %}{% endset %}
+
+{% set attributes = attributes.addClass(['read-more']).setAttribute('data-read-more-lines', lines) %}
+
+{# Print the HTML. Without JavaScript the content simply shows in full. #}
+<div{{ attributes }}>
+  <div class="read-more__content" id="{{ content_id }}">
+    {{ block_content }}
+  </div>
+  <button type="button" class="read-more__toggle font-serif" aria-expanded="false" aria-controls="{{ content_id }}" data-more-text="{{ more_text }}" data-less-text="{{ less_text }}" hidden>{{ more_text }}</button>
+</div>

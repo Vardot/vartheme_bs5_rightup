@@ -230,3 +230,15 @@ $carousel-control-prev-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w
 $carousel-control-next-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='35' height='35' viewBox='0 0 35 35' fill='none'><path d='M17.5 0C27.165 0 35 7.83502 35 17.5C35 27.165 27.165 35 17.5 35C7.83502 35 0 27.165 0 17.5C0 7.83502 7.83502 0 17.5 0ZM9.84375 16.4062C9.23969 16.4062 8.75 16.8959 8.75 17.5C8.75 18.1041 9.23969 18.5938 9.84375 18.5938H22.5157L17.8204 23.2891C17.3932 23.7162 17.3932 24.4088 17.8204 24.8359C18.2475 25.263 18.94 25.263 19.3671 24.8359L25.9296 18.2734C26.3568 17.8463 26.3568 17.1537 25.9296 16.7266L19.3671 10.1641C18.94 9.73697 18.2475 9.73697 17.8204 10.1641C17.3932 10.5912 17.3932 11.2838 17.8204 11.7109L22.5157 16.4062H9.84375Z' fill='white'/></svg>");
 
 $carousel-transition-duration: .6s !default;
+
+// Figma's 32px grid gutter (size-6). Bootstrap's gutters stop at 24px, then 48px.
+$spacer: 1rem !default;
+$gutters: (
+  0: 0,
+  1: $spacer * .25,
+  2: $spacer * .5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+  6: $spacer * 2,
+);

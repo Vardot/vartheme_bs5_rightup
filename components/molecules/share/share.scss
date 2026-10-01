@@ -259,6 +259,17 @@
     }
   }
 
+  // Design artwork: 40 px artboards, except the link, drawn at its glyph size.
+  &__item img#{&}__design-icon {
+    width: var(--webshare-button-size);
+    height: var(--webshare-button-size);
+  }
+
+  &__item img#{&}__design-icon--link {
+    width: var(--webshare-icon-size);
+    height: var(--webshare-icon-size);
+  }
+
   &__native-button {
     @include webshare-button;
 

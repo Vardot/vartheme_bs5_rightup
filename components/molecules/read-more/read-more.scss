@@ -1,0 +1,32 @@
+@import "../../defaults"; // Global component defaults.
+
+.read-more {
+  // The collapsed height is measured from the content by read-more.js.
+  &.is-collapsible:not(.is-expanded) &__content {
+    max-height: var(--read-more-height);
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  }
+
+  &.is-collapsible.is-expanded &__content {
+    margin-bottom: $spacer * 0.5;
+  }
+
+  &__toggle {
+    padding: 0;
+    color: var(--bs-tertiary);
+    background: transparent;
+    border: 0;
+    font-size: 1.125rem;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--bs-tertiary);
+      outline-offset: 2px;
+    }
+  }
+}

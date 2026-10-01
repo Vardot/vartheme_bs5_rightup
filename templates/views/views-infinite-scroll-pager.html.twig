@@ -1,0 +1,16 @@
+{#
+/**
+ * @file
+ * The "load more" pager of Views Infinite Scroll, as the design's button.
+ *
+ * The list, its attributes and the pager__item wrapper stay: the module's
+ * JavaScript finds the next page through them.
+ */
+#}
+{% if items.next %}
+  <ul{{ attributes.addClass('list-unstyled', 'mt-4', 'mb-0') }}>
+    <li class="pager__item">
+      <a class="btn btn-primary" href="{{ items.next.href }}" title="{{ 'Load more items'|t }}" rel="next">{{ options.button_text }}</a>
+    </li>
+  </ul>
+{% endif %}

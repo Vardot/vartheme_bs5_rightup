@@ -100,6 +100,7 @@
   'linkedin': 'bi-linkedin',
   'facebook_share': 'bi-facebook',
   'x': 'bi-twitter-x',
+  'instagram': 'bi-instagram',
   'whatsapp': 'bi-whatsapp',
   'copy': 'bi-link-45deg',
 } %}
@@ -107,6 +108,14 @@
 {# The design draws "copy link" as a chain link (13402:7707); the SVG pack
    ships a clipboard for it, so that one glyph comes from Bootstrap Icons. #}
 {% set icon_from_pack_excluded = ['copy'] %}
+
+{# The design's own artwork for the platforms it draws. #}
+{% set design_icons = {
+  'facebook_share': 'facebook',
+  'x': 'x',
+  'instagram': 'instagram',
+  'copy': 'link',
+} %}
 
 {# Logic: build the wrapper element attributes. #}
 {% set attributes = attributes
@@ -181,7 +190,9 @@
             .setAttribute('aria-label', platform.title|default('Copy URL'|t))
           %}
           <button{{ copy_button_attributes }}>
-            {% if platform.icon_html and platform.key not in icon_from_pack_excluded %}
+            {% if design_icons[platform.key] is defined %}
+              <img class="webshare__design-icon webshare__design-icon--{{ design_icons[platform.key] }}" src="/{{ componentMetadata.path }}/icons/{{ design_icons[platform.key] }}.svg" alt="" aria-hidden="true">
+            {% elseif platform.icon_html and platform.key not in icon_from_pack_excluded %}
               {% set platform_icon_span_attributes = create_attribute().setAttribute('aria-hidden', 'true') %}
               <span{{ platform_icon_span_attributes }}>{{ platform.icon_html|raw }}</span>
             {% else %}
@@ -202,7 +213,9 @@
             .setAttribute('aria-label', platform.title ~ ' ' ~ '(opens in a new tab)'|t)
           %}
           <a{{ platform_link_attributes }}>
-            {% if platform.icon_html and platform.key not in icon_from_pack_excluded %}
+            {% if design_icons[platform.key] is defined %}
+              <img class="webshare__design-icon webshare__design-icon--{{ design_icons[platform.key] }}" src="/{{ componentMetadata.path }}/icons/{{ design_icons[platform.key] }}.svg" alt="" aria-hidden="true">
+            {% elseif platform.icon_html and platform.key not in icon_from_pack_excluded %}
               {% set platform_icon_span_attributes = create_attribute().setAttribute('aria-hidden', 'true') %}
               <span{{ platform_icon_span_attributes }}>{{ platform.icon_html|raw }}</span>
             {% else %}

@@ -1,0 +1,43 @@
+@import "../../defaults"; // Global component defaults.
+
+.podcast-platforms {
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacer * 0.25;
+    min-height: 1.5rem;
+    color: inherit;
+    font-family: var(--font-heading, Rubik);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    opacity: 0.75;
+    transition: opacity 0.15s ease-in-out;
+
+    &:hover,
+    &:focus-visible {
+      color: inherit;
+      opacity: 1;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--bs-accent, currentcolor);
+      outline-offset: 2px;
+    }
+  }
+
+  &__icon--color {
+    display: none;
+  }
+
+  // Figma: the icon turns from white to the platform's colours on hover.
+  &__link:hover &__icon:has(+ &__icon--color),
+  &__link:focus-visible &__icon:has(+ &__icon--color) {
+    display: none;
+  }
+
+  &__link:hover &__icon--color,
+  &__link:focus-visible &__icon--color {
+    display: block;
+  }
+}

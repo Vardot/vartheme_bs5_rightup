@@ -1,0 +1,14 @@
+{#
+/**
+ * @file
+ * The platforms the current episode's podcast can be listened on.
+ */
+#}
+{% set show = row._relationship_entities.field_podcast %}
+{% set links = [] %}
+{% if show %}
+  {% for item in show.field_listen_links %}
+    {% set links = links|merge([{ title: item.title, url: item.getUrl().toString() }]) %}
+  {% endfor %}
+{% endif %}
+{{ include('vartheme_bs5_rightup:podcast-platforms', { links: links }, false) }}

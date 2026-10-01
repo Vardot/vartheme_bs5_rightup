@@ -133,14 +133,18 @@
   <div{{ content_attributes }}>
     {{ content_slot }}
   </div>
+  {% if use_stretched_link %}
+  <a{{ icon_attributes.addClass(['position-relative', 'z-2']).setAttribute('href', link_url|e).setAttribute('tabindex', '-1') }} aria-hidden="true">
+  {% else %}
   <div{{ icon_attributes }} aria-hidden="true">
+  {% endif %}
     {# preserveAspectRatio="none": the viewBox is square but the CSS size
      # (horizontal-text-icon-card.scss) is not, so the default "meet"
      # behavior would letterbox instead of filling the box. #}
     <svg class="horizontal-text-icon-card__icon-svg" viewBox="0 0 48 48" preserveAspectRatio="none" fill="currentColor" xmlns="http://www.w3.org/2000/svg" focusable="false">
       <path fill-rule="evenodd" clip-rule="evenodd" d="M34.8 24.5L18 13.7V35.3L34.8 24.5Z"/>
     </svg>
-  </div>
+  {% if use_stretched_link %}</a>{% else %}</div>{% endif %}
   {% if use_stretched_link %}
     {{ include('vartheme_bs5_rightup:link', {
       url: link_url,

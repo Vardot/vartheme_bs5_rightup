@@ -19,9 +19,50 @@
   // contains rather than a fixed class name.
   // The underline goes on the LINK inside the heading, never on the heading
   // itself, or it stacks with the one the base stylesheet draws on `a:hover`.
-  &:hover {
+  &:hover,
+  &:focus-within {
     .horizontal-text-icon-card__content :is(h1, h2, h3, h4, h5, h6) a {
       text-decoration: underline;
     }
+  }
+
+  // The stretched link has no box of its own, so the row carries its focus ring.
+  &:has(.stretched-link:focus-visible) {
+    outline: 2px solid var(--bs-tertiary);
+    outline-offset: 2px;
+  }
+
+  .stretched-link:focus-visible {
+    outline: none;
+  }
+
+  // Figma: the play control lightens on hover and again while pressed.
+  &__icon {
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+  }
+
+  a#{&}__icon:hover {
+    background-color: color-mix(in srgb, var(--bs-tertiary) 90%, #fff) !important;
+    color: #e2e2e2 !important;
+  }
+
+  a#{&}__icon:active {
+    background-color: color-mix(in srgb, var(--bs-tertiary) 80%, #fff) !important;
+    color: #cdcdcd !important;
+  }
+
+  &__separator {
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    margin-inline: 0.75rem;
+    vertical-align: middle;
+    background-color: currentcolor;
+    transition: background-color 0.15s ease-in-out;
+  }
+
+  &:hover &__separator,
+  &:focus-within &__separator {
+    background-color: var(--bs-tertiary);
   }
 }

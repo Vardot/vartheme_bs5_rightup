@@ -1,0 +1,22 @@
+"$schema": "https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json"
+name: Podcast platforms
+group: Media
+description: "A row of links to the platforms a podcast can be listened on, each with its platform icon."
+
+props:
+  type: object
+  properties:
+
+    links:
+      type: array
+      title: "Links"
+      description: "One link per platform. The icon is picked from the URL."
+      items:
+        type: object
+        properties:
+          title:
+            type: string
+            title: "Platform name"
+          url:
+            type: string
+            title: "URL"

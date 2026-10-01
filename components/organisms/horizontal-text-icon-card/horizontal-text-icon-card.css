@@ -12,6 +12,47 @@
   height: 1.35rem;
 }
 
-.horizontal-text-icon-card:hover .horizontal-text-icon-card__content :is(h1, h2, h3, h4, h5, h6) a {
+.horizontal-text-icon-card:hover .horizontal-text-icon-card__content :is(h1, h2, h3, h4, h5, h6) a,
+.horizontal-text-icon-card:focus-within .horizontal-text-icon-card__content :is(h1, h2, h3, h4, h5, h6) a {
   text-decoration: underline;
+}
+
+.horizontal-text-icon-card:has(.stretched-link:focus-visible) {
+  outline: 2px solid var(--bs-tertiary);
+  outline-offset: 2px;
+}
+
+.horizontal-text-icon-card .stretched-link:focus-visible {
+  outline: none;
+}
+
+.horizontal-text-icon-card__icon {
+  transition:
+    background-color 0.15s ease-in-out,
+    color 0.15s ease-in-out;
+}
+
+.horizontal-text-icon-card a.horizontal-text-icon-card__icon:hover {
+  color: #e2e2e2 !important;
+  background-color: color-mix(in srgb, var(--bs-tertiary) 90%, #fff) !important;
+}
+
+.horizontal-text-icon-card a.horizontal-text-icon-card__icon:active {
+  color: #cdcdcd !important;
+  background-color: color-mix(in srgb, var(--bs-tertiary) 80%, #fff) !important;
+}
+
+.horizontal-text-icon-card__separator {
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  transition: background-color 0.15s ease-in-out;
+  vertical-align: middle;
+  background-color: currentColor;
+  margin-inline: 0.75rem;
+}
+
+.horizontal-text-icon-card:hover .horizontal-text-icon-card__separator,
+.horizontal-text-icon-card:focus-within .horizontal-text-icon-card__separator {
+  background-color: var(--bs-tertiary);
 }

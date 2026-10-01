@@ -1,0 +1,15 @@
+{#
+/**
+ * @file
+ * When an episode was published and who hosts it, on the episode page.
+ */
+#}
+{% set host = fields.field_host.content|striptags|trim %}
+<div class="font-serif">
+  <p class="d-flex align-items-center gap-2 mb-1 opacity-75">
+    <time datetime="{{ fields.created_2.content|striptags|trim }}">{{ fields.created.content|striptags|trim }}</time>
+    <span aria-hidden="true">&bull;</span>
+    <span>{{ fields.created_1.content|striptags|trim }}</span>
+  </p>
+  {% if host %}<p class="mb-0"><span class="opacity-75">{{ 'Hosted and Written by'|t }}</span> <span class="fs-5 text-tertiary">{{ host }}</span></p>{% endif %}
+</div>

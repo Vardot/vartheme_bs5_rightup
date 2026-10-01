@@ -205,6 +205,16 @@
   cursor: pointer;
 }
 
+.webshare__item img.webshare__design-icon {
+  width: var(--webshare-button-size);
+  height: var(--webshare-button-size);
+}
+
+.webshare__item img.webshare__design-icon--link {
+  width: var(--webshare-icon-size);
+  height: var(--webshare-icon-size);
+}
+
 .webshare__native-button {
   display: flex;
   align-items: center;

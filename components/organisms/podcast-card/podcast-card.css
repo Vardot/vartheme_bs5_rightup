@@ -10,41 +10,62 @@
   font-size: 1.125rem !important;
 }
 
-.podcast-card__button > span {
-  position: relative;
-  text-decoration: none;
+.podcast-card__button > i {
+  transition: transform 0.15s ease-in-out;
 }
 
-.podcast-card__button > span::after {
-  position: absolute;
-  bottom: 0;
-  height: 0.05em;
-  content: "";
-  transition: transform 0.2s ease-in-out;
-  transform: scaleX(0);
-  transform-origin: right;
-  border-radius: 50rem;
-  background: currentColor;
-  inset-inline: 0;
+.podcast-card__button {
+  transition: color 0.15s ease-in-out;
 }
 
-[dir="rtl"] .podcast-card__button > span::after {
-  transform-origin: left;
+.podcast-card:hover .podcast-card__button,
+.podcast-card:focus-within .podcast-card__button,
+.podcast-card__button:hover,
+.podcast-card__button:focus-visible {
+  color: var(--bs-tertiary) !important;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .podcast-card__button > span::after {
-    transition: none;
-  }
+.podcast-card:hover .podcast-card__button > i,
+.podcast-card:focus-within .podcast-card__button > i {
+  transform: translateX(0.125rem);
 }
 
-.podcast-card__button:hover > span::after,
-.podcast-card__button:focus-visible > span::after {
-  transform: scaleX(1);
-  transform-origin: left;
+[dir="rtl"] .podcast-card:hover .podcast-card__button > i,
+[dir="rtl"] .podcast-card:focus-within .podcast-card__button > i {
+  transform: translateX(-0.125rem);
 }
 
-[dir="rtl"] .podcast-card__button:hover > span::after,
-[dir="rtl"] .podcast-card__button:focus-visible > span::after {
-  transform-origin: right;
+[dir="rtl"] .podcast-card:hover .podcast-card__button > i,
+[dir="rtl"] .podcast-card:focus-within .podcast-card__button > i {
+  transform: translateX(-0.125rem);
+}
+
+[dir="rtl"] [dir="rtl"] .podcast-card:hover .podcast-card__button > i,
+[dir="rtl"] [dir="rtl"] .podcast-card:focus-within .podcast-card__button > i {
+  transform: translateX(0.125rem);
+}
+
+.podcast-card:hover .podcast-card__body :is(h1, h2, h3, h4, h5, h6) a,
+.podcast-card:focus-within .podcast-card__body :is(h1, h2, h3, h4, h5, h6) a {
+  text-decoration: underline;
+}
+
+.podcast-card__meta {
+  font-size: 1.125rem;
+}
+
+.podcast-card__button.btn:focus-visible,
+.podcast-card__button:focus-visible {
+  outline: 2px solid var(--bs-tertiary) !important;
+  outline-offset: 2px;
+  box-shadow: none !important;
+}
+
+.podcast-card:has(.stretched-link:focus-visible) {
+  outline: 2px solid var(--bs-tertiary);
+  outline-offset: 2px;
+}
+
+.podcast-card .stretched-link:focus-visible {
+  outline: none;
 }
