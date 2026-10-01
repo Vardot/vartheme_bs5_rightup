@@ -84,5 +84,5 @@
 }
 
 [dir="rtl"] .breadcrumb-item + .breadcrumb-item::before {
-  content: "\f285";
+  content: "\f284";
 }

@@ -56,6 +56,8 @@ $breadcrumb-padding-x: 0.0625rem;
   font-weight: 500;
   content: quote("\F285");
 }
+// RTL reads right to left, so the separator points left. A glyph cannot be
+// flipped by a logical property; it has to be the other icon.
 [dir="rtl"] .breadcrumb-item + .breadcrumb-item::before {
-  content: quote("\F285");
+  content: quote("\F284");
 }
