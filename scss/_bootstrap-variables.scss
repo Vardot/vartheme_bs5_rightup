@@ -30,9 +30,9 @@ $font-family-sans-serif: 'Rubik', system-ui, -apple-system, 'Segoe UI', Roboto, 
 // admin strings) stays on the sans family, which is what the design does.
 $font-family-serif: 'EB Garamond', 'Garamond', 'Times New Roman', 'Liberation Serif', 'Georgia', serif;
 
-// The brand keeps EB Garamond in Bootstrap's monospace slot, so `--bs-font-monospace`
-// carries the secondary family. Same serif fallbacks as $font-family-serif.
-$font-family-monospace: 'EB Garamond', 'Garamond', 'Times New Roman', 'Liberation Serif', 'Georgia', serif;
+// Real monospace, so `code`, `kbd` and `samp` keep their alignment. The secondary
+// family is carried by --vb-font-serif and the .font-serif utility instead.
+$font-family-monospace: 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 
 // Override the default font size.
 $font-size-root: null;

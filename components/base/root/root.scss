@@ -17,6 +17,16 @@
   --bs-accent-border-subtle: #{$accent-border-subtle};
 }
 
+// The secondary family as a theme token. Bootstrap emits no serif custom property,
+// and its monospace slot now holds a real monospace stack.
+:root {
+  --vb-font-serif: #{inspect($font-family-serif)};
+}
+
+.font-serif {
+  font-family: var(--vb-font-serif) !important;
+}
+
 // Theme-owned display tokens. Bootstrap emits no custom property for a display
 // size and carries no tracking variable at all, so these values are the theme's
 // own and carry the theme's --vb- prefix, never --#{$prefix}: a reader has to be

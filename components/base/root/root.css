@@ -70,7 +70,7 @@
   --bs-white-rgb: 255, 255, 255;
   --bs-black-rgb: 0, 0, 0;
   --bs-font-sans-serif: "Rubik", system-ui, -apple-system, "Segoe UI", roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", arial, sans-serif;
-  --bs-font-monospace: "EB Garamond", "Garamond", "Times New Roman", "Liberation Serif", "Georgia", serif;
+  --bs-font-monospace: "SFMono-Regular", menlo, monaco, consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-font-size: 1.125rem;
@@ -189,6 +189,14 @@
   --bs-accent-bg-subtle: #e2fcf5;
   --bs-accent-text-emphasis: #212529;
   --bs-accent-border-subtle: rgb(153, 251, 237.8);
+}
+
+:root {
+  --vb-font-serif: "EB Garamond", "Garamond", "Times New Roman", "Liberation Serif", "Georgia", serif;
+}
+
+.font-serif {
+  font-family: var(--vb-font-serif) !important;
 }
 
 :root {
