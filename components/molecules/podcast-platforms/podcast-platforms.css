@@ -22,17 +22,3 @@
   outline: 2px solid var(--bs-accent, currentcolor);
   outline-offset: 2px;
 }
-
-.podcast-platforms__icon--color {
-  display: none;
-}
-
-.podcast-platforms__link:hover .podcast-platforms__icon:has(+ .podcast-platforms__icon--color),
-.podcast-platforms__link:focus-visible .podcast-platforms__icon:has(+ .podcast-platforms__icon--color) {
-  display: none;
-}
-
-.podcast-platforms__link:hover .podcast-platforms__icon--color,
-.podcast-platforms__link:focus-visible .podcast-platforms__icon--color {
-  display: block;
-}

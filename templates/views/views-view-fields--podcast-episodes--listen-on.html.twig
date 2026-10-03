@@ -1,13 +1,14 @@
 {#
 /**
  * @file
- * The platforms the current episode's podcast can be listened on.
+ * Where to listen to the current episode: its own links, or its podcast's.
  */
 #}
-{% set show = row._relationship_entities.field_podcast %}
+{% set episode = row._entity %}
+{% set source = episode.hasField('field_listen_links') and episode.field_listen_links is not empty ? episode : row._relationship_entities.field_podcast %}
 {% set links = [] %}
-{% if show %}
-  {% for item in show.field_listen_links %}
+{% if source %}
+  {% for item in source.field_listen_links %}
     {% set links = links|merge([{ title: item.title, url: item.getUrl().toString() }]) %}
   {% endfor %}
 {% endif %}

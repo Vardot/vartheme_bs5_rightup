@@ -17,13 +17,10 @@
   <ul{{ attributes.addClass(['podcast-platforms', 'list-unstyled', 'd-flex', 'flex-wrap', 'column-gap-3', 'row-gap-2', 'mb-0']) }}>
     {% for link in links %}
       {% set url = link.url|lower %}
-      {% set platform = 'google' in url ? 'google-podcasts' : ('apple' in url ? 'apple-podcasts' : ('overcast' in url ? 'overcast' : ('spotify' in url ? 'spotify' : 'rss'))) %}
+      {% set platform = 'youtube' in url ? 'youtube-music' : ('apple' in url ? 'apple-podcasts' : ('overcast' in url ? 'overcast' : ('spotify' in url ? 'spotify' : 'rss'))) %}
       <li>
         <a class="podcast-platforms__link" href="{{ link.url }}">
           <img class="podcast-platforms__icon" src="/{{ icons ~ platform }}.svg" width="16" height="16" alt="" loading="lazy">
-          {% if platform == 'google-podcasts' %}
-            <img class="podcast-platforms__icon podcast-platforms__icon--color" src="/{{ icons ~ platform }}-color.svg" width="16" height="16" alt="" loading="lazy">
-          {% endif %}
           <span>{{ link.title }}</span>
         </a>
       </li>

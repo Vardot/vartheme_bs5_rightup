@@ -9,6 +9,7 @@
 #}
 {% set title = fields.title.content|striptags|trim %}
 {% set count = fields.nid.content|striptags|trim %}
+{# The listing page has no h2 above the cards; More Podcasts sits under one. #}
 {% embed 'vartheme_bs5_rightup:podcast-card' with {
   media_image: { src: fields.image_url.content|striptags|trim, alt: title },
   image_ratio: 'ratio-1x1',
@@ -20,11 +21,12 @@
   button_target: '_self',
   stretched_link: true,
   title: title,
+  heading_level: view.current_display == 'more' ? 3 : 2,
   url: fields.view_node.content|striptags|trim,
   fields: fields,
 } only %}
   {% block content_slot %}
-    {{ include('vartheme_bs5_rightup:heading', { heading_text: title, level: 3, text_size: 'h3', url: url }, false) }}
+    {{ include('vartheme_bs5_rightup:heading', { heading_text: title, level: heading_level, text_size: 'h3', url: url }, false) }}
     {% if fields.field_description is defined %}
       <p class="podcast-card__text font-serif text-body-secondary mb-0">{{ fields.field_description.content }}</p>
     {% endif %}

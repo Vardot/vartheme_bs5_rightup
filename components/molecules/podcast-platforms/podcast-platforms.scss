@@ -25,19 +25,4 @@
       outline-offset: 2px;
     }
   }
-
-  &__icon--color {
-    display: none;
-  }
-
-  // Figma: the icon turns from white to the platform's colours on hover.
-  &__link:hover &__icon:has(+ &__icon--color),
-  &__link:focus-visible &__icon:has(+ &__icon--color) {
-    display: none;
-  }
-
-  &__link:hover &__icon--color,
-  &__link:focus-visible &__icon--color {
-    display: block;
-  }
 }
