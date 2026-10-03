@@ -33,6 +33,24 @@ props:
       default: false
       examples:
         - false
+    row_divider:
+      type: boolean
+      title: 'Row divider'
+      description: 'Draw a divider line between rows, for stacked card lists.'
+      default: false
+      examples:
+        - false
+    row_divider_color:
+      type: string
+      title: 'Row divider color'
+      description: 'Border color of the row divider. Use border-light on a dark section.'
+      enum:
+        - border-black
+        - border-light
+        - border-white
+      default: border-black
+      examples:
+        - border-black
     attributes:
       type: Drupal\Core\Template\Attribute
       title: Attributes

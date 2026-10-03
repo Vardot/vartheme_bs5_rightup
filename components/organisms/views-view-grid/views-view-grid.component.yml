@@ -171,6 +171,13 @@ props:
         "col-xxl-6" : "6 (2 columns per row)"
         "col-xxl-12" : "12 (1 column per row)"
       x-translation-context: Column width of items at xxl breakpoint
+    column_divider:
+      type: boolean
+      title: 'Column divider'
+      description: 'Draw a vertical line between columns from the md breakpoint up.'
+      default: false
+      examples:
+        - false
     attributes:
       type: Drupal\Core\Template\Attribute
       title: Attributes

@@ -1,0 +1,11 @@
+// @file views-view-grid — optional vertical divider between grid columns.
+
+@import "../../defaults";
+
+.views-view-grid--divided {
+  @include media-breakpoint-up(md) {
+    > div:not(:first-child) {
+      border-inline-start: var(--bs-border-width) solid var(--bs-black);
+    }
+  }
+}

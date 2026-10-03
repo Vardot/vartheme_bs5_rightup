@@ -1,0 +1,5 @@
+@media (min-width: 768px) {
+  .views-view-grid--divided > div:not(:first-child) {
+    border-inline-start: var(--bs-border-width) solid var(--bs-black);
+  }
+}

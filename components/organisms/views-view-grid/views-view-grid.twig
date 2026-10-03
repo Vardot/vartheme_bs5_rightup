@@ -20,6 +20,8 @@
  *   - content: A list of data_rows or rows. Each row or data_row contains:
  *     - attributes: HTML attributes for each row or data_row.
  *     - content: The row or data_row contents.
+ * - column_divider: (true|false) Vertical line between columns from md up.
+ *   Defaults to `false`.
  *
  * @see template_preprocess_views_view_grid()
  */
@@ -37,6 +39,7 @@
 {# Variables: optional utility classes. #}
 {% set grid_utility_classes = grid_utility_classes ?? [] %}
 {% set column_utility_classes = column_utility_classes ?? [] %}
+{% set column_divider = column_divider ?? false %}
 
 {# Logic: responsive column classes, only when set. #}
 {% set col_xs =((col_xs is defined and col_xs != 'none') ? [col_xs] : []) %}
@@ -53,6 +56,7 @@
     'grid',
     'row',
     'clearfix',
+    column_divider ? 'views-view-grid--divided',
   ]|merge(grid_utility_classes)
 %}
 

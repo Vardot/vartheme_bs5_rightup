@@ -46,6 +46,8 @@
  # `atoms/heading` declares neither - its API is `heading_text` and `level` - so
  # the title rendered as an empty <h3> and the text was dropped. #}
 {% set title_level = title_level|default(3) %}
+{% set row_divider = row_divider ?? false %}
+{% set row_divider_color = row_divider_color|default('border-black') %}
 
 {% if title %}
   {{ include('vartheme_bs5_rightup:heading', {
@@ -54,6 +56,11 @@
     }, with_context: false) }}
 {% endif %}
 {% for row in rows %}
+  {% if row_divider and not loop.first %}
+    {{ include('vartheme_bs5_rightup:divider', {
+        border_color: row_divider_color,
+      }, with_context: false) }}
+  {% endif %}
   {% if row.content is defined %}
     {# Theme template context: rows come from template_preprocess_views_view_unformatted(). #}
     {% set row_attributes = row.attributes.addClass(row_classes) %}
