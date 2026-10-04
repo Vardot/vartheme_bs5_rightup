@@ -1,0 +1,12 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Language Switcher
+status: stable
+description: The language switcher block's links, each named in its own language. Rendered by links--language-block.html.twig, not placed directly.
+noUi: true
+props:
+  type: object
+  properties:
+    links:
+      type: array
+      title: Links
+      description: The language links prepared by template_preprocess_links(), keyed by langcode.

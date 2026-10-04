@@ -24,6 +24,7 @@ module.exports = {
     'atoms/divider/divider': ['./components/atoms/divider/divider.scss'],
     'atoms/progress-bar/progress-bar': ['./components/atoms/progress-bar/progress-bar.scss'],
     'molecules/audio-player-local/audio-player-local': ['./components/molecules/audio-player-local/audio-player-local.scss'],
+    'molecules/language-switcher/language-switcher': ['./components/molecules/language-switcher/language-switcher.scss'],
     'molecules/read-more/read-more': ['./components/molecules/read-more/read-more.scss'],
     'molecules/podcast-platforms/podcast-platforms': ['./components/molecules/podcast-platforms/podcast-platforms.scss'],
     'molecules/audio-player-remote/audio-player-remote': ['./components/molecules/audio-player-remote/audio-player-remote.scss'],

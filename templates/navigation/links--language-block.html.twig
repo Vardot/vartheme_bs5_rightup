@@ -1,0 +1,10 @@
+{#
+/**
+ * @file
+ * Theme override for the language switcher block's links.
+ *
+ * @see template_preprocess_links()
+ * @see vartheme_bs5_rightup_preprocess_links__language_block()
+ */
+#}
+{% include 'vartheme_bs5_rightup:language-switcher' with { links: links, attributes: attributes } only %}

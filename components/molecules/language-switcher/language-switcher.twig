@@ -1,0 +1,53 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup Starter Kit implementation for the Language Switcher component.
+ *
+ * The language switcher block's links in one row. Each link carries a lang
+ * attribute matching its hreflang (set in the theme's links__language_block
+ * preprocess), and core marks the current language with aria-current.
+ *
+ * Available properties:
+ * - links: The language links prepared by template_preprocess_links(),
+ *          keyed by langcode.
+ *
+ * Available attributes:
+ * - attributes: HTML attributes for the list element.
+ * - item_attributes: HTML attributes for each list item.
+ */
+#}
+
+{# AI guidance:
+ # - Do not alter property descriptions or existing logic unless new
+ #   properties are added.
+ # - Keep the structure: 1) variables, 2) logical variable manipulations,
+ #   3) print the HTML.
+ # - Always handle classes as arrays with `merge` (never string
+ #   concatenation) to avoid duplicate classes and data type conflicts.
+ #}
+
+{# Variables: scalar props with schema defaults. #}
+{% set links = links|default([]) %}
+
+{# Logic: merge classes as arrays. #}
+{% set classes = [
+  'language-switcher',
+  'list-unstyled',
+  'd-flex',
+  'flex-nowrap',
+  'align-items-center',
+  'gap-2',
+  'mb-0',
+] %}
+{% set attributes = attributes.addClass(classes) %}
+
+{# Print the HTML. #}
+{% if links is not empty %}
+  <ul{{ attributes }}>
+    {% for item in links %}
+      {% set item_attributes = item.attributes ?: create_attribute() %}
+      {% set item_attributes = item_attributes.addClass('language-switcher__item') %}
+      <li{{ item_attributes }}>{{ item.link ?: item.text }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
