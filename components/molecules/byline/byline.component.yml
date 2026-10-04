@@ -66,3 +66,28 @@ props:
       default: text-muted
       examples:
         - text-muted
+
+    show_prefix:
+      type: boolean
+      title: Show the "By" prefix
+      description: Print "By" before the author name. Turn off to print the name alone.
+      default: true
+      examples:
+        - true
+
+    font_weight:
+      type: string
+      title: Font weight
+      description: Bootstrap font weight utility. Leave empty for default weight.
+      enum:
+        - fw-light
+        - fw-normal
+        - fw-medium
+        - fw-semibold
+        - fw-bold
+      meta:enum:
+        fw-light: Light
+        fw-normal: Normal
+        fw-medium: Medium
+        fw-semibold: Semibold
+        fw-bold: Bold

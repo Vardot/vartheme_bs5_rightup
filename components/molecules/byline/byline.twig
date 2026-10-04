@@ -14,6 +14,9 @@
  * - date: ISO 8601 date string (YYYY-MM-DD). Leave empty to omit the date.
  *         Defaults to `''`.
  * - size: Bootstrap font-size utility class. (fs-1..fs-6) Defaults to `fs-6`.
+ * - show_prefix: Print "By" before the author name. Defaults to `true`.
+ * - font_weight: Bootstrap font weight utility. (fw-light | fw-normal | fw-medium |
+ *                fw-semibold | fw-bold) Leave empty for the default weight.
  * - text_color: Bootstrap text color utility class.
  *               (text-muted | text-body | text-primary | text-secondary | text-dark)
  *               Defaults to `text-muted`.
@@ -41,13 +44,15 @@
 {% set date = date|default('') %}
 {% set size = size|default('fs-6') %}
 {% set text_color = text_color|default('text-muted') %}
+{% set show_prefix = show_prefix is defined ? show_prefix : true %}
+{% set font_weight = font_weight|default('') %}
 
 {# Logic: presence checks; render nothing when there is neither an author
  # nor a date. #}
 {% set has_author = author|trim is not empty %}
 {% set has_date = date|trim is not empty %}
 
-{% set classes = ['mb-0', size, text_color] %}
+{% set classes = ['mb-0', size, text_color, font_weight]|filter(v => v is not empty) %}
 {% set attributes = attributes.addClass(classes) %}
 {% set author_link_attributes = create_attribute()
   .setAttribute('href', author_url)
@@ -58,7 +63,7 @@
 {% if has_author or has_date %}
   <p{{ attributes }}>
     {% if has_author %}
-      {{ 'By'|t }}
+      {% if show_prefix %}{{ 'By'|t }}{% endif %}
       {% if author_url is not empty %}
         <a{{ author_link_attributes }}>{{ author }}</a>
       {% else %}

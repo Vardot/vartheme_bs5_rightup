@@ -32,6 +32,8 @@ Use this component under a headline or teaser title when you need a compact byli
 - `date`: ISO 8601 date string (`YYYY-MM-DD`); leave empty to omit. Defaults to `''`
 - `size`: Bootstrap font-size utility — `fs-1` through `fs-6`; defaults to `fs-6`
 - `text_color`: Bootstrap text color utility — `text-muted`, `text-body`, `text-primary`, `text-secondary`, `text-dark`; defaults to `text-muted`
+- `show_prefix`: Print "By" before the author name. Defaults to `true`
+- `font_weight`: Bootstrap font weight utility (`fw-light` to `fw-bold`); empty for the default weight
 
 ## Available attributes
 
