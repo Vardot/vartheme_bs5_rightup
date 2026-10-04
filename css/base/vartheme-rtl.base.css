@@ -32,3 +32,13 @@
   text-align: left;
   direction: ltr;
 }
+[dir="rtl"] .bi-arrow-left::before,
+[dir="rtl"] .bi-arrow-right::before,
+[dir="rtl"] .bi-arrow-up-right::before,
+[dir="rtl"] .bi-chevron-left::before,
+[dir="rtl"] .bi-chevron-right::before {
+  transform: scaleX(-1);
+}
+[dir="rtl"]:root {
+  --vb-display-letter-spacing: normal;
+}

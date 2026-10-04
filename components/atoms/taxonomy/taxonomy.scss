@@ -9,6 +9,11 @@
 // modifier in px.
 .taxonomy {
   letter-spacing: 0.08em;
+
+  // Tracking breaks the letter joins of cursive RTL scripts.
+  [dir="rtl"] & {
+    letter-spacing: normal;
+  }
 }
 
 .taxonomy-lg {

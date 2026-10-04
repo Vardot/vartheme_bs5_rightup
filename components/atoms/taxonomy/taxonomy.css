@@ -2,6 +2,10 @@
   letter-spacing: 0.08em;
 }
 
+[dir="rtl"] .taxonomy {
+  letter-spacing: normal;
+}
+
 .taxonomy-lg {
   font-size: 0.75rem;
 }

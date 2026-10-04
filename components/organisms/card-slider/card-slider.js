@@ -6,13 +6,19 @@
  * element without JS, the controls simply have no effect.
  */
 ((Drupal, once) => {
+  // In RTL, scrollLeft starts at 0 and goes negative, so compare magnitudes.
+  function isRtl(track) {
+    return window.getComputedStyle(track).direction === 'rtl';
+  }
+
   function updateControls(track, prevButton, nextButton) {
     const maxScroll = track.scrollWidth - track.clientWidth;
+    const position = Math.abs(track.scrollLeft);
     if (prevButton) {
-      prevButton.disabled = track.scrollLeft <= 1;
+      prevButton.disabled = position <= 1;
     }
     if (nextButton) {
-      nextButton.disabled = maxScroll <= 1 || track.scrollLeft >= maxScroll - 1;
+      nextButton.disabled = maxScroll <= 1 || position >= maxScroll - 1;
     }
   }
 
@@ -25,7 +31,10 @@
     // the card's own width already reflects the visible-items preset.
     const gap =
       parseFloat(window.getComputedStyle(track).columnGap || '0') || 0;
-    const amount = (card.getBoundingClientRect().width + gap) * direction;
+    const amount =
+      (card.getBoundingClientRect().width + gap) *
+      direction *
+      (isRtl(track) ? -1 : 1);
     track.scrollBy({ left: amount, behavior: 'smooth' });
   }
 

@@ -33,3 +33,21 @@
     unicode-bidi: plaintext;
   }
 }
+
+/* Directional icons point along the reading direction. */
+[dir="rtl"] {
+  .bi-arrow-left,
+  .bi-arrow-right,
+  .bi-arrow-up-right,
+  .bi-chevron-left,
+  .bi-chevron-right {
+    &::before {
+      transform: scaleX(-1);
+    }
+  }
+}
+
+/* Display tracking breaks the letter joins of cursive RTL scripts. */
+[dir="rtl"]:root {
+  --vb-display-letter-spacing: normal;
+}

@@ -53,6 +53,13 @@
   padding-inline: 0;
 }
 
+// Keep a time and a title in another script from reordering each other,
+// e.g. "12:00 PM" beside an RTL headline, or an LTR title on an RTL page.
+.live-feed-item__time,
+.live-feed-item__title {
+  unicode-bidi: plaintext;
+}
+
 .live-feed__track-wrapper {
   // Fade the scrolling row's edges rather than cutting items off sharply.
   mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
@@ -84,6 +91,11 @@
 
   &.is-looping {
     animation: live-feed-scroll var(--live-feed-duration) linear infinite;
+  }
+
+  // RTL lays the cloned group out to the left, so the loop travels right.
+  [dir="rtl"] &.is-looping {
+    animation-name: live-feed-scroll-rtl;
   }
 }
 
@@ -139,5 +151,15 @@
 
   to {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes live-feed-scroll-rtl {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(50%);
   }
 }
