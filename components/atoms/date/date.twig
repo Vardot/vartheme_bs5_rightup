@@ -51,5 +51,8 @@
 {% set attributes = attributes.addClass(classes) %}
 {% set attributes = attributes.setAttribute('datetime', date) %}
 
-{# Print the HTML. #}
-<time{{ attributes }}>{{ date|date('M j, Y') }}</time>
+{# Logic: the pattern is translatable so a language can reorder day and month. #}
+{% set date_format = 'M j, Y'|t({}, {'context': 'PHP date format'}) ~ '' %}
+
+{# Print the HTML: format_date names the month in the interface language. #}
+<time{{ attributes }}>{{ date|date('U')|format_date('custom', date_format) }}</time>

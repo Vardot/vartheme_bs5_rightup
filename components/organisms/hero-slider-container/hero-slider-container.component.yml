@@ -92,5 +92,6 @@ slots:
 
 libraryOverrides:
   dependencies:
+    - core/drupal
     - vartheme_bs5_rightup/framework
     # `framework` depends on `bootstrap-scripts` which already includes carousel.

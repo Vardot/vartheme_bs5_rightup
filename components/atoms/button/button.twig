@@ -50,7 +50,7 @@
  #}
 
 {# Variables: scalar props with schema defaults. #}
-{% set label = label|default('Button label') %}
+{% set label = label|default('Button label'|t ~ '') %}
 {% set variant = variant|default('btn-primary') %}
 {% set size = size|default('btn-md') %}
 {% set target = target|default('self') %}

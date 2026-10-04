@@ -19,9 +19,9 @@
  #}
 
 {# Variables: scalar props with schema defaults. #}
-{% set title = title|default('Demo title') %}
+{% set title = title|default('Demo title'|t ~ '') %}
 {% set heading_tag = heading_tag|default('h2') %}
-{% set content_text = content_text|default('Demo content text goes here. You can edit this in Canvas.') %}
+{% set content_text = content_text|default('Demo content text goes here. You can edit this in Canvas.'|t ~ '') %}
 {% set container_type = container_type|default('container') %}
 {% set media_position = media_position|default('end') %}
 {% set split_gap = split_gap|default('g-4') %}

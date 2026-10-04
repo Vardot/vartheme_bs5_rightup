@@ -59,7 +59,7 @@
 
 {% set image_media = {
   src: media.src|default(''),
-  alt: media.alt|default(cite_name|default('Avatar')),
+  alt: media.alt|default(cite_name|default('Avatar'|t ~ '')),
   width: media.width|default(60),
   height: media.height|default(60),
 } %}

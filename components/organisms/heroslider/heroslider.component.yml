@@ -132,6 +132,9 @@ slots:
     default: ''
 libraryOverrides:
   dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once
     - vartheme_bs5_rightup/bs-carousel-script
     - vartheme_bs5_rightup/local-video-slider
     - vartheme_bs5_rightup/youtube-video-slider

@@ -41,7 +41,7 @@
  # hand-placed items keep working. #}
 {% set displayed_time = time|default('') is not empty
   ? time
-  : (timestamp is not empty ? timestamp|date(time_format) : '') %}
+  : (timestamp is not empty ? timestamp|format_date('custom', time_format) : '') %}
 
 {# Logic: URL switches the root tag to a link. #}
 {% set has_url = url is not empty %}

@@ -22,7 +22,7 @@
  #}
 
 {# Variables: scalar props with schema defaults. #}
-{% set heading_text = heading_text|default('Enter the title') %}
+{% set heading_text = heading_text|default('Enter the title'|t ~ '') %}
 {% set level = level|default(2) %}
 {% set heading_size = heading_size|default('default') %}
 {% set date = date|default('') %}
@@ -96,7 +96,7 @@
 
         {% if author is not empty %}
           <p{{ author_attributes }}>
-            <span{{ author_prefix_attributes }}>By</span>
+            <span{{ author_prefix_attributes }}>{{ 'By'|t }}</span>
             {% if author_url is not empty %}
               {{ include('vartheme_bs5_rightup:link', author_link_props, with_context: false) }}
             {% else %}

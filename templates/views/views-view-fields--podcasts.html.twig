@@ -9,13 +9,16 @@
 #}
 {% set title = fields.title.content|striptags|trim %}
 {% set count = fields.nid.content|striptags|trim %}
+{% set count = count matches '/^\\d+$/' ? count + 0 : 0 %}
+{# Plural forms come from the language; some languages have six. #}
+{% set meta_text %}{% trans %}1 Episode{% plural count %}{{ count }} Episodes{% endtrans %}{% endset %}
 {# The listing page has no h2 above the cards; More Podcasts sits under one. #}
 {% embed 'vartheme_bs5_rightup:podcast-card' with {
   media_image: { src: fields.image_url.content|striptags|trim, alt: title },
   image_ratio: 'ratio-1x1',
   image_fit: 'object-fit-cover',
   content_padding: false,
-  meta_text: count ~ ' ' ~ (count == '1' ? 'Episode'|t : 'Episodes'|t),
+  meta_text: meta_text|trim,
   button_text: 'View Show'|t ~ '',
   button_url: fields.view_node.content|striptags|trim,
   button_target: '_self',

@@ -120,7 +120,7 @@
       {% if has_content_slot %}
         {{ content_slot }}
       {% else %}
-        <div{{ empty_state_attributes }}>Drop content here</div>
+        <div{{ empty_state_attributes }}>{{ 'Drop content here'|t }}</div>
       {% endif %}
     </div>
   </div>

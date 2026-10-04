@@ -90,7 +90,7 @@
 {% set note_attributes = create_attribute().addClass(['small', 'opacity-75', 'mt-1']) %}
 {% set features_wrapper_attributes = create_attribute().addClass(features_wrapper_class|split(' ')) %}
 {% set features_content_attributes = create_attribute().addClass(['small']) %}
-{% set button_label_value = button_label|default('Get started') %}
+{% set button_label_value = button_label|default('Get started'|t ~ '') %}
 {% set button_href_value = button_url|default('') %}
 {% set button_wrapper_attributes = create_attribute().addClass(['mt-auto']) %}
 

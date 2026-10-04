@@ -127,7 +127,7 @@
       {% if items.current and (items.previous or items.next) %}
         <li class="page-item disabled">
           <span class="page-link">
-            {{ 'Page' ~ items.current|t }}
+            {{ 'Page @current'|t({'@current': items.current}) }}
           </span>
         </li>
       {% endif %}

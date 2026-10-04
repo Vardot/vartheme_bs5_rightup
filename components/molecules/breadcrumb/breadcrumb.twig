@@ -35,7 +35,7 @@
 {% set classes = []|merge(breadcrumb_utility_classes) %}
 {% set attributes = attributes.addClass(classes) %}
 {% set attributes = attributes.setAttribute('role', 'navigation') %}
-{% set attributes = attributes.setAttribute('aria-label', 'breadcrumb') %}
+{% set attributes = attributes.setAttribute('aria-label', 'Breadcrumb'|t) %}
 
 {% if divider is not empty and divider != '' %}
   {% set attributes = attributes.setAttribute('style', "--bs-breadcrumb-divider: '" ~ divider ~ "';") %}

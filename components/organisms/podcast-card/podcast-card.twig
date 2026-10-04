@@ -54,7 +54,7 @@
 {% set meta_text = meta_text|default('38 Episodes') %}
 {% set image_ratio = image_ratio|default('ratio-1x1') %}
 {% set image_fit = image_fit|default('object-fit-cover') %}
-{% set button_text = button_text|default('View Show') %}
+{% set button_text = button_text|default('View Show'|t ~ '') %}
 {% set button_url = button_url|default('')|trim %}
 {% set button_target = button_target|default('_self') %}
 
@@ -162,7 +162,7 @@
     {% if has_content %}
       {{ content_content }}
     {% else %}
-      <div{{ content_placeholder_attributes }}>Drop content here</div>
+      <div{{ content_placeholder_attributes }}>{{ 'Drop content here'|t }}</div>
     {% endif %}
 
     {% if has_footer %}

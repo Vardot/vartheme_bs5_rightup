@@ -62,7 +62,7 @@
     {% if has_video %}
       <video class="{{ frame_classes|join(' ') }}" controls preload="metadata" {% if poster %}poster="{{ poster|e }}"{% endif %}>
         <source src="{{ src|e }}">
-        Your browser does not support the video tag.
+        {{ 'Your browser does not support the video tag.'|t }}
       </video>
     {% endif %}
   </div>

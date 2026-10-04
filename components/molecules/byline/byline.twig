@@ -58,7 +58,7 @@
 {% if has_author or has_date %}
   <p{{ attributes }}>
     {% if has_author %}
-      By
+      {{ 'By'|t }}
       {% if author_url is not empty %}
         <a{{ author_link_attributes }}>{{ author }}</a>
       {% else %}

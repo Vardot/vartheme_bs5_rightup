@@ -9,6 +9,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\views\Plugin\views\field\EntityField;
 
 /**
  * Implements hook_theme().
@@ -337,6 +338,17 @@ function vartheme_bs5_rightup_preprocess_login_with(&$variables) {
         }
       }
     }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for views_view_fields.
+ */
+function vartheme_bs5_rightup_preprocess_views_view_fields(&$variables) {
+  // The row title in the same translation as the row's other fields.
+  $title = $variables['view']->field['title'] ?? NULL;
+  if ($title instanceof EntityField) {
+    $variables['row_title'] = $title->getValue($variables['row']);
   }
 }
 

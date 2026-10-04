@@ -165,9 +165,9 @@
 {% set nav_col_attributes = create_attribute({class: nav_col_class|split(' '), 'data-hero-nav-col': true}) %}
 {% set nav_inner_attributes = create_attribute({class: nav_inner_classes}) %}
 {% set indicators_attributes = create_attribute({class: ['carousel-indicators', 'position-static', 'justify-content-start', 'm-0'], 'data-hero-indicators': true}) %}
-{% set controls_attributes = create_attribute({class: ['hero-slider__controls', 'd-flex', 'align-items-center', 'gap-2'], role: 'group', 'aria-label': 'Carousel controls'}) %}
+{% set controls_attributes = create_attribute({class: ['hero-slider__controls', 'd-flex', 'align-items-center', 'gap-2'], role: 'group', 'aria-label': 'Carousel controls'|t}) %}
 {% set prev_button_attributes = create_attribute({class: prev_control_classes, type: 'button', 'data-bs-target': '#' ~ carousel_id, 'data-bs-slide': 'prev'}) %}
-{% set pause_button_attributes = create_attribute({class: pause_control_classes, type: 'button', 'data-hero-toggle': 'pause', 'data-paused': hero_slider_autoplay ? 'false' : 'true', 'aria-label': hero_slider_autoplay ? 'Pause' : 'Play'}) %}
+{% set pause_button_attributes = create_attribute({class: pause_control_classes, type: 'button', 'data-hero-toggle': 'pause', 'data-paused': hero_slider_autoplay ? 'false' : 'true', 'aria-label': hero_slider_autoplay ? 'Pause'|t : 'Play'|t}) %}
 {% set next_button_attributes = create_attribute({class: next_control_classes, type: 'button', 'data-bs-target': '#' ~ carousel_id, 'data-bs-slide': 'next'}) %}
 
 {% set fallback_carousel_item_attributes = create_attribute({class: ['carousel-item', 'active'], 'data-hero-slide': true}) %}
@@ -207,8 +207,8 @@
                   <div{{ fallback_row_attributes }}>
                     <div{{ fallback_col_attributes }}>
                       <div{{ fallback_caption_attributes }}>
-                        <h2{{ fallback_title_attributes }}>Hero Slider</h2>
-                        <div{{ fallback_text_attributes }}><p>Add “Hero Slide” components into the Slides slot.</p></div>
+                        <h2{{ fallback_title_attributes }}>{{ 'Hero Slider'|t }}</h2>
+                        <div{{ fallback_text_attributes }}><p>{{ 'Add “Hero Slide” components into the Slides slot.'|t }}</p></div>
                       </div>
                     </div>
                   </div>
@@ -233,14 +233,14 @@
                 {% if hero_slider_show_controls %}
                   <div{{ controls_attributes }}>
                     <button{{ prev_button_attributes }}>
-                      <span{{ prev_hidden_label_attributes }}>Previous</span>
+                      <span{{ prev_hidden_label_attributes }}>{{ 'Previous'|t }}</span>
                       <svg{{ prev_icon_attributes }}>
                         <path{{ prev_icon_path_attributes }}/>
                       </svg>
                     </button>
 
                     <button{{ next_button_attributes }}>
-                      <span{{ next_hidden_label_attributes }}>Next</span>
+                      <span{{ next_hidden_label_attributes }}>{{ 'Next'|t }}</span>
                       <svg{{ next_icon_attributes }}>
                         <path{{ next_icon_path_attributes }}/>
                       </svg>

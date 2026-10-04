@@ -56,7 +56,7 @@
 
 {% set heading_id  = 'heading-'  ~ unique_id %}
 {% set collapse_id = 'collapse-' ~ unique_id %}
-{% set title_text  = title|default('Accordion item') %}
+{% set title_text  = title|default('Accordion item'|t ~ '') %}
 
 {# Logic: resolve color. `inherit` receives the container-provided color. #}
 {% set resolved_color = color %}

@@ -119,7 +119,7 @@
 
   {% set button_text_final = (button_text is defined ? button_text : '')|trim %}
   {% if button_text_final == '' %}
-    {% set button_text_final = 'Learn more' %}
+    {% set button_text_final = 'Learn more'|t ~ '' %}
   {% endif %}
 
   {% set button_url_final = (button_url is defined ? button_url : '')|trim %}
@@ -178,7 +178,7 @@
   {% endif %}
 
   {% set has_media = src_final != '' %}
-  {% set alt_final = (media.alt is defined and media.alt) ? media.alt : (title_final ? title_final : 'Slide image') %}
+  {% set alt_final = (media.alt is defined and media.alt) ? media.alt : (title_final ? title_final : 'Slide image'|t ~ '') %}
   {% set has_cta = button_text_final and button_url_final %}
   {% set cta_button_props = {
     label: button_text_final,

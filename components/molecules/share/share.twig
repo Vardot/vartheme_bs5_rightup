@@ -39,7 +39,7 @@
  #}
 
 {# Variables: scalar props with schema defaults. #}
-{% set heading = heading|default('Share') %}
+{% set heading = heading|default('Share'|t ~ '') %}
 {% set heading_level = heading_level|default(2) %}
 {% set alignment = alignment|default('end') %}
 {% set orientation = orientation|default('vertical') %}
@@ -175,6 +175,7 @@
         </button>
       </li>
     {% endif %}
+    {# Platform titles live in the Webshare table, not config, so t() is their only translation path. #}
     {% for platform in platforms|default([]) %}
       {% set bi_class = bi_icons[platform.key]|default('bi-share') %}
       {% set platform_item_attributes = create_attribute()
@@ -187,7 +188,7 @@
             .addClass('webshare-copy-url')
             .setAttribute('data-url', url)
             .setAttribute('data-clipboard', url)
-            .setAttribute('aria-label', platform.title|default('Copy URL'|t))
+            .setAttribute('aria-label', platform.title ? platform.title|t : 'Copy URL'|t)
           %}
           <button{{ copy_button_attributes }}>
             {% if design_icons[platform.key] is defined %}
@@ -203,14 +204,14 @@
               <i{{ platform_icon_attributes }}></i>
             {% endif %}
             {% set platform_hidden_label_attributes = create_attribute().addClass('visually-hidden') %}
-            <span{{ platform_hidden_label_attributes }}>{{ platform.title|default('Copy URL'|t) }}</span>
+            <span{{ platform_hidden_label_attributes }}>{{ platform.title ? platform.title|t|striptags : 'Copy URL'|t }}</span>
           </button>
         {% else %}
           {% set platform_link_attributes = create_attribute()
             .setAttribute('href', platform.url)
             .setAttribute('target', '_blank')
             .setAttribute('rel', 'noopener noreferrer')
-            .setAttribute('aria-label', platform.title ~ ' ' ~ '(opens in a new tab)'|t)
+            .setAttribute('aria-label', platform.title|t ~ ' ' ~ '(opens in a new tab)'|t)
           %}
           <a{{ platform_link_attributes }}>
             {% if design_icons[platform.key] is defined %}
@@ -226,7 +227,7 @@
               <i{{ platform_icon_attributes }}></i>
             {% endif %}
             {% set platform_hidden_label_attributes = create_attribute().addClass('visually-hidden') %}
-            <span{{ platform_hidden_label_attributes }}>{{ platform.title }} {{ '(opens in a new tab)'|t }}</span>
+            <span{{ platform_hidden_label_attributes }}>{{ platform.title|t|striptags }} {{ '(opens in a new tab)'|t }}</span>
           </a>
         {% endif %}
       </li>

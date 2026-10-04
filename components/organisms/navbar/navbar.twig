@@ -63,7 +63,7 @@
     {{ branding }}
   {% endblock %}
 
-  <button class="{{ toggler_classes|join(' ') }}" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="{{ toggler_classes|join(' ') }}" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="{{ 'Toggle navigation'|t }}">
     <span class="{{ toggler_icon_classes|join(' ') }}"></span>
   </button>
 

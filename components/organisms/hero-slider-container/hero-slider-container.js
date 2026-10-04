@@ -15,7 +15,7 @@
  *   This enables CSS to reposition nav on responsive for per-slide overrides.
  * - Optional play/pause toggle support.
  */
-(function () {
+(function (Drupal) {
   function trim(str) {
     return String(str || '').trim();
   }
@@ -124,7 +124,10 @@
       btn.type = 'button';
       btn.setAttribute('data-bs-target', `#${id}`);
       btn.setAttribute('data-bs-slide-to', String(i));
-      btn.setAttribute('aria-label', `Slide ${i + 1}`);
+      btn.setAttribute(
+        'aria-label',
+        Drupal.t('Slide @number', { '@number': i + 1 }),
+      );
       if (i === activeIndex) {
         btn.classList.add('active');
         btn.setAttribute('aria-current', 'true');
@@ -169,9 +172,10 @@
 
     function setPaused(paused) {
       toggle.setAttribute('data-paused', paused ? 'true' : 'false');
-      toggle.setAttribute('aria-label', paused ? 'Play' : 'Pause');
+      const label = paused ? Drupal.t('Play') : Drupal.t('Pause');
+      toggle.setAttribute('aria-label', label);
       const hidden = toggle.querySelector('.visually-hidden');
-      if (hidden) hidden.textContent = paused ? 'Play' : 'Pause';
+      if (hidden) hidden.textContent = label;
     }
 
     // Align initial state with autoplay.
@@ -268,4 +272,4 @@
   } else {
     start();
   }
-})();
+})(Drupal);

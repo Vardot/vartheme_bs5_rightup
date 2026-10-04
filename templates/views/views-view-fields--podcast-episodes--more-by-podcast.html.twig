@@ -12,6 +12,6 @@
   {% if number %}
     {{ include('vartheme_bs5_rightup:taxonomy', { label: 'Episode @n'|t({'@n': number}) ~ '', size: 'taxonomy-lg', color: 'text-tertiary', no_padding: true, justify_content: 'justify-content-start' }, false) }}
   {% endif %}
-  {{ include('vartheme_bs5_rightup:heading', { heading_text: row._entity.label, level: 3, text_size: 'h5', url: url, attributes: create_attribute({ class: ['mb-0'] }) }, false) }}
+  {{ include('vartheme_bs5_rightup:heading', { heading_text: row_title|default(row._entity.label), level: 3, text_size: 'h5', url: url, attributes: create_attribute({ class: ['mb-0'] }) }, false) }}
   {% if host %}<p class="font-serif text-body-secondary small mt-2 mb-0">{{ 'Hosted by @host'|t({'@host': host}) }}</p>{% endif %}
 </article>

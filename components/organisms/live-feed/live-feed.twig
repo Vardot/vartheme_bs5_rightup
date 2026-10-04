@@ -36,7 +36,7 @@
  #}
 
 {# Variables: scalar props with schema defaults. #}
-{% set label = label|default('Latest') %}
+{% set label = label|default('Latest'|t ~ '') %}
 
 {# Logic: presence check — nothing to scroll without slot content. #}
 {% set has_items = items is defined and items|render|trim is not empty %}

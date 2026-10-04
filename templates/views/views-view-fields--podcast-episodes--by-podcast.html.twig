@@ -20,7 +20,7 @@
   hosted: hosted,
   duration: duration,
   fields: fields,
-  title: row._entity.label,
+  title: row_title|default(row._entity.label),
 } only %}
   {% block content %}
     {% if number %}

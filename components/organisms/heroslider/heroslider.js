@@ -49,14 +49,14 @@
         if ($button.hasClass('paused')) {
           // Resume: remove paused class and start cycling
           $button.removeClass('paused');
-          $button.find('.visually-hidden').text('Pause');
-          $button.attr('aria-label', 'Pause carousel');
+          $button.find('.visually-hidden').text(Drupal.t('Pause'));
+          $button.attr('aria-label', Drupal.t('Pause carousel'));
           if (bsCarousel) bsCarousel.cycle();
         } else {
           // Pause: add paused class and stop cycling
           $button.addClass('paused');
-          $button.find('.visually-hidden').text('Play');
-          $button.attr('aria-label', 'Play carousel');
+          $button.find('.visually-hidden').text(Drupal.t('Play'));
+          $button.attr('aria-label', Drupal.t('Play carousel'));
           if (bsCarousel) bsCarousel.pause();
         }
       });
@@ -76,8 +76,8 @@
         // If carousel is paused, resume it (like clicking play)
         if ($pauseButton.hasClass('paused')) {
           $pauseButton.removeClass('paused');
-          $pauseButton.find('.visually-hidden').text('Pause');
-          $pauseButton.attr('aria-label', 'Pause carousel');
+          $pauseButton.find('.visually-hidden').text(Drupal.t('Pause'));
+          $pauseButton.attr('aria-label', Drupal.t('Pause carousel'));
 
           // Get carousel instance and start cycling
           const carouselElement = $carousel[0];

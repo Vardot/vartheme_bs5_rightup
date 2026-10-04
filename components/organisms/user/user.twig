@@ -30,7 +30,7 @@
     <h2 class="user__name" style="text-transform:none">{{ user_label }}</h2>
   {% endif %}
   {% if user_actions %}
-    <nav class="user__actions" aria-label="User actions">
+    <nav class="user__actions" aria-label="{{ 'User actions'|t }}">
       {{ user_actions }}
     </nav>
   {% endif %}
