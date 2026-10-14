@@ -13,10 +13,12 @@
  * - border_width: Bootstrap border width utility class.
  *                 (border-1 | border-2 | border-3 | border-4 | border-5)
  *                 Defaults to `border-1`.
- * - border_color: Bootstrap border color utility class.
- *                 (border-secondary | border-light | border-dark | border-primary
- *                  | border-success | border-danger | border-warning | border-info
- *                  | border-white | border-black) Defaults to `border-secondary`.
+ * - border_color: Bootstrap border color utility class, or `none` for the
+ *                 theme border color.
+ *                 (none | border-black | border-secondary | border-primary
+ *                  | border-tertiary | border-accent | border-success
+ *                  | border-danger | border-warning | border-info | border-light
+ *                  | border-dark | border-white) Defaults to `border-black`.
  * - opacity: Bootstrap opacity utility class.
  *            (opacity-25 | opacity-50 | opacity-75 | opacity-100)
  *            Defaults to `opacity-100`.
@@ -44,7 +46,7 @@
 
 {# Variables: scalar props with schema defaults. #}
 {% set border_width = border_width|default('border-1') %}
-{% set border_color = border_color|default('border-secondary') %}
+{% set border_color = border_color|default('border-black') %}
 {% set opacity = opacity|default('opacity-100') %}
 {% set margin_start = margin_start|default('ms-3') %}
 {% set margin_end = margin_end|default('me-3') %}
@@ -54,7 +56,7 @@
   'divider-vertical',
   'border-start',
   border_width,
-  border_color,
+  border_color == 'none' ? null : border_color,
   opacity,
   margin_start,
   margin_end,
@@ -62,7 +64,7 @@
 
 {# Logic: route static attributes through the attribute object. #}
 {% set attributes = attributes
-  .addClass(classes)
+  .addClass(classes|filter(c => c))
   .setAttribute('role', 'separator')
   .setAttribute('aria-orientation', 'vertical')
 %}

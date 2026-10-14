@@ -37,7 +37,7 @@ of content sitting side by side (columns, toolbar items, meta info) that can:
 ### Appearance
 
 - `border_width`: Bootstrap border width utility — `border-1`, `border-2`, `border-3`, `border-4`, `border-5`; defaults to `border-1`
-- `border_color`: Bootstrap border color utility — `border-secondary`, `border-light`, `border-dark`, `border-primary`, `border-success`, `border-danger`, `border-warning`, `border-info`, `border-white`, `border-black`; defaults to `border-secondary`
+- `border_color`: Bootstrap border color utility, or `none` for the theme border color — the same options as the RightUp Divider; defaults to `border-black`
 - `opacity`: Bootstrap opacity utility — `opacity-25`, `opacity-50`, `opacity-75`, `opacity-100`; defaults to `opacity-100`
 
 ### Spacing
@@ -64,7 +64,7 @@ tallest column automatically, regardless of the row's `align_items` setting:
     <div class="col">First column</div>
     {% include 'vartheme_bs5_rightup:divider-vertical' with {
       border_width: 'border-1',
-      border_color: 'border-secondary',
+      border_color: 'border-black',
       opacity: 'opacity-100',
       margin_start: 'ms-3',
       margin_end: 'me-3'
@@ -81,7 +81,7 @@ Between two inline items in a flex toolbar:
   <span>Item one</span>
   {% include 'vartheme_bs5_rightup:divider-vertical' with {
     border_width: 'border-1',
-    border_color: 'border-secondary',
+    border_color: 'border-black',
     opacity: 'opacity-100',
     margin_start: 'ms-2',
     margin_end: 'me-2'
