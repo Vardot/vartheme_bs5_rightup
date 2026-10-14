@@ -1,4 +1,4 @@
-# Vertical divider
+# Divider vertical
 
 A Bootstrap 5.3-compatible vertical divider that automatically stretches to the
 full height of its parent section or container, with no `height` prop to set.
@@ -24,13 +24,13 @@ of content sitting side by side (columns, toolbar items, meta info) that can:
 
 ## Files
 
-- `vertical-divider.component.yml` — component schema and props
-- `vertical-divider.twig` — component template
-- `vertical-divider.scss` — component styles (auto-height behavior)
+- `divider-vertical.component.yml` — component schema and props
+- `divider-vertical.twig` — component template
+- `divider-vertical.scss` — component styles (auto-height behavior)
 - `README.md` — usage notes and examples
-- `vertical-divider.mdx` — Storybook docs page
-- `vertical-divider.stories.json` — Storybook story configuration
-- `vertical-divider.stories.twig` — Storybook story templates
+- `divider-vertical.mdx` — Storybook docs page
+- `divider-vertical.stories.json` — Storybook story configuration
+- `divider-vertical.stories.twig` — Storybook story templates
 
 ## Props overview
 
@@ -62,7 +62,7 @@ tallest column automatically, regardless of the row's `align_items` setting:
 {% embed 'vartheme_bs5_rightup:row' %}
   {% block content %}
     <div class="col">First column</div>
-    {% include 'vartheme_bs5_rightup:vertical-divider' with {
+    {% include 'vartheme_bs5_rightup:divider-vertical' with {
       border_width: 'border-1',
       border_color: 'border-secondary',
       opacity: 'opacity-100',
@@ -79,7 +79,7 @@ Between two inline items in a flex toolbar:
 ```twig
 <div class="d-flex align-items-center">
   <span>Item one</span>
-  {% include 'vartheme_bs5_rightup:vertical-divider' with {
+  {% include 'vartheme_bs5_rightup:divider-vertical' with {
     border_width: 'border-1',
     border_color: 'border-secondary',
     opacity: 'opacity-100',

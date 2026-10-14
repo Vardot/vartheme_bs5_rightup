@@ -61,7 +61,7 @@ module.exports = {
     'atoms/badge/badge': ['./components/atoms/badge/badge.scss'],
     'atoms/taxonomy/taxonomy': ['./components/atoms/taxonomy/taxonomy.scss'],
     'organisms/live-feed/live-feed': ['./components/organisms/live-feed/live-feed.scss'],
-    'atoms/vertical-divider/vertical-divider': ['./components/atoms/vertical-divider/vertical-divider.scss'],
+    'atoms/divider-vertical/divider-vertical': ['./components/atoms/divider-vertical/divider-vertical.scss'],
     'organisms/horizontal-text-icon-card/horizontal-text-icon-card': ['./components/organisms/horizontal-text-icon-card/horizontal-text-icon-card.scss'],
   },
   output: {

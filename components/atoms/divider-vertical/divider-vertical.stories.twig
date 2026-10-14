@@ -1,5 +1,5 @@
-{% stories VerticalDivider with {
-  title: 'Layout/Vertical divider',
+{% stories DividerVertical with {
+  title: 'Layout/Divider Vertical',
   parameters: {
     componentSubtitle: 'Bootstrap 5.3 vertical divider component',
     docs: {
@@ -13,7 +13,7 @@
   },
   argTypes: {
     border_width: {
-      name: 'Border width',
+      name: 'Thickness',
       description: 'Bootstrap border width utility class.',
       defaultValue: 'border-1',
       control: 'select',
@@ -46,7 +46,7 @@
     opacity: {
       name: 'Opacity',
       description: 'Bootstrap opacity utility class.',
-      defaultValue: 'opacity-25',
+      defaultValue: 'opacity-100',
       control: 'select',
       options: {
         Subtle: 'opacity-25',
@@ -91,14 +91,14 @@
   args: {
     border_width: 'border-1',
     border_color: 'border-secondary',
-    opacity: 'opacity-25',
+    opacity: 'opacity-100',
     margin_start: 'ms-3',
     margin_end: 'me-3',
   },
 } %}
 <div class="d-flex align-items-stretch" style="height: 4rem;">
   <div>Left content</div>
-  {% include 'vartheme_bs5_rightup:vertical-divider' with {
+  {% include 'vartheme_bs5_rightup:divider-vertical' with {
     border_width: border_width,
     border_color: border_color,
     opacity: opacity,
@@ -121,7 +121,7 @@
 } %}
 <div class="d-flex align-items-stretch" style="height: 4rem;">
   <div>Left content</div>
-  {% include 'vartheme_bs5_rightup:vertical-divider' with {
+  {% include 'vartheme_bs5_rightup:divider-vertical' with {
     border_width: border_width,
     border_color: border_color,
     opacity: opacity,
@@ -144,7 +144,7 @@
 } %}
 <div class="d-flex align-items-stretch" style="height: 4rem;">
   <div>Left content</div>
-  {% include 'vartheme_bs5_rightup:vertical-divider' with {
+  {% include 'vartheme_bs5_rightup:divider-vertical' with {
     border_width: border_width,
     border_color: border_color,
     opacity: opacity,
@@ -152,6 +152,32 @@
     margin_end: margin_end
   } %}
   <div>Right content</div>
+</div>
+{% endstory %}
+{% story AutoHeight with {
+  name: 'Auto Height',
+  args: {
+    border_width: 'border-1',
+    border_color: 'border-secondary',
+    opacity: 'opacity-100',
+    margin_start: 'ms-3',
+    margin_end: 'me-3',
+  },
+} %}
+<div class="d-flex align-items-center">
+  <div>
+    <p>A taller block of content.</p>
+    <p>No fixed height is set on the wrapper:</p>
+    <p>the divider stretches to the tallest sibling.</p>
+  </div>
+  {% include 'vartheme_bs5_rightup:divider-vertical' with {
+    border_width: border_width,
+    border_color: border_color,
+    opacity: opacity,
+    margin_start: margin_start,
+    margin_end: margin_end
+  } %}
+  <div>Short content</div>
 </div>
 {% endstory %}
 {% endstories %}
