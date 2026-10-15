@@ -25,6 +25,7 @@
     "js/bootstrap/**"
   ],
   "words": [
+    "htmx",
     "infobars",
     "ddev",
     "nowrap",
