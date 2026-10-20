@@ -204,6 +204,8 @@
     "labelledby",
     "blockvarbase",
     "BLOCKVARBASE",
+    "blocksearch",
+    "hiddens",
     "unpublish",
     "unpublished",
     "unlink",

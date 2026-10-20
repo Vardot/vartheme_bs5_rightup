@@ -1,0 +1,64 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup's theme override for the search page category tabs.
+ *
+ * Renders the tabs facet's links as the Tabs component, one Tab Item per
+ * link. They stay plain links, so choosing one keeps the rest of the query.
+ *
+ * Available variables:
+ * - items: A list of items. Each item contains:
+ *   - attributes: HTML attributes to be applied to each list item.
+ *   - value: The link render array of the item.
+ * - title: The title of the list.
+ * - attributes: HTML attributes to be applied to the list.
+ * - empty: A message to display when there are no items.
+ * - facet: The facet for this result item.
+ *
+ * Available attributes:
+ * - wrapper_attributes: HTML attributes for the widget wrapper.
+ * - link_attributes: HTML attributes for each tab link, per iteration.
+ *
+ * @see facets_preprocess_facets_item_list()
+ */
+#}
+
+{# Logic: the widget wrapper keeps the class the facets module gives it. #}
+{% set wrapper_attributes = create_attribute().addClass(['facets-widget-' ~ facet.widget.type]) %}
+{% set attributes = attributes.addClass(['item-list__' ~ facet.widget.type]) %}
+
+{# Logic: one Tab Item per facet link, keeping the link's own attributes. #}
+{% set tab_items %}
+  {% for item in items %}
+    {% set link = item.value %}
+    {% set is_active = link['#title']['#is_active'] ?? false %}
+    {% set link_attributes = create_attribute(link['#attributes']|merge(link['#url'].getOption('attributes')|default({}))) %}
+    {% if is_active %}
+      {% set link_attributes = link_attributes.setAttribute('aria-current', 'true') %}
+    {% endif %}
+    {{ include('vartheme_bs5_rightup:tab-item', {
+      title: link['#title']['#value'],
+      url: link['#url'].toString(),
+      is_active: is_active,
+      attributes: link_attributes,
+    }, with_context: false) }}
+  {% endfor %}
+{% endset %}
+
+{# Print the HTML. #}
+<div{{ wrapper_attributes }}>
+  {% if title is not empty %}
+    <h3>{{ title }}</h3>
+  {% endif %}
+  {% if items %}
+    {{ include('vartheme_bs5_rightup:tabs', {
+      tabs_id: 'facet-' ~ facet.id,
+      shape: 'tabs',
+      border_color: 'border-tertiary',
+      items: tab_items,
+      attributes: attributes,
+    }, with_context: false) }}
+  {% else %}
+    {{ empty }}
+  {% endif %}
+</div>

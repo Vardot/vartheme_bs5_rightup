@@ -1,0 +1,69 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup's theme override for the search page sort links.
+ *
+ * Shows the Better Exposed Filters sort links as a Bootstrap dropdown that
+ * looks like a select. They stay links, so a new sort keeps the rest of the
+ * query, and the current one is marked with aria-current.
+ *
+ * Available variables:
+ * - element: The sort element; its children are the option links.
+ * - children: The option values, in order.
+ * - hiddens: Name and value pairs of the hidden inputs that carry the current
+ *   sort with the form.
+ *
+ * Available attributes:
+ * - attributes: HTML attributes for the dropdown wrapper.
+ * - hidden_attributes: HTML attributes for each hidden input, per iteration.
+ * - toggle_attributes: HTML attributes for the dropdown button.
+ * - toggle_label_attributes: HTML attributes for the button's hidden label.
+ * - menu_attributes: HTML attributes for the list of options.
+ *
+ * @see template_preprocess_bef_links()
+ */
+#}
+
+{# Logic: the current option names the button. #}
+{% set selected = children|filter(child => 'bef-link--selected' in attribute(element, child)['#attributes'].class)|first %}
+{% set selected_label = attribute(element, selected ?: children|first)['#title'] %}
+
+{# Logic: Bootstrap's dropdown, with a static menu below the button. #}
+{% set attributes = attributes.removeClass('form-select').addClass(['bef-links', 'dropdown']) %}
+{% set toggle_attributes = create_attribute()
+  .setAttribute('type', 'button')
+  .setAttribute('data-bs-toggle', 'dropdown')
+  .setAttribute('data-bs-display', 'static')
+  .setAttribute('aria-expanded', 'false')
+  .addClass(['bef-links__toggle', 'form-select'])
+%}
+{% set toggle_label_attributes = create_attribute().addClass(['visually-hidden']) %}
+{% set menu_attributes = create_attribute().addClass(['bef-links__menu', 'dropdown-menu', 'shadow']) %}
+
+{# Print the HTML. #}
+{{ attach_library('vartheme_bs5_rightup/bs-dropdown-script') }}
+{% for name, value in hiddens %}
+  {% set hidden_attributes = create_attribute({
+    'type': 'hidden',
+    'name': name,
+    'value': value,
+    'id': 'edit-' ~ name,
+  }) %}
+  <input{{ hidden_attributes }}>
+{% endfor %}
+<div{{ attributes }}>
+  <button{{ toggle_attributes }}>
+    <span{{ toggle_label_attributes }}>{{ element['#title'] }}</span>
+    {{ selected_label }}
+  </button>
+  <ul{{ menu_attributes }}>
+    {% for child in children %}
+      {% set link = attribute(element, child) %}
+      {% set is_selected = child == selected %}
+      {% set link_attributes = link['#attributes']|merge({
+        'class': link['#attributes'].class|merge(['dropdown-item'])|merge(is_selected ? ['active'] : []),
+      })|merge(is_selected ? {'aria-current': 'true'} : {}) %}
+      <li>{{ link|merge({'#attributes': link_attributes}) }}</li>
+    {% endfor %}
+  </ul>
+</div>

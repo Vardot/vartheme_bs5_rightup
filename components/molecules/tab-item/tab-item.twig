@@ -16,6 +16,7 @@
  *
  * Available attributes:
  * - attributes: HTML attributes for the link element.
+ * - item_attributes: HTML attributes for the list item element.
  */
 #}
 
@@ -52,6 +53,7 @@
  #}
 {% set classes = ['nav-link']|merge(is_active ? ['active'] : []) %}
 {% set attributes = attributes.addClass(classes).setAttribute('href', href) %}
+{% set item_attributes = create_attribute().addClass(['nav-item']) %}
 {% if is_js_tab %}
   {% set attributes = attributes
     .setAttribute('id', pane_id ~ '-tab')
@@ -61,9 +63,11 @@
     .setAttribute('aria-controls', pane_id)
     .setAttribute('aria-selected', is_active ? 'true' : 'false')
   %}
+  {# Only a tab drops its list item role; a plain link stays a list item. #}
+  {% set item_attributes = item_attributes.setAttribute('role', 'presentation') %}
 {% endif %}
 
 {# Print the HTML. #}
-<li class="nav-item" role="presentation">
+<li{{ item_attributes }}>
   <a{{ attributes }}>{{ title }}</a>
 </li>

@@ -78,8 +78,11 @@
 {% set attributes = attributes
   .addClass(tabs_block_classes)
   .setAttribute('id', resolved_tabs_id)
-  .setAttribute('role', 'tablist')
 %}
+{# A row of plain links stays a list; only panes make it a tablist. #}
+{% if has_panes_content %}
+  {% set attributes = attributes.setAttribute('role', 'tablist') %}
+{% endif %}
 
 {% if not content_attributes %}
   {% set content_attributes = create_attribute() %}

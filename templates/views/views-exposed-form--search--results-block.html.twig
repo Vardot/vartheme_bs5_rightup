@@ -1,0 +1,41 @@
+{#
+/**
+ * @file
+ * Vartheme BS5 Rightup's theme override for the search page keyword form.
+ *
+ * Two columns that line up with the results and filter columns below: the
+ * keyword field with its button, then the sort control. Sort prints last, so
+ * the reading and focus order follow the layout.
+ *
+ * Available variables:
+ * - form: A render element representing the form.
+ * - q: (optional) The 'q' query parameter, when clean URLs are off.
+ *
+ * Available attributes:
+ * - row_attributes: HTML attributes for the row wrapping both columns.
+ * - search_attributes: HTML attributes for the keyword field column.
+ * - sort_attributes: HTML attributes for the sort column.
+ *
+ * @see template_preprocess_views_exposed_form()
+ */
+#}
+
+{# Logic: the same grid as the results row, so the columns align. #}
+{% set row_attributes = create_attribute().addClass(['row', 'gx-5', 'row-gap-3', 'align-items-center']) %}
+{% set search_attributes = create_attribute().addClass(['views-exposed-form__search', 'col-12', 'col-md-8']) %}
+{% set sort_attributes = create_attribute().addClass(['views-exposed-form__sort', 'col-12', 'col-md-4']) %}
+
+{# Print the HTML. #}
+{% if q is not empty %}
+  {{ q }}
+{% endif %}
+<div{{ row_attributes }}>
+  <div{{ search_attributes }}>
+    {{ form|without('sort_by') }}
+  </div>
+  {% if form.sort_by %}
+    <div{{ sort_attributes }}>
+      {{ form.sort_by }}
+    </div>
+  {% endif %}
+</div>

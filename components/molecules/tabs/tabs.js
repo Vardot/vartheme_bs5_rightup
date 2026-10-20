@@ -77,6 +77,8 @@
           link.setAttribute('role', 'tab');
           link.setAttribute('aria-controls', paneId);
           link.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          // A tab's list item is presentational inside the tablist.
+          link.closest('li')?.setAttribute('role', 'presentation');
 
           pane.id = paneId;
           pane.setAttribute('role', 'tabpanel');

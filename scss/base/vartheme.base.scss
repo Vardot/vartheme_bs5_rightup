@@ -1014,23 +1014,28 @@ $rightup-display-selectors: ();
 
 // Search results page
 // -----------------------------------------------------------------------------
-// The design (VBN Stylesheet, Search-Listing 13058:23852) puts the search field
-// on the results page itself, not only in the header: an 864x46 group with the
-// field at 762 and the submit at 103 butted against it, sharing the header
-// bar's metrics. The results page is a Drupal Canvas page, so the body carries
+// The search field sits on the results page itself, not only in the header.
+// Its template prints two grid columns that line up with the results row: the
+// field and its button butted together, then the sort control over the filter
+// column. The results page is a Drupal Canvas page, so the body carries
 // `canvas-page path-page` rather than `path-search`. The form is keyed by the
 // view/display class hook_form_alter() adds, never by the form ID Views
 // generates: `exposed_block` renders the form outside the `.view-…` wrapper,
 // so the view classes are not available as ancestors.
 .views-exposed-form--search--results-block {
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  width: min(100%, #{$spacer * 54});
-  height: #{$spacer * 2.875};
-  margin-block-end: #{$spacer * 2};
+  --search-field-height: #{$spacer * 2.875};
+  --search-sort-height: #{$spacer * 2.875};
+  --search-subtle-color: #{rgba($black, .6)};
 
-  .form-item {
+  // 2rem below the title; this margin collapses with the title's own.
+  margin-block-start: #{$spacer * 2};
+
+  .views-exposed-form__search {
+    display: flex;
+    height: var(--search-field-height);
+  }
+
+  .form-item-keywords {
     display: flex;
     flex: 1 1 auto;
     min-width: 0;
@@ -1039,27 +1044,30 @@ $rightup-display-selectors: ();
 
   .form-actions {
     display: flex;
-    flex: 0 0 #{$spacer * 6.4375};
-    width: #{$spacer * 6.4375};
+    flex: 0 0 auto;
     margin-block: 0;
     margin-inline-start: -#{$border-width};
   }
 
+  // Bootstrap Icons' search glyph, the one the header search uses.
   .form-control {
     height: 100%;
     width: 100%;
     margin-block: 0;
     border: $border-width solid $black;
     border-radius: 0;
-    background-color: $white;
-    padding-inline: #{$spacer};
+    background: $white escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$primary-text-emphasis}'><path d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0'/></svg>")) no-repeat left #{$spacer * .75} center / #{$spacer};
+    padding-inline: #{$spacer * 2.25} #{$spacer};
     font-family: #{inspect($headings-font-family)};
     font-size: #{$spacer * 0.875};
     line-height: 1.5;
+
+    &::placeholder {
+      color: var(--search-subtle-color);
+    }
   }
 
   .form-actions .btn {
-    width: 100%;
     height: 100%;
     border-radius: 0;
     border-color: $black;
@@ -1068,6 +1076,120 @@ $rightup-display-selectors: ();
     font-size: #{$spacer};
     font-weight: 500;
     line-height: 1.35;
+  }
+
+  .form-item-sort-by {
+    display: flex;
+    align-items: center;
+    gap: #{$spacer * .8125};
+    margin-block: 0;
+
+    > label {
+      margin: 0;
+      color: $black;
+      font-family: $font-family-serif;
+      font-size: $font-size-md;
+      line-height: 1.5;
+      white-space: nowrap;
+    }
+  }
+
+  // The sort links as a select-like dropdown (see the bef-links template).
+  .bef-links {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .bef-links__toggle {
+    height: var(--search-sort-height);
+    padding-block: 0;
+    padding-inline: #{$spacer * .75} #{$spacer * 2.5};
+    overflow: hidden;
+    border-color: $black;
+    border-radius: 0;
+    background-position: right $spacer center;
+    color: var(--search-subtle-color);
+    font-size: $font-size-sm;
+    line-height: 1.5;
+    text-align: start;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    // Open, the chevron points up.
+    &[aria-expanded="true"] {
+      --#{$prefix}form-select-bg-img: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$form-select-indicator-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 11 6-6 6 6'/></svg>"))};
+    }
+  }
+
+  .bef-links__menu {
+    --#{$prefix}dropdown-min-width: 100%;
+    --#{$prefix}dropdown-spacer: 0;
+    --#{$prefix}dropdown-padding-y: #{$spacer * .625};
+    --#{$prefix}dropdown-font-size: #{$font-size-sm};
+    --#{$prefix}dropdown-border-color: #{$secondary-bg-subtle};
+    --#{$prefix}dropdown-border-radius: #{$border-radius-sm};
+    --#{$prefix}dropdown-item-padding-x: #{$spacer};
+    --#{$prefix}dropdown-item-padding-y: #{$spacer * .375};
+    --#{$prefix}dropdown-link-color: #{$black};
+    --#{$prefix}dropdown-link-hover-color: #{$black};
+    --#{$prefix}dropdown-link-hover-bg: #{$tertiary-bg-subtle};
+    --#{$prefix}dropdown-link-active-color: #{$white};
+    --#{$prefix}dropdown-link-active-bg: #{$tertiary};
+  }
+
+  @include media-breakpoint-down(md) {
+    --search-sort-height: #{$spacer * 2.5};
+
+    margin-block-start: #{$spacer * 1.5};
+
+    .form-actions .btn {
+      padding-inline: $spacer;
+      font-size: $font-size-sm;
+    }
+
+    .form-item-sort-by {
+      max-width: #{$spacer * 19};
+
+      > label {
+        font-size: $font-size-sm;
+      }
+    }
+
+    .bef-links__toggle {
+      padding-inline-end: #{$spacer * 2};
+      background-position: right #{$spacer * .5} center;
+    }
+  }
+}
+
+// Without JavaScript the dropdown cannot open, so its links show as a list.
+html:not(.js) .views-exposed-form--search--results-block .bef-links__menu {
+  position: static;
+  display: block;
+}
+
+// The category tabs sit flush. On a phone the row scrolls sideways instead of
+// wrapping onto a second line.
+.block-facet-blocksearch-tabs-category {
+  .tabs.nav-tabs {
+    gap: 0;
+  }
+
+  @include media-breakpoint-down(md) {
+    .tabs.nav-tabs {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    // The scroll box clips an outer focus ring, so it is drawn inside.
+    .nav-link {
+      white-space: nowrap;
+
+      &:focus-visible {
+        box-shadow: inset $nav-link-focus-box-shadow;
+      }
+    }
   }
 }
 
@@ -1101,9 +1223,11 @@ $rightup-display-selectors: ();
 }
 
 .views-exposed-form--search--date-block {
-  // The bar above the results owns the keyword field, and Better Exposed
-  // Filters submits this form on change, so it needs no button of its own.
+  // The bar above the results owns the keyword field and the sort, and Better
+  // Exposed Filters submits this form on change, so it needs no button of its
+  // own. Hidden, not removed: the values still submit with a date change.
   .form-item-keywords,
+  .form-item-sort-by,
   .form-actions {
     display: none;
   }
@@ -1139,6 +1263,13 @@ $rightup-display-selectors: ();
 // with 32px and a hairline rule, which is listing rhythm rather than anything
 // the card itself should own, so it lives here.
 .view-search {
+  // The result count is a quiet line, 1.5rem above the first result.
+  .view-header {
+    margin-block-end: #{$spacer * 1.5};
+    color: $black;
+    font-size: $font-size-sm;
+  }
+
   .views-row + .views-row {
     margin-block-start: #{$spacer * 2};
     padding-block-start: #{$spacer * 2};
@@ -1161,6 +1292,7 @@ $rightup-display-selectors: ();
   --vb-filter-option-gap: #{$spacer * 0.5}; // 8px
   --vb-filter-option-box-size: #{$spacer}; // 16px
   --vb-filter-option-box-border: #{$black};
+  --vb-filter-option-checked-bg: #{$primary};
   --vb-filter-option-font-size: #{$spacer * 0.875}; // 14px
   --vb-filter-option-color: #{$black};
   --vb-filter-option-count-color: #{$tertiary};
@@ -1186,6 +1318,12 @@ $rightup-display-selectors: ();
     border: #{$border-width} solid var(--vb-filter-option-box-border);
     border-radius: 0;
     background-color: transparent;
+
+    // Filled when checked, so Bootstrap's white tick or dot shows.
+    &:checked {
+      border-color: var(--vb-filter-option-checked-bg);
+      background-color: var(--vb-filter-option-checked-bg);
+    }
   }
 
   // A radio keeps its circle. The design draws every filter as a square box,
