@@ -1,20 +1,27 @@
 @import "../../defaults";   // Global component defaults.
 
+// Canvas loads its brand kit :root colors before the theme CSS. The Bootstrap
+// root values sit in a cascade layer, and a layer loses to the brand kit (which
+// is in none) whatever the load order, so these values stay the fallback.
 // The Root CSS3 variables for Bootstrap 5.
-@import "../../../node_modules/bootstrap/scss/root";
+@layer vartheme-root {
+  @import "../../../node_modules/bootstrap/scss/root";
+}
 
 // Custom tertiary/accent CSS vars — Bootstrap only generates subtle/emphasis/
 // border vars for its built-in theme colors; tertiary and accent are vartheme
 // custom additions so we define them manually.
-:root,
-[data-bs-theme="light"] {
-  --bs-tertiary-bg-subtle:     #{$tertiary-bg-subtle};
-  --bs-tertiary-text-emphasis: #{$tertiary-text-emphasis};
-  --bs-tertiary-border-subtle: #{$tertiary-border-subtle};
+@layer vartheme-root {
+  :root,
+  [data-bs-theme="light"] {
+    --bs-tertiary-bg-subtle:     #{$tertiary-bg-subtle};
+    --bs-tertiary-text-emphasis: #{$tertiary-text-emphasis};
+    --bs-tertiary-border-subtle: #{$tertiary-border-subtle};
 
-  --bs-accent-bg-subtle:     #{$accent-bg-subtle};
-  --bs-accent-text-emphasis: #{$accent-text-emphasis};
-  --bs-accent-border-subtle: #{$accent-border-subtle};
+    --bs-accent-bg-subtle:     #{$accent-bg-subtle};
+    --bs-accent-text-emphasis: #{$accent-text-emphasis};
+    --bs-accent-border-subtle: #{$accent-border-subtle};
+  }
 }
 
 // The secondary family as a theme token. Bootstrap emits no serif custom property,
