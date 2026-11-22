@@ -24,7 +24,7 @@ Use this component when you need to:
 
 ### Content
 
-- `text`: HTML content (rich text); defaults to `<p>Lorem ipsum dolor sit amet.</p>`. Make sure this content is filtered/safe before rendering.
+- `text`: HTML content (rich text); renders nothing when empty. Make sure this content is filtered/safe before rendering.
 
 ### Appearance
 
