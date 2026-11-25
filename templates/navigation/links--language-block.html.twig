@@ -7,4 +7,9 @@
  * @see vartheme_bs5_rightup_preprocess_links__language_block()
  */
 #}
-{% include 'vartheme_bs5_rightup:language-switcher' with { links: links, attributes: attributes } only %}
+{# Links arrive keyed by langcode; language-switcher wants a list. #}
+{% set switcher_links = [] %}
+{% for link in links %}
+  {% set switcher_links = switcher_links|merge([link]) %}
+{% endfor %}
+{% include 'vartheme_bs5_rightup:language-switcher' with { links: switcher_links, attributes: attributes } only %}
